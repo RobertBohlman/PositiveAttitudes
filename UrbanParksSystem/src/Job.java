@@ -9,16 +9,18 @@ public class Job {
 	public String myMonth;
 	public String myYear;
 	public String myRequirements;
+	public Integer myNoVolunteers;
 	public String myLocation;
 	public String myDescription;
 	
 	public Job(final String theTitle, final String theDay, final String theMonth,
 					final String theYear, final String theRequirements,
-					final String theLocation, final String theDescription) {
+					final Integer theNoVolunteers, final String theLocation, final String theDescription) {
 		myTitle = theTitle;
 		myDay = theDay;
 		myYear = theYear;
 		myRequirements = theRequirements;
+		myNoVolunteers = theNoVolunteers;
 		myLocation = theLocation;
 		myDescription = theDescription;
 	}
