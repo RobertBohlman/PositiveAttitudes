@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-import java.util.Date;
-=======
-
->>>>>>> branch 'master' of https://github.com/RobertBohlman/PositiveAttitudes.git
-
 /**
  * Stores Jobs and info pertaining to them
  * @author Jacob
