@@ -56,6 +56,8 @@ public class DataStore implements Serializable{
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			// jgdhxf gjhfhhfjf
 			
+		} catch (Exception e) {
+			
 		}
 	}
 	
