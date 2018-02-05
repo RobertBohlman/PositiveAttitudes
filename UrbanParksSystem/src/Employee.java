@@ -1,8 +1,17 @@
 
+/*
+ * 
+ * @author Jenna Hand, Kristi Anna Stageberg, Robert Bohlman, Jacob Reed, Aaron Hammers
+ */
 public class Employee extends AbstractUser {
-
-	public Employee() {
-		// TODO Auto-generated constructor stub
+	
+	/**
+	 * 
+	 * @param theUserName
+	 * @param thePermissionLevel
+	 */
+	public Employee(String theUserName, int thePermissionLevel) {
+		super(theUserName, thePermissionLevel);
 	}
 
 }

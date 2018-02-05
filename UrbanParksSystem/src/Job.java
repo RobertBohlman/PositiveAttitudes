@@ -24,4 +24,13 @@ public class Job {
 		myLocation = theLocation;
 		myDescription = theDescription;
 	}
+=======
+
+public class Job {
+
+	public Job() {
+		// TODO Auto-generated constructor stub
+	}
+
+>>>>>>> refs/remotes/origin/implement_user_classes
 }
