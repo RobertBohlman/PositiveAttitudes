@@ -28,11 +28,25 @@ public class Job {
 
 	}
 	
+	/*
+	 * Blank Overloaded Constructor
+	 */
+	public Job() {
+		myTitle = null;
+		myDay = 0;
+		myMonth = 0;
+		myYear = 0;
+		myRequirements = null;
+		myNoVolunteers = 0;
+		myLocation = null;
+		myDescription = null;
+		
+	}
 	public boolean checkJobStartDay() {
-		if (myDay - System.currentDay >= 2) {
+		/*if (myDay - System.currentDay >= 2) {
 			return true;
 			
-		}
+		}*/
 		return false;
 	}
 }
