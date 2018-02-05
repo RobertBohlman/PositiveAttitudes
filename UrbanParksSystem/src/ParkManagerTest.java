@@ -68,4 +68,30 @@ class ParkManagerTest {
 		fail("Not yet implemented");
 	}
 
+	@Test
+	/*
+	 * Tests return of true if job is less than maximum
+	 * of 3 days, testing using one less (2)
+	 */
+	void submitJob_durationLessThanMax_returnTrue() {
+		//assertEquals(//TODO check job length, true);
+	}
+	
+	@Test
+	/*
+	 * Tests return of true if job number of days
+	 * is equal to the exact max
+	 */
+	void submitJob_durationEqualsMax_returnTrue() {
+		//assertEquals(//TODO checkJob Length, true);
+	}
+	
+	@Test
+	/*
+	 * Tests return of false if job number of days is > max
+	 * Using one greater than max (4)
+	 */
+	void submitJob_durationGreaterThanMax_returnFalse() {
+		//assertEquals(//TODO check job length, false);
+	}
 }
