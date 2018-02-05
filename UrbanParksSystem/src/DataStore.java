@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /*
  * Class for storing persistent data
@@ -11,5 +12,5 @@ public class DataStore implements Serializable{
 	private static final long serialVersionUID = -7839681454166039293L;
 	public String myUsername;
 	public int myPermission;
-	//public List<Job> = new List<Job>();
+	public ArrayList<Job> myJobs = new ArrayList<Job>();
 }
