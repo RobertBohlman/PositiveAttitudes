@@ -25,6 +25,7 @@ public class Job {
 		myNoVolunteers = theNoVolunteers;
 		myLocation = theLocation;
 		myDescription = theDescription;
+
 	}
 	
 	public boolean checkJobStartDay() {
@@ -35,3 +36,6 @@ public class Job {
 		return false;
 	}
 }
+
+
+
