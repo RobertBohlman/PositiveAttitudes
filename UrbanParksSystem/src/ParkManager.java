@@ -1,3 +1,5 @@
+import java.util.List;
+
 /**
  * 
  */
@@ -36,5 +38,11 @@ public class ParkManager extends AbstractUser {
 	public void setManagerEmail(String theEmail) {
 		myEmail = theEmail;
 	}
+	
+	public void submitJob(Job theJob, List<Job> theSessionJobs, int theMaxNumberJobs) {
+		addJob(theJob, theSessionJobs, theMaxNumberJobs);
+	}
+	
+	
 
 }

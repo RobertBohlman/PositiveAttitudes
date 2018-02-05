@@ -52,4 +52,15 @@ public abstract class AbstractUser {
 	public List<Job> getJobs() {
 		return myJobs;
 	}
+	
+	public void addJob(Job theJob, List<Job> theSessionJobs, int theMaxNumberJobs) {
+		if (notTooManyJobs(theJob, theSessionJobs, theMaxNumberJobs)) {
+			theSessionJobs.add(theJob);
+			myJobs.add(theJob);
+		}
+	}
+	
+	public boolean notTooManyJobs(Job theJob, List<Job> theSessionJobs, int theMaxNumberJobs) {
+		return theSessionJobs.size() < theMaxNumberJobs;
+	}
 }
