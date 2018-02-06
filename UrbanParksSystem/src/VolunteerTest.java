@@ -8,7 +8,9 @@ public class VolunteerTest {
 	// Supporting classes Volunteer.java & Job.java
 	
 	Volunteer VolunteerMoreThanTwoDays = new Volunteer(null, 0, 0, null, 0);
-	Job anyOldJob = new Job(null, null, null, null, null, null, null, null);
+	Job anyOldJob = new Job(null, 1, 1,
+			1, null,
+			0, null, null);
 
 	@Test
 	public void isMinDaysAfter_moreThanTwoDays_True() {

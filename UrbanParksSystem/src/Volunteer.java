@@ -120,7 +120,7 @@ public class Volunteer extends AbstractUser {
 		
 		
 		for(Job job : myJobs) {
-			int compDate = job.date.compareTo(date);
+			int compDate = job.myDate.compareTo(date);
 			
 			if(compDate == 1) {
 				okDate = true;
