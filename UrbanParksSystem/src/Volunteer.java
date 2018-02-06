@@ -119,6 +119,7 @@ public class Volunteer extends AbstractUser {
 		
 		
 		
+<<<<<<< HEAD
 //		for(Job job : myJobs) {
 //			int compDate = job.date.compareTo(date);
 //			
@@ -130,6 +131,19 @@ public class Volunteer extends AbstractUser {
 //			
 //			isMin = okDate || isMin;
 //		}
+=======
+		for(Job job : myJobs) {
+			int compDate = job.myDate.compareTo(date);
+			
+			if(compDate == 1) {
+				okDate = true;
+			} else {
+				okDate = false;
+			}
+			
+			isMin = okDate || isMin;
+		}
+>>>>>>> b6ae6f035e5c39e92a697a83ce479865b91f574e
 		return isMin;	
 	}
 }

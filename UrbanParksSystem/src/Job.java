@@ -1,3 +1,5 @@
+import java.util.Date;
+
 /**
  * Stores Jobs and info pertaining to them
  * @author Jacob
@@ -12,7 +14,8 @@ public class Job {
 	public Integer myNoVolunteers;
 	public String myLocation;
 	public String myDescription;
-	//public Date date;
+	public Date myDate;
+
 	
 	public Job(final String theTitle, final int theDay, final int theMonth,
 					final int theYear, final String theRequirements,
