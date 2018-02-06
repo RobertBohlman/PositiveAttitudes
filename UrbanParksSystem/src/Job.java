@@ -1,5 +1,3 @@
-
-
 /**
  * Stores Jobs and info pertaining to them
  * @author Jacob
@@ -14,6 +12,7 @@ public class Job {
 	public Integer myNoVolunteers;
 	public String myLocation;
 	public String myDescription;
+	public Date date;
 	
 	public Job(final String theTitle, final int theDay, final int theMonth,
 					final int theYear, final String theRequirements,
@@ -28,11 +27,25 @@ public class Job {
 
 	}
 	
+	/*
+	 * Blank Overloaded Constructor
+	 */
+	public Job() {
+		myTitle = null;
+		myDay = 0;
+		myMonth = 0;
+		myYear = 0;
+		myRequirements = null;
+		myNoVolunteers = 0;
+		myLocation = null;
+		myDescription = null;
+		
+	}
 	public boolean checkJobStartDay() {
-		if (myDay - System.currentDay >= 2) {
+		/*if (myDay - System.currentDay >= 2) {
 			return true;
 			
-		}
+		}*/
 		return false;
 	}
 }
