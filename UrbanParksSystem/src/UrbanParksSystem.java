@@ -1,12 +1,15 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class UrbanParksSystem {
 	private static Scanner scan;
 	private static List<Job> joblist;
+	private static Map<Integer, AbstractUser> userMap;
 	
-	private static int consoleState = 1;
+	private static int consoleState = 0;
 	
 	private static final int USER_LOG_IN = 0;
 	private static final int VOLUNTEER_MAIN_MENU = 1;
@@ -23,11 +26,33 @@ public class UrbanParksSystem {
 		joblist.add(new Job("Planting Trees", 6, 1, 2018, "Medium", 3, "Park#2", "Plant Tress(duh)"));
 		scan = new Scanner(System.in);
 		
+		
+		
+		//Added this for hard-coding users until we have to implement letting 
+		//them set up accounts for themselves.
+		//0 = Employee :: 1 = ParkManager :: 2 = Volunteer
+		userMap = new HashMap<Integer, AbstractUser>();
+		
+		String user1 = "Carol";
+		int user1num = user1.hashCode();
+		userMap.put(user1num, new Employee("Carol", 0));
+		
+		String user2 = "Frank";
+		int user2num = user2.hashCode();
+		userMap.put(user2num, new ParkManager("Frank", 1, "why@gmail.com"));
+		
+		String user3 = "Billy";
+		int user3num = user3.hashCode();
+		userMap.put(user3num, new Volunteer("Billy", 2, 34, "umm@gmail.com", 3));
+		
+		
+		
+		
 		while (consoleState != END) {
 			
 			switch (consoleState) {
 				case USER_LOG_IN:
-					//displayUserLogIn();  Not yet implemented
+					displayUserLogIn();
 					break;
 					
 				case VOLUNTEER_MAIN_MENU:
@@ -52,6 +77,35 @@ public class UrbanParksSystem {
 		}
 		
 		scan.close();
+	}
+	
+	
+	private static void displayUserLogIn() {
+		System.out.println("Hello! Welcome to Urban Parks.\n"
+				+ "Login with your Username: ");
+		String selection = scan.nextLine();
+		
+		int userHash = selection.hashCode();
+		
+		
+		int selectionPermission = userMap.get(userHash).getPermissionLevel();
+		
+		switch (selectionPermission) {
+			case 0:
+				//Not yet implemented - reserved for employees
+				break;
+				
+			case 1:
+				consoleState = PARK_MANAGER_MAIN_MENU;
+				break;
+			
+			case 2:
+				consoleState = VOLUNTEER_MAIN_MENU;
+				break;
+				
+			default:
+				break;
+		}
 	}
 	
 	private static void displayVolunteerMainMenu() {
