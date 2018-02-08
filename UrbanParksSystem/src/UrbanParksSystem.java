@@ -8,6 +8,7 @@ public class UrbanParksSystem {
 	private static Scanner scan;
 	private static List<Job> joblist;
 	private static Map<Integer, AbstractUser> userMap;
+	private static DataStore myStorage;
 	
 	private static int consoleState = 0;
 	
@@ -18,12 +19,11 @@ public class UrbanParksSystem {
 	private static final int PARK_MANAGER_JOB_SUBMIT = 4;
 	private static final int END = 99;
 	
-
 	public static void main(String[] args) {
 		joblist = new ArrayList<Job>();
 		joblist.add(new Job("Weeding", 2, 1, 2018, "Light", 3, "Park#4", "Pull weeds"));
 		joblist.add(new Job());
-		joblist.add(new Job("Planting Trees", 6, 1, 2018, "Medium", 3, "Park#2", "Plant Tress(duh)"));
+		joblist.add(new Job("Planting Trees", 6, 1, 2018, "Medium", 3, "Park#2", "Plant Tress"));
 		scan = new Scanner(System.in);
 		
 		
