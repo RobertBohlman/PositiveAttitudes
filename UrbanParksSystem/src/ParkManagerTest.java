@@ -1,12 +1,14 @@
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 class ParkManagerTest {
 
@@ -17,7 +19,7 @@ class ParkManagerTest {
 	private Job submittableJob;
 	private ParkManager user;
 	
-	@BeforeEach
+	@Before
 	void setUp() throws Exception {
 		fewerThanMaxJobs = new ArrayList<Job>();
 		maxJobs = new ArrayList<Job>();

@@ -15,9 +15,8 @@ public class DataStore implements Serializable{
 
 	/**Generated SUID**/
 	private static final long serialVersionUID = -7839681454166039293L;
-	public String myUsername;
-	public int myPermission;
-	public ArrayList<Job> myJobs = new ArrayList<Job>();
+	public AbstractUser myUser;
+	
 	
 	/**
 	 * Constructor.
@@ -25,11 +24,8 @@ public class DataStore implements Serializable{
 	 * @param thePermission Permission Rank (1-3)
 	 * @param theJobs List of jobs pertaining to user
 	 */
-	public DataStore(final String theUsername, final int thePermission,
-						final ArrayList<Job> theJobs) {
-		myUsername = theUsername;
-		myPermission = thePermission;
-		myJobs = theJobs;
+	public DataStore(final AbstractUser theUser) {
+		myUser = theUser;
 	}
 	
 	/**
@@ -38,26 +34,30 @@ public class DataStore implements Serializable{
 	public void Store() {
 		try {
 			FileOutputStream fileOut = new
-					FileOutputStream("/tmp/" + myUsername + ".ser");
+					FileOutputStream("/tmp/" + myUser.getUserName() + ".ser");
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-			out.writeObject(myUsername);
-			out.writeObject(myPermission);
-			out.writeObject(myJobs);
+			out.writeObject(myUser);
 			fileOut.close();
-			System.out.println("Serliazed data is saved to /tmp/" + myUsername + ".ser");
+			System.out.println("Serliazed data is saved to /tmp/" + myUser.getUserName() + ".ser");
 		}catch (IOException i) {
 			i.printStackTrace();
 		}
 	}
 	
+	/**
+	 * Loads data object
+	 * @param theUsername
+	 */
 	public void Load(final String theUsername) {
 		try {
 			FileInputStream fileIn = new FileInputStream("/tmp/" + theUsername + ".ser");
 			ObjectInputStream in = new ObjectInputStream(fileIn);
-			// jgdhxf gjhfhhfjf
-			
+			myUser = (AbstractUser) in.readObject();
+			in.close();
+			fileIn.close();
+			System.out.println("Object has been deserialized");
 		} catch (Exception e) {
-			
+			e.printStackTrace();
 		}
 	}
 	
