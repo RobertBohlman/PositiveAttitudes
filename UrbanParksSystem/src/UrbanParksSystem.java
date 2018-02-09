@@ -6,12 +6,13 @@ import java.util.Scanner;
 
 public class UrbanParksSystem {
 	private static Scanner scan;
-	private static List<Job> joblist;
+	private static List<Job> jobList;
 	private static Map<Integer, AbstractUser> userMap;
 	private static DataStore myStorage;
 	
 	private static int consoleState = 0;
 	
+	private static final int MAX_NUM_JOBS = 20;
 	private static final int USER_LOG_IN = 0;
 	private static final int VOLUNTEER_MAIN_MENU = 1;
 	private static final int VOLUNTEER_JOB_SCREEN = 2;
@@ -20,10 +21,10 @@ public class UrbanParksSystem {
 	private static final int END = 99;
 	
 	public static void main(String[] args) {
-		joblist = new ArrayList<Job>();
-		joblist.add(new Job("Weeding", 2, 1, 2018, "Light", 3, "Park#4", "Pull weeds"));
-		joblist.add(new Job());
-		joblist.add(new Job("Planting Trees", 6, 1, 2018, "Medium", 3, "Park#2", "Plant Tress"));
+		jobList = new ArrayList<Job>();
+		jobList.add(new Job("Weeding", 2, 1, 2018, "Light", 3, "Park#4", "Pull weeds"));
+		jobList.add(new Job());
+		jobList.add(new Job("Planting Trees", 6, 1, 2018, "Medium", 3, "Park#2", "Plant Tress"));
 		scan = new Scanner(System.in);
 		
 		
@@ -143,7 +144,7 @@ public class UrbanParksSystem {
 		int i = 1;
 		System.out.println("Title:\n Date:\n Requirements:\n Location:");
 		System.out.println("-------------------------------------------------------------------");
-		for (Job j:joblist) {
+		for (Job j:jobList) {
 			System.out.println(i + ". " + j.myTitle + "\n" + j.myMonth + "/" + j.myDay + "/" + j.myYear 
 					+ "\n" + j.myRequirements + "\n" + j.myLocation);
 			System.out.println("-------------------------------------------------------------------");
@@ -153,7 +154,7 @@ public class UrbanParksSystem {
 		System.out.println("Select a job number to view information");
 		String selection = scan.nextLine();
 		int selectNumber = Integer.parseInt(selection);
-		displayJobDetails(joblist.get(selectNumber - 1));
+		displayJobDetails(jobList.get(selectNumber - 1));
 	}
 	
 	private static void displayJobDetails(Job j) {
@@ -253,7 +254,7 @@ public class UrbanParksSystem {
 		String selection = scan.nextLine();
 		
 		if (selection.charAt(0) == '1') {
-			joblist.add(new Job(title, day, month, year, req, 0, location, desc));
+			jobList.add(new Job(title, day, month, year, req, 0, location, desc));
 			System.out.println("Thank you for submitting a job at Urban Parks!");
 			consoleState = PARK_MANAGER_MAIN_MENU;
 			
@@ -262,4 +263,15 @@ public class UrbanParksSystem {
 		}
 	}
 
+	public void addJob(Job theJob) {
+		if (notTooManyJobs()) {
+			jobList.add(theJob);
+		}
+	}
+	
+	public boolean notTooManyJobs() {
+		return jobList.size() < MAX_NUM_JOBS;
+	}
+	
+	
 }

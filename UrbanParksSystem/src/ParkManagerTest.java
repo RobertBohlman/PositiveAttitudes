@@ -48,7 +48,7 @@ class ParkManagerTest {
 	
 	@Test
 	void submitJob_fewerThanMax_returnTrue() { 
-		for (int i = 0; i < 29; i++) {
+		for (int i = 0; i < 20; i++) {
 			fewerThanMaxJobs.add(new Job());
 		}
 		user.submitJob(submittableJob, maxJobs, MAX_NUM_JOBS);
