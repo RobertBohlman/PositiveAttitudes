@@ -223,9 +223,21 @@ public class UrbanParksSystem {
 		}
 	}
 	
+	public static void displayVolunteerJobs() {
+		System.out.println("Your Current Jobs");
+		System.out.println("-------------------------------------------------------------------");
+		int i = 1;
+		for (Integer id : userMap.get(userHash).getJobs()) {
+				System.out.println(i + ". " + jobList.get(id).myTitle + "\n" + jobList.get(id).myMonth + "/" + jobList.get(id).myDay + "/" + jobList.get(id).myYear 
+						+ "\n" + jobList.get(id).myRequirements + "\n" + jobList.get(id).myLocation);
+			i++;
+		}
+		System.out.println("-------------------------------------------------------------------");
+	}
+	
 	private static void displaySubmitJobScreen() {
 		System.out.println("Job Form");
-		System.out.println("Enter job tite:");
+		System.out.println("Enter job title:");
 		String title = scan.nextLine();
 		
 		System.out.println("Enter job day: ");  
