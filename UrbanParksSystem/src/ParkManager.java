@@ -39,10 +39,6 @@ public class ParkManager extends AbstractUser {
 		myEmail = theEmail;
 	}
 	
-	public void submitJob(Job theJob, List<Integer> theSessionJobs, int theMaxNumberJobs) {
-		addJob(theJob, theSessionJobs, theMaxNumberJobs);
-	}
-	
 	
 
 }
