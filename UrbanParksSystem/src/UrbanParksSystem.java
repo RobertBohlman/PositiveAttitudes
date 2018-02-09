@@ -264,7 +264,9 @@ public class UrbanParksSystem {
 	}
 
 	public void addJob(Job theJob) {
-		jobList.put(generateID(), theJob);
+		if (notTooManyJobs()) {
+			jobList.put(generateID(), theJob);
+		}
 	}
 	
 	public boolean notTooManyJobs() {
