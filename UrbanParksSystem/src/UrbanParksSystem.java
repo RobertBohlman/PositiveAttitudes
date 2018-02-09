@@ -224,7 +224,7 @@ public class UrbanParksSystem {
 	}
 	
 	public static void displayVolunteerJobs() {
-		System.out.println("Your Jobs");
+		System.out.println("Your Current Jobs");
 		System.out.println("-------------------------------------------------------------------");
 		int i = 1;
 		for (Integer id : userMap.get(userHash).getJobs()) {
