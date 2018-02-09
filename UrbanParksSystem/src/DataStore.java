@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /*
  * Class for storing persistent data
@@ -15,17 +16,18 @@ public class DataStore implements Serializable{
 
 	/**Generated SUID**/
 	private static final long serialVersionUID = -7839681454166039293L;
-	public AbstractUser myUser;
+	private HashMap myUsers;
+	private HashMap myJobs;
 	
 	
 	/**
 	 * Constructor.
-	 * @param theUsername Username
-	 * @param thePermission Permission Rank (1-3)
-	 * @param theJobs List of jobs pertaining to user
+	 * @param theUsers HashMap of user data
+	 * @param theJobs HashMap of jobs
 	 */
-	public DataStore(final AbstractUser theUser) {
-		myUser = theUser;
+	public DataStore(HashMap theUsers, HashMap theJobs) {
+		myUsers = theUsers;
+		myJobs = theJobs;
 	}
 	
 	/**
@@ -33,12 +35,20 @@ public class DataStore implements Serializable{
 	 */
 	public void Store() {
 		try {
-			FileOutputStream fileOut = new
-					FileOutputStream("/tmp/" + myUser.getUserName() + ".ser");
-			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-			out.writeObject(myUser);
-			fileOut.close();
-			System.out.println("Serliazed data is saved to /tmp/" + myUser.getUserName() + ".ser");
+			//Users
+			FileOutputStream fileOutUser = new
+					FileOutputStream("/tmp/users.ser");
+			ObjectOutputStream outUser = new ObjectOutputStream(fileOutUser);
+			outUser.writeObject(myUsers);
+			fileOutUser.close();
+			System.out.println("Serliazed user map is saved to /tmp/users.ser");
+			//Jobs
+			FileOutputStream fileOutJob = new
+					FileOutputStream("/tmp/jobs.ser");
+			ObjectOutputStream outJob = new ObjectOutputStream(fileOutJob);
+			outJob.writeObject(myUsers);
+			fileOutJob.close();
+			System.out.println("Serliazed user map is saved to /tmp/users.ser");
 		}catch (IOException i) {
 			i.printStackTrace();
 		}
@@ -48,18 +58,37 @@ public class DataStore implements Serializable{
 	 * Loads data object
 	 * @param theUsername
 	 */
-	public void Load(final String theUsername) {
+	public HashMap LoadUsers() {
 		try {
-			FileInputStream fileIn = new FileInputStream("/tmp/" + theUsername + ".ser");
-			ObjectInputStream in = new ObjectInputStream(fileIn);
-			myUser = (AbstractUser) in.readObject();
-			in.close();
-			fileIn.close();
-			System.out.println("Object has been deserialized");
+			//User
+			FileInputStream fileInUser = new FileInputStream("/tmp/users.ser");
+			ObjectInputStream inUser = new ObjectInputStream(fileInUser);
+			myUsers = (HashMap) inUser.readObject();
+			inUser.close();
+			fileInUser.close();
+			System.out.println("User map has been deserialized");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		return myUsers;
 	}
 	
+	public HashMap LoadJobs() {
+		try {
+
+			//Job
+			FileInputStream fileInJob = new FileInputStream("/tmp/users.ser");
+			ObjectInputStream inJob = new ObjectInputStream(fileInJob);
+			myUsers = (HashMap) inJob.readObject();
+			inJob.close();
+			fileInJob.close();
+			System.out.println("User map has been deserialized");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return myJobs;
+	}
 	
 }
