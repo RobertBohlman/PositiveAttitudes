@@ -269,7 +269,7 @@ public class UrbanParksSystem {
 		}
 	}
 	
-	public boolean notTooManyJobs() {
+	private boolean notTooManyJobs() {
 		return jobList.size() < MAX_NUM_JOBS;
 	}
 	
@@ -278,7 +278,7 @@ public class UrbanParksSystem {
 		
 	}
 
-	public int generateID() {
+	private static int generateID() {
 		//implement
 		return 1;
 	}
