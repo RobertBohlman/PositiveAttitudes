@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -20,7 +21,7 @@ public class Volunteer extends AbstractUser {
 	private int myPhysicalLevel;
 	
 	/** */
-	Collection <Job> myJobs;
+	Collection <Integer> myJobs;
 	
 	
 	/**
@@ -37,7 +38,9 @@ public class Volunteer extends AbstractUser {
 		myAge = theAge;
 		myEmail = theEmail;
 		myPhysicalLevel = thePhysicalLevel;
+		myJobs = new ArrayList<Integer>();
 	}
+	
 	
 	/**
 	 * 

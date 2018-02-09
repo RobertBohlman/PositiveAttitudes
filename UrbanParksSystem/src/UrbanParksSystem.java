@@ -8,6 +8,7 @@ public class UrbanParksSystem {
 	private static Scanner scan;
 	private static Map<Integer, Job> jobList;
 	private static Map<Integer, AbstractUser> userMap;
+	private static int userHash;
 	private static DataStore myStorage;
 	
 	private static int consoleState = 0;
@@ -22,9 +23,6 @@ public class UrbanParksSystem {
 	
 	public static void main(String[] args) {
 		jobList = new HashMap<Integer, Job>();
-		jobList.put(generateID(), new Job("Weeding", 2, 1, 2018, "Light", 3, "Park#4", "Pull weeds"));
-		jobList.put(generateID(), new Job());
-		jobList.put(generateID(), new Job("Planting Trees", 6, 1, 2018, "Medium", 3, "Park#2", "Plant Tress"));
 		scan = new Scanner(System.in);
 		
 		
@@ -113,7 +111,7 @@ public class UrbanParksSystem {
 		System.out.println("Welcome to Urban Parks, Volunteer!\n"
 				+ "Actions: \n"
 				+ "1. See available jobs\n"
-				+ "2. See your calendar\n"
+				+ "2. View your jobs\n"
 				+ "3. Edit personal info\n"
 				+ "4. Logout");
 		System.out.print("Choose an action(Enter a number): ");
@@ -131,7 +129,7 @@ public class UrbanParksSystem {
 				break; //Not yet implemented
 				
 			case '4':
-				consoleState = END;
+				consoleState = USER_LOG_IN;
 				System.out.println("Goodbye!");
 				break;
 			
@@ -174,7 +172,9 @@ public class UrbanParksSystem {
 		
 		switch (selection.charAt(0)) {
 		case '1':
-			System.out.println("You have signed up"); //Not yet implemented
+			AbstractUser user = userMap.get(userHash);
+			user.getJobs().add(j.myTitle.hashCode());
+			System.out.println("You have signed up"); 
 			consoleState = VOLUNTEER_MAIN_MENU;
 			break;
 			
@@ -214,7 +214,7 @@ public class UrbanParksSystem {
 				break; //Not yet implemented
 				
 			case '4':
-				consoleState = END;
+				consoleState = USER_LOG_IN;
 				System.out.println("Goodbye!");
 				break;
 			
@@ -228,11 +228,14 @@ public class UrbanParksSystem {
 		System.out.println("Enter job tite:");
 		String title = scan.nextLine();
 		
-		System.out.println("Enter job date: (m/d/yyyy)");   //I still have to clean up how this is collected,
-		String date = scan.nextLine();
-		int month = Integer.parseInt(date.substring(0, 1));
-		int day = Integer.parseInt(date.substring(2, 3));
-		int year = Integer.parseInt(date.substring(4, 8));
+		System.out.println("Enter job day: ");  
+		int day = Integer.parseInt(scan.nextLine());
+		
+		System.out.println("Enter job month: ");   
+		int month = Integer.parseInt(scan.nextLine());
+		
+		System.out.println("Enter job year: ");   
+		int year = Integer.parseInt(scan.nextLine());
 		
 		System.out.println("Enter the job requirements: ");
 		String req = scan.nextLine();
@@ -254,7 +257,7 @@ public class UrbanParksSystem {
 		String selection = scan.nextLine();
 		
 		if (selection.charAt(0) == '1') {
-			jobList.put(generateID(), new Job(title, day, month, year, req, 0, location, desc));
+			addJob(new Job(title, day, month, year, req, 0, location, desc));
 			System.out.println("Thank you for submitting a job at Urban Parks!");
 			consoleState = PARK_MANAGER_MAIN_MENU;
 			
@@ -263,13 +266,13 @@ public class UrbanParksSystem {
 		}
 	}
 
-	public void addJob(Job theJob) {
+	private static void addJob(Job theJob) {
 		if (notTooManyJobs()) {
-			jobList.put(generateID(), theJob);
+			jobList.put(theJob.myTitle.hashCode(), theJob);
 		}
 	}
 	
-	public boolean notTooManyJobs() {
+	private static boolean notTooManyJobs() {
 		return jobList.size() < MAX_NUM_JOBS;
 	}
 	
@@ -278,8 +281,4 @@ public class UrbanParksSystem {
 		
 	}
 
-	public int generateID() {
-		//implement
-		return 1;
-	}
 }
