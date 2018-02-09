@@ -53,6 +53,5 @@ public abstract class AbstractUser {
 		return myJobs;
 	}
 	
-
 	
 }

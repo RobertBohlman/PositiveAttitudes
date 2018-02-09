@@ -6,6 +6,7 @@ import java.util.Date;
  *
  */
 public class Job {
+	public int myID;
 	public String myTitle;
 	public int myDay;
 	public int myMonth;

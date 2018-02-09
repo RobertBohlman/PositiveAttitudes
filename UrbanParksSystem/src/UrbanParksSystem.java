@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class UrbanParksSystem {
 	private static Scanner scan;
-	private static List<Job> jobList;
+	private static Map<Integer, Job> jobList;
 	private static Map<Integer, AbstractUser> userMap;
 	private static DataStore myStorage;
 	
@@ -21,10 +21,10 @@ public class UrbanParksSystem {
 	private static final int END = 99;
 	
 	public static void main(String[] args) {
-		jobList = new ArrayList<Job>();
-		jobList.add(new Job("Weeding", 2, 1, 2018, "Light", 3, "Park#4", "Pull weeds"));
-		jobList.add(new Job());
-		jobList.add(new Job("Planting Trees", 6, 1, 2018, "Medium", 3, "Park#2", "Plant Tress"));
+		jobList = new HashMap<Integer, Job>();
+		jobList.put(generateID(), new Job("Weeding", 2, 1, 2018, "Light", 3, "Park#4", "Pull weeds"));
+		jobList.put(generateID(), new Job());
+		jobList.put(generateID(), new Job("Planting Trees", 6, 1, 2018, "Medium", 3, "Park#2", "Plant Tress"));
 		scan = new Scanner(System.in);
 		
 		
@@ -144,9 +144,9 @@ public class UrbanParksSystem {
 		int i = 1;
 		System.out.println("Title:\n Date:\n Requirements:\n Location:");
 		System.out.println("-------------------------------------------------------------------");
-		for (Job j:jobList) {
-			System.out.println(i + ". " + j.myTitle + "\n" + j.myMonth + "/" + j.myDay + "/" + j.myYear 
-					+ "\n" + j.myRequirements + "\n" + j.myLocation);
+		for (Integer j: jobList.keySet()) {
+			System.out.println(i + ". " + jobList.get(j).myTitle + "\n" + jobList.get(j).myMonth + "/" + jobList.get(j).myDay + "/" + jobList.get(j).myYear 
+					+ "\n" + jobList.get(j).myRequirements + "\n" + jobList.get(j).myLocation);
 			System.out.println("-------------------------------------------------------------------");
 			i++;
 		}
@@ -254,7 +254,7 @@ public class UrbanParksSystem {
 		String selection = scan.nextLine();
 		
 		if (selection.charAt(0) == '1') {
-			jobList.add(new Job(title, day, month, year, req, 0, location, desc));
+			jobList.put(generateID(), new Job(title, day, month, year, req, 0, location, desc));
 			System.out.println("Thank you for submitting a job at Urban Parks!");
 			consoleState = PARK_MANAGER_MAIN_MENU;
 			
@@ -265,7 +265,7 @@ public class UrbanParksSystem {
 
 	public void addJob(Job theJob) {
 		if (notTooManyJobs()) {
-			jobList.add(theJob);
+			jobList.put(generateID(), theJob);
 		}
 	}
 	
@@ -273,5 +273,13 @@ public class UrbanParksSystem {
 		return jobList.size() < MAX_NUM_JOBS;
 	}
 	
-	
+	public Job getJob(int theID) {
+		return jobList.get(theID);
+		
+	}
+
+	public int generateID() {
+		//implement
+		return 1;
+	}
 }
