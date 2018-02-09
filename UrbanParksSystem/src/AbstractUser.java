@@ -16,7 +16,7 @@ public abstract class AbstractUser {
 	private int myPermissionLevel;
 	
 	/** */
-	private List<Job> myJobs;
+	private List<Integer> myJobs;
 	
 	/**
 	 * 
@@ -26,7 +26,7 @@ public abstract class AbstractUser {
 	public AbstractUser(String theUserName, int thePermissionLevel) {
 		myUserName = theUserName;
 		myPermissionLevel = thePermissionLevel;
-		myJobs = new ArrayList<Job>();
+		myJobs = new ArrayList<Integer>();
 	}
 	
 	/**
@@ -49,18 +49,10 @@ public abstract class AbstractUser {
 	 * 
 	 * @return
 	 */
-	public List<Job> getJobs() {
+	public List<Integer> getJobs() {
 		return myJobs;
 	}
 	
-	public void addJob(Job theJob, List<Job> theSessionJobs, int theMaxNumberJobs) {
-		if (notTooManyJobs(theJob, theSessionJobs, theMaxNumberJobs)) {
-			theSessionJobs.add(theJob);
-			myJobs.add(theJob);
-		}
-	}
+
 	
-	public boolean notTooManyJobs(Job theJob, List<Job> theSessionJobs, int theMaxNumberJobs) {
-		return theSessionJobs.size() < theMaxNumberJobs;
-	}
 }
