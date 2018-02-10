@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /*
  * Class for storing persistent data
@@ -22,12 +23,12 @@ public class DataStore implements Serializable{
 	
 	/**
 	 * Constructor.
-	 * @param theUsers HashMap of user data
-	 * @param theJobs HashMap of jobs
+	 * @param userMap HashMap of user data
+	 * @param jobList HashMap of jobs
 	 */
-	public DataStore(HashMap theUsers, HashMap theJobs) {
-		myUsers = theUsers;
-		myJobs = theJobs;
+	public DataStore(Map<Integer, AbstractUser> userMap, Map<Integer, Job> jobList) {
+		myUsers = (HashMap) userMap;
+		myJobs = (HashMap) jobList;
 	}
 	
 	/**
@@ -37,18 +38,17 @@ public class DataStore implements Serializable{
 		try {
 			//Users
 			FileOutputStream fileOutUser = new
-					FileOutputStream("/tmp/users.ser");
+					FileOutputStream("./users.ser");
 			ObjectOutputStream outUser = new ObjectOutputStream(fileOutUser);
 			outUser.writeObject(myUsers);
 			fileOutUser.close();
-			System.out.println("Serliazed user map is saved to /tmp/users.ser");
+			
 			//Jobs
 			FileOutputStream fileOutJob = new
-					FileOutputStream("/tmp/jobs.ser");
+					FileOutputStream("./jobs.ser");
 			ObjectOutputStream outJob = new ObjectOutputStream(fileOutJob);
 			outJob.writeObject(myUsers);
 			fileOutJob.close();
-			System.out.println("Serliazed user map is saved to /tmp/users.ser");
 		}catch (IOException i) {
 			i.printStackTrace();
 		}
@@ -61,12 +61,11 @@ public class DataStore implements Serializable{
 	public HashMap LoadUsers() {
 		try {
 			//User
-			FileInputStream fileInUser = new FileInputStream("/tmp/users.ser");
+			FileInputStream fileInUser = new FileInputStream("./users.ser");
 			ObjectInputStream inUser = new ObjectInputStream(fileInUser);
 			myUsers = (HashMap) inUser.readObject();
 			inUser.close();
 			fileInUser.close();
-			System.out.println("User map has been deserialized");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -78,12 +77,11 @@ public class DataStore implements Serializable{
 		try {
 
 			//Job
-			FileInputStream fileInJob = new FileInputStream("/tmp/users.ser");
+			FileInputStream fileInJob = new FileInputStream("./users.ser");
 			ObjectInputStream inJob = new ObjectInputStream(fileInJob);
 			myUsers = (HashMap) inJob.readObject();
 			inJob.close();
 			fileInJob.close();
-			System.out.println("User map has been deserialized");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -91,4 +89,11 @@ public class DataStore implements Serializable{
 		return myJobs;
 	}
 	
+	public HashMap getJobs() {
+		return myJobs;
+	}
+	
+	public HashMap getUsers() {
+		return myUsers;
+	}
 }

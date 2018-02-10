@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import java.util.List;
  * 
  * @author Jenna Hand, Kristi Anna Stageberg, Robert Bohlman, Jacob Reed, Aaron Hammers
  */
-public abstract class AbstractUser {
+public abstract class AbstractUser implements Serializable{
 	
 	/** */
 	private String myUserName;
