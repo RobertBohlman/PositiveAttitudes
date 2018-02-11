@@ -172,7 +172,7 @@ public class UrbanParksSystem {
 		System.out.println("Select a job number to view information");
 		String selection = scan.nextLine();
 		int selectNumber = Integer.parseInt(selection);
-		displayJobDetails(jobList.get(selectNumber - 1));
+		displayJobDetails((Job) jobList.values().toArray()[selectNumber - 1]);
 	}
 	
 	private static void displayJobDetails(Job j) {
@@ -256,7 +256,7 @@ public class UrbanParksSystem {
 		System.out.println("Select a job number to view information");
 		String selection = scan.nextLine();
 		int selectNumber = Integer.parseInt(selection);
-		displayJobDetails(jobList.get(selectNumber - 1));
+		displayJobDetails((Job) jobList.values().toArray()[selectNumber - 1]);
 	}
 	
 	private static void displaySubmitJobScreen() {
