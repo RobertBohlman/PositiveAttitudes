@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class UrbanParksSystem {
@@ -31,22 +32,34 @@ public class UrbanParksSystem {
 		//them set up accounts for themselves.
 		//0 = Employee :: 1 = ParkManager :: 2 = Volunteer
 		userMap = new HashMap<Integer, AbstractUser>();
+		myStorage = new DataStore();
+		myStorage.LoadJobs();
+		myStorage.LoadUsers();
 		
-		String user1 = "Carol";
-		int user1num = user1.hashCode();
-		userMap.put(user1num, new Employee("Carol", 0));
+		if(!myStorage.isUserMapNull()) {
+			userMap = myStorage.getUsers();
+		} else {
+
+			String user1 = "Carol";
+			int user1num = user1.hashCode();
+			userMap.put(user1num, new Employee("Carol", 0));
+				
+			String user2 = "Frank";
+			int user2num = user2.hashCode();
+			userMap.put(user2num, new ParkManager("Frank", 1, "why@gmail.com"));
+				
+				
+			String user3 = "Billy";
+			int user3num = user3.hashCode();
+			userMap.put(user3num, new Volunteer("Billy", 2, 34, "umm@gmail.com", 3));
+			myStorage.setUsers(userMap);
+		}
 		
-		String user2 = "Frank";
-		int user2num = user2.hashCode();
-		userMap.put(user2num, new ParkManager("Frank", 1, "why@gmail.com"));
-		
-		String user3 = "Billy";
-		int user3num = user3.hashCode();
-		userMap.put(user3num, new Volunteer("Billy", 2, 34, "umm@gmail.com", 3));
-		
-		
-		
-		
+		if(!myStorage.isJobListNull()) {
+			jobList = myStorage.getJobs();
+		}
+	
+
 		while (consoleState != END) {
 			
 			switch (consoleState) {
@@ -131,6 +144,8 @@ public class UrbanParksSystem {
 			case '4':
 				consoleState = USER_LOG_IN;
 				System.out.println("Goodbye!");
+				myStorage.setJobs(jobList);
+				myStorage.Store(); //Serialize userMap and jobList
 				break;
 			
 			default:
@@ -216,6 +231,8 @@ public class UrbanParksSystem {
 			case '4':
 				consoleState = USER_LOG_IN;
 				System.out.println("Goodbye!");
+				myStorage.setJobs(jobList);
+				myStorage.Store(); //Serialize userMap and jobList
 				break;
 			
 			default:
@@ -274,6 +291,7 @@ public class UrbanParksSystem {
 		
 		if (selection.charAt(0) == '1') {
 			addJob(new Job(title, day, month, year, req, 0, location, desc));
+			myStorage.setJobs(jobList);
 			System.out.println("Thank you for submitting a job at Urban Parks!");
 			consoleState = PARK_MANAGER_MAIN_MENU;
 			

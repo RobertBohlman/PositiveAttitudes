@@ -15,20 +15,27 @@ import java.util.Map;
  */
 public class DataStore implements Serializable{
 
-	/**Generated SUID**/
-	private static final long serialVersionUID = -7839681454166039293L;
-	private HashMap myUsers;
-	private HashMap myJobs;
-	
-	
+
 	/**
-	 * Constructor.
-	 * @param userMap HashMap of user data
-	 * @param jobList HashMap of jobs
+	 * 
 	 */
-	public DataStore(Map<Integer, AbstractUser> userMap, Map<Integer, Job> jobList) {
-		myUsers = (HashMap) userMap;
-		myJobs = (HashMap) jobList;
+	private static final long serialVersionUID = 6789836420905113195L;
+	private HashMap<Integer, AbstractUser> myUsers;
+	private HashMap<Integer, Job> myJobs;
+	
+	
+	public DataStore() {
+		myUsers = null;
+		myJobs = null;
+	}
+	
+	
+	public void setUsers(Map<Integer, AbstractUser> userMap) {
+		myUsers = (HashMap<Integer, AbstractUser>) userMap;
+	}
+	
+	public void setJobs(Map<Integer, Job> jobList) {
+		myJobs = (HashMap<Integer, Job>) jobList;
 	}
 	
 	/**
@@ -47,7 +54,7 @@ public class DataStore implements Serializable{
 			FileOutputStream fileOutJob = new
 					FileOutputStream("./jobs.ser");
 			ObjectOutputStream outJob = new ObjectOutputStream(fileOutJob);
-			outJob.writeObject(myUsers);
+			outJob.writeObject(myJobs);
 			fileOutJob.close();
 		}catch (IOException i) {
 			i.printStackTrace();
@@ -58,7 +65,7 @@ public class DataStore implements Serializable{
 	 * Loads data object
 	 * @param theUsername
 	 */
-	public HashMap LoadUsers() {
+	public void LoadUsers() {
 		try {
 			//User
 			FileInputStream fileInUser = new FileInputStream("./users.ser");
@@ -69,11 +76,9 @@ public class DataStore implements Serializable{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		return myUsers;
 	}
 	
-	public HashMap LoadJobs() {
+	public void LoadJobs() {
 		try {
 
 			//Job
@@ -85,15 +90,29 @@ public class DataStore implements Serializable{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+	}
+	
+	public HashMap<Integer, Job> getJobs() {
 		return myJobs;
 	}
 	
-	public HashMap getJobs() {
-		return myJobs;
-	}
-	
-	public HashMap getUsers() {
+	public HashMap<Integer, AbstractUser>  getUsers() {
 		return myUsers;
+	}
+	
+	public boolean isUserMapNull() {
+		if(myUsers == null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean isJobListNull() {
+		if(myJobs == null) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

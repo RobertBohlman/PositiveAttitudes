@@ -10,6 +10,14 @@ import java.util.List;
  */
 public abstract class AbstractUser implements Serializable{
 	
+
+
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8519694891914710230L;
+
 	/** */
 	private String myUserName;
 	

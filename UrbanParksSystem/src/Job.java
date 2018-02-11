@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -5,7 +6,11 @@ import java.util.Date;
  * @author Jacob
  *
  */
-public class Job {
+public class Job implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2453550104876763925L;
 	public int myID;
 	public String myTitle;
 	public int myDay;
