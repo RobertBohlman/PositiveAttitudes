@@ -38,12 +38,20 @@ public abstract class AbstractUser implements Serializable{
 		return myUserName;
 	}
 	
+	public void setUserName(String theUserName) {
+		myUserName = theUserName;
+	}
+	
 	/**
 	 * 
 	 * @return
 	 */
 	public int getPermissionLevel() {
 		return myPermissionLevel;
+	}
+	
+	public void setPermissionLevel(int thePermissionLevel) {
+		myPermissionLevel = thePermissionLevel;
 	}
 	
 	/**
@@ -54,5 +62,12 @@ public abstract class AbstractUser implements Serializable{
 		return myJobs;
 	}
 	
+	public void addJob(Integer theJobID) {
+		myJobs.add(theJobID);
+	}
+	
+	public void removeJob(Integer theJobID) {
+		myJobs.remove(theJobID);
+	}
 	
 }

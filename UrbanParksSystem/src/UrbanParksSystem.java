@@ -25,6 +25,8 @@ public class UrbanParksSystem {
 		jobList = new HashMap<Integer, Job>();
 		scan = new Scanner(System.in);
 		
+		
+		
 		//Added this for hard-coding users until we have to implement letting 
 		//them set up accounts for themselves.
 		//0 = Employee :: 1 = ParkManager :: 2 = Volunteer
@@ -41,10 +43,6 @@ public class UrbanParksSystem {
 		String user3 = "Billy";
 		int user3num = user3.hashCode();
 		userMap.put(user3num, new Volunteer("Billy", 2, 34, "umm@gmail.com", 3));
-		myStorage = new DataStore(userMap, jobList);
-		
-		myStorage.Store();
-		userMap = myStorage.getUsers();
 		
 		
 		
@@ -133,7 +131,6 @@ public class UrbanParksSystem {
 			case '4':
 				consoleState = USER_LOG_IN;
 				System.out.println("Goodbye!");
-				myStorage.Store();
 				break;
 			
 			default:
@@ -219,7 +216,6 @@ public class UrbanParksSystem {
 			case '4':
 				consoleState = USER_LOG_IN;
 				System.out.println("Goodbye!");
-				myStorage.Store();
 				break;
 			
 			default:
@@ -237,6 +233,10 @@ public class UrbanParksSystem {
 			i++;
 		}
 		System.out.println("-------------------------------------------------------------------");
+		System.out.println("Select a job number to view information");
+		String selection = scan.nextLine();
+		int selectNumber = Integer.parseInt(selection);
+		displayJobDetails(jobList.get(selectNumber - 1));
 	}
 	
 	private static void displaySubmitJobScreen() {

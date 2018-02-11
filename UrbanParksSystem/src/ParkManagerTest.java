@@ -51,7 +51,7 @@ class ParkManagerTest {
 		for (int i = 0; i < 20; i++) {
 			fewerThanMaxJobs.add(new Job());
 		}
-		user.submitJob(submittableJob, maxJobs, MAX_NUM_JOBS);
+		UrbanParksSystem.addJob(submittableJob, maxJobs, MAX_NUM_JOBS);
 		assertTrue(user.getJobs().contains(submittableJob));
 	}
 
