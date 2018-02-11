@@ -70,7 +70,7 @@ public class DataStore implements Serializable{
 			//User
 			FileInputStream fileInUser = new FileInputStream("./users.ser");
 			ObjectInputStream inUser = new ObjectInputStream(fileInUser);
-			myUsers = (HashMap) inUser.readObject();
+			myUsers = (HashMap<Integer, AbstractUser>) inUser.readObject();
 			inUser.close();
 			fileInUser.close();
 		} catch (Exception e) {
@@ -84,7 +84,7 @@ public class DataStore implements Serializable{
 			//Job
 			FileInputStream fileInJob = new FileInputStream("./users.ser");
 			ObjectInputStream inJob = new ObjectInputStream(fileInJob);
-			myUsers = (HashMap) inJob.readObject();
+			myUsers = (HashMap<Integer, AbstractUser>) inJob.readObject();
 			inJob.close();
 			fileInJob.close();
 		} catch (Exception e) {
