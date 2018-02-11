@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,6 +64,7 @@ public class DataStore implements Serializable{
 	 * Loads data object
 	 * @param theUsername
 	 */
+	@SuppressWarnings("unchecked")
 	public void LoadUsers() {
 		try {
 			//User
@@ -78,6 +78,7 @@ public class DataStore implements Serializable{
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void LoadJobs(Map<Integer, Job> jobList) {
 		try {
 
