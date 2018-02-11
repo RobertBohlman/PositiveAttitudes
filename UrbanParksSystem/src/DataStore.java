@@ -74,7 +74,7 @@ public class DataStore implements Serializable{
 			inUser.close();
 			fileInUser.close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			//do nothing
 		}
 	}
 	
@@ -84,11 +84,11 @@ public class DataStore implements Serializable{
 			//Job
 			FileInputStream fileInJob = new FileInputStream("./users.ser");
 			ObjectInputStream inJob = new ObjectInputStream(fileInJob);
-			myUsers = (HashMap<Integer, AbstractUser>) inJob.readObject();
+			myJobs = (HashMap<Integer, Job>) inJob.readObject();
 			inJob.close();
 			fileInJob.close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			//do nothing
 		}
 	}
 	

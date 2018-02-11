@@ -33,8 +33,8 @@ public class UrbanParksSystem {
 		//0 = Employee :: 1 = ParkManager :: 2 = Volunteer
 		userMap = new HashMap<Integer, AbstractUser>();
 		myStorage = new DataStore();
-		myStorage.LoadJobs();
 		myStorage.LoadUsers();
+		myStorage.LoadJobs();
 		
 		if(!myStorage.isUserMapNull()) {
 			userMap = myStorage.getUsers();
@@ -144,8 +144,6 @@ public class UrbanParksSystem {
 			case '4':
 				consoleState = USER_LOG_IN;
 				System.out.println("Goodbye!");
-				myStorage.setJobs(jobList);
-				myStorage.Store(); //Serialize userMap and jobList
 				break;
 			
 			default:
@@ -231,8 +229,6 @@ public class UrbanParksSystem {
 			case '4':
 				consoleState = USER_LOG_IN;
 				System.out.println("Goodbye!");
-				myStorage.setJobs(jobList);
-				myStorage.Store(); //Serialize userMap and jobList
 				break;
 			
 			default:
@@ -303,6 +299,8 @@ public class UrbanParksSystem {
 	private static void addJob(Job theJob) {
 		if (notTooManyJobs()) {
 			jobList.put(theJob.myTitle.hashCode(), theJob);
+			myStorage.setJobs(jobList);
+			myStorage.Store();
 		}
 	}
 	
