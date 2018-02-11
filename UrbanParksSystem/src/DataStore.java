@@ -82,7 +82,7 @@ public class DataStore implements Serializable{
 		try {
 
 			//Job
-			FileInputStream fileInJob = new FileInputStream("./users.ser");
+			FileInputStream fileInJob = new FileInputStream("./jobs.ser");
 			ObjectInputStream inJob = new ObjectInputStream(fileInJob);
 			myJobs = (HashMap<Integer, Job>) inJob.readObject();
 			inJob.close();
