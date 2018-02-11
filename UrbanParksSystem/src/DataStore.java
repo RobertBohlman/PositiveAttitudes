@@ -74,7 +74,7 @@ public class DataStore implements Serializable{
 			inUser.close();
 			fileInUser.close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			//do nothing
 		}
 	}
 	
@@ -91,7 +91,7 @@ public class DataStore implements Serializable{
 				jobList.put(i, myJobs.get(i));
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			//do nothing
 		}
 	}
 	

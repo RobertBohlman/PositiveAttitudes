@@ -35,7 +35,7 @@ public class UrbanParksSystem {
 		myStorage = new DataStore();
 		myStorage.LoadJobs(jobList);
 		myStorage.LoadUsers();
-		
+
 		if(!myStorage.isUserMapNull()) {
 			userMap = myStorage.getUsers();
 		} else {
@@ -150,7 +150,6 @@ public class UrbanParksSystem {
 			case '4':
 				consoleState = USER_LOG_IN;
 				System.out.println("Goodbye!");
-				myStorage.setJobs(jobList);
 				
 				break;
 			
@@ -237,8 +236,6 @@ public class UrbanParksSystem {
 			case '4':
 				consoleState = USER_LOG_IN;
 				System.out.println("Goodbye!");
-				myStorage.setJobs(jobList);
-				
 				break;
 			
 			default:
@@ -309,6 +306,8 @@ public class UrbanParksSystem {
 	private static void addJob(Job theJob) {
 		if (notTooManyJobs()) {
 			jobList.put(theJob.myTitle.hashCode(), theJob);
+			myStorage.setJobs(jobList);
+			myStorage.Store();
 		}
 	}
 	
