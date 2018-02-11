@@ -33,7 +33,7 @@ public class UrbanParksSystem {
 		//0 = Employee :: 1 = ParkManager :: 2 = Volunteer
 		userMap = new HashMap<Integer, AbstractUser>();
 		myStorage = new DataStore();
-		myStorage.LoadJobs();
+		myStorage.LoadJobs(jobList);
 		myStorage.LoadUsers();
 		
 		if(!myStorage.isUserMapNull()) {
@@ -52,11 +52,14 @@ public class UrbanParksSystem {
 			String user3 = "Billy";
 			int user3num = user3.hashCode();
 			userMap.put(user3num, new Volunteer("Billy", 2, 34, "umm@gmail.com", 3));
+			
+			
 			myStorage.setUsers(userMap);
 		}
 		
 		if(!myStorage.isJobListNull()) {
 			jobList = myStorage.getJobs();
+			
 		}
 	
 
@@ -87,6 +90,8 @@ public class UrbanParksSystem {
 					break;
 			}
 		}
+		System.out.println("Shutting down");
+		myStorage.Store(); //Serialize userMap and jobList
 		
 		scan.close();
 	}
@@ -94,7 +99,7 @@ public class UrbanParksSystem {
 	
 	private static void displayUserLogIn() {
 		System.out.println("Hello! Welcome to Urban Parks.\n"
-				+ "Login with your Username: ");
+				+ "Login with your Username: (Deveopment note: Sign in as Carol to shut down)");
 		String selection = scan.nextLine();
 		
 		int userHash = selection.hashCode();
@@ -104,7 +109,7 @@ public class UrbanParksSystem {
 		
 		switch (selectionPermission) {
 			case 0:
-				//Not yet implemented - reserved for employees
+				consoleState = END;//Not yet implemented - reserved for employees
 				break;
 				
 			case 1:
@@ -116,6 +121,7 @@ public class UrbanParksSystem {
 				break;
 				
 			default:
+				consoleState = END;
 				break;
 		}
 	}
@@ -145,7 +151,7 @@ public class UrbanParksSystem {
 				consoleState = USER_LOG_IN;
 				System.out.println("Goodbye!");
 				myStorage.setJobs(jobList);
-				myStorage.Store(); //Serialize userMap and jobList
+				
 				break;
 			
 			default:
@@ -232,7 +238,7 @@ public class UrbanParksSystem {
 				consoleState = USER_LOG_IN;
 				System.out.println("Goodbye!");
 				myStorage.setJobs(jobList);
-				myStorage.Store(); //Serialize userMap and jobList
+				
 				break;
 			
 			default:

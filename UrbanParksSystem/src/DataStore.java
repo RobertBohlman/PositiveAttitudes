@@ -78,15 +78,18 @@ public class DataStore implements Serializable{
 		}
 	}
 	
-	public void LoadJobs() {
+	public void LoadJobs(Map<Integer, Job> jobList) {
 		try {
 
 			//Job
-			FileInputStream fileInJob = new FileInputStream("./users.ser");
+			FileInputStream fileInJob = new FileInputStream("./jobs.ser");
 			ObjectInputStream inJob = new ObjectInputStream(fileInJob);
-			myUsers = (HashMap<Integer, AbstractUser>) inJob.readObject();
+			myJobs = (HashMap<Integer, Job>) inJob.readObject();
 			inJob.close();
 			fileInJob.close();
+			for (int i:myJobs.keySet()) {
+				jobList.put(i, myJobs.get(i));
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
