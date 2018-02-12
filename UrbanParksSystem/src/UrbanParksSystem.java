@@ -17,6 +17,7 @@ public class UrbanParksSystem {
 	private static final int VOLUNTEER_JOB_SCREEN = 2;
 	private static final int PARK_MANAGER_MAIN_MENU = 3;
 	private static final int PARK_MANAGER_JOB_SUBMIT = 4;
+	private static final int VOLUNTEER_SIGNED_UP_JOBS = 5;
 	private static final int END = 99;
 	
 	public static void main(String[] args) {
@@ -83,6 +84,10 @@ public class UrbanParksSystem {
 					displaySubmitJobScreen();
 					break;
 					
+				case VOLUNTEER_SIGNED_UP_JOBS:
+					displayVolunteerJobs();
+					break;
+					
 				default:
 					break;
 			}
@@ -99,7 +104,7 @@ public class UrbanParksSystem {
 				+ "Login with your Username: (Deveopment note: Sign in as Carol to shut down)");
 		String selection = scan.nextLine();
 		
-		int userHash = selection.hashCode();
+		userHash = selection.hashCode();
 		
 		
 		int selectionPermission = userMap.get(userHash).getPermissionLevel();
@@ -121,6 +126,7 @@ public class UrbanParksSystem {
 				consoleState = END;
 				break;
 		}
+		
 	}
 	
 	private static void displayVolunteerMainMenu() {
@@ -139,7 +145,8 @@ public class UrbanParksSystem {
 				break;
 				
 			case '2':
-				break; //Not yet implemented
+				consoleState = VOLUNTEER_SIGNED_UP_JOBS;
+				break; 
 			
 			case '3':
 				break; //Not yet implemented
@@ -169,7 +176,7 @@ public class UrbanParksSystem {
 		System.out.println("Select a job number to view information");
 		String selection = scan.nextLine();
 		int selectNumber = Integer.parseInt(selection);
-		displayJobDetails(jobList.get(selectNumber - 1));
+		displayJobDetails((Job) jobList.values().toArray()[selectNumber - 1]);
 	}
 	
 	private static void displayJobDetails(Job j) {
@@ -253,7 +260,7 @@ public class UrbanParksSystem {
 		System.out.println("Select a job number to view information");
 		String selection = scan.nextLine();
 		int selectNumber = Integer.parseInt(selection);
-		displayJobDetails(jobList.get(selectNumber - 1));
+		displayJobDetails((Job) jobList.values().toArray()[selectNumber - 1]);
 	}
 	
 	private static void displaySubmitJobScreen() {
