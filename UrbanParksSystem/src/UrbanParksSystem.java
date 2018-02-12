@@ -350,7 +350,7 @@ public class UrbanParksSystem {
 	}
 	
 	private static void displayParkManagerJobs() {
-		int i = 1; //infinite loop?
+		int i = 1;
 		System.out.println("-------------------------------------------------------------------");
 		for (Integer j: myJobMap.keySet()) {
 			System.out.println("Job #" + i + "\nTitle: " + myJobMap.get(j).myTitle + "\n" 
@@ -360,6 +360,45 @@ public class UrbanParksSystem {
 								+ "Location: " + myJobMap.get(j).myLocation);
 			System.out.println("-------------------------------------------------------------------");
 			i++;
+		}
+		
+		System.out.println("Select a job number to view information");
+		String selection = scan.nextLine();
+		int selectNumber = Integer.parseInt(selection);
+		displayParkManagerJobDetails((Job) myJobMap.values().toArray()[selectNumber - 1]);
+	}
+	
+	private static void displayParkManagerJobDetails(Job j) {
+		System.out.println("-------------------------------------------------------------------");
+		System.out.println("Job information: ");
+		System.out.println("Title: " + j.myTitle);
+		System.out.println("Date: " + j.myMonth + "/" + j.myDay + "/" + j.myYear);
+		System.out.println("Requirements: " + j.myRequirements + "," + j.myNoVolunteers + " volunteers");
+		System.out.println("Location: " + j.myLocation);
+		System.out.println("Description: " + j.myDescription);
+		System.out.println("-------------------------------------------------------------------");
+		
+		System.out.println("\nChoose an action: \n"
+				+ "1. Delete this job\n"
+				+ "2. Back to available jobs\n"
+				+ "3. Main menu");
+		String selection = scan.nextLine();
+		
+		switch (selection.charAt(0)) {
+		case '1':
+			//TODO DELETE JOB
+			break;
+			
+		case '2':
+			consoleState = PARK_MANAGER_JOB_VIEW;
+			break;
+		
+		case '3':
+			consoleState = PARK_MANAGER_MAIN_MENU;
+			break;
+		
+		default:
+			break;
 		}
 	}
 }
