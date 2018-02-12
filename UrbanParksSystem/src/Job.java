@@ -94,6 +94,20 @@ public class Job implements Serializable {
 		}
 		return(!myDateStart.before(min));
 	}
+	
+	public boolean hasDateConflicts(Volunteer volun) {
+		boolean conflict = false;
+		Job j;
+		
+		for (int i : volun.myJobs) {
+			j = UrbanParksSystem.myJobMap.get(i);
+			if (j.myDateStart.compareTo(this.myDateStart) == 0) {
+				conflict = true;
+				break;
+			}
+		}
+		return conflict;
+	}
 }
 
 

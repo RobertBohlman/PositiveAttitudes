@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class UrbanParksSystem {
 	private static Scanner scan;
-	private static Map<Integer, Job> myJobMap;
+	public static Map<Integer, Job> myJobMap;
 	private static Map<Integer, AbstractUser> myUserMap;
 	private static int userHash;
 	private static DataStore myStorage;
@@ -219,13 +219,13 @@ public class UrbanParksSystem {
 		switch (selection.charAt(0)) {
 		case '1':
 			AbstractUser user = myUserMap.get(userHash);
-			if (j.validStartDate()) {
+			if (j.validStartDate() && j.hasDateConflicts((Volunteer) myUserMap.get(userHash))) {
 				user.getJobs().add(j.myTitle.hashCode());
 				myStorage.setJobs(myJobMap);
 				myStorage.Store();
 				System.out.println("You have signed up"); 
 			} else {
-				System.out.println("It's too late to sign up for this job");
+				System.out.println("Sorry, you cannot sign up for this job");
 			}
 			consoleState = VOLUNTEER_MAIN_MENU;
 			break;
