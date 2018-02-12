@@ -106,37 +106,4 @@ public class Volunteer extends AbstractUser {
 		myPhysicalLevel = thePhysicalLevel;
 	}
 	
-	
-	
-	
-	/**
-	 * Checks if the job is the minimum days after the job
-	 * @param candidateJob
-	 * @param daysAfter
-	 * @return
-	 */
-	public boolean isMinDaysAfter(Job candidateJob, int daysAfter) {
-		boolean isMin = false;
-		boolean okDate = false;
-		
-		Calendar cal = Calendar.getInstance(); // starts with today's date and time
-		cal.add(Calendar.DAY_OF_YEAR, daysAfter);  // advances day by 2
-		Date date = cal.getTime(); // gets modified time
-		
-		
-		
-
-//		for(Job job : myJobs) {
-//			int compDate = job.date.compareTo(date);
-//			
-//			if(compDate == 1) {
-//				okDate = true;
-//			} else {
-//				okDate = false;
-//			}
-//			
-//			isMin = okDate || isMin;
-//		}
-		return isMin;	
-	}
 }
