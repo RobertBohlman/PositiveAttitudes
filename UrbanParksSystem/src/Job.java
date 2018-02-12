@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -36,12 +37,21 @@ public class Job implements Serializable {
 		myLocation = theLocation;
 		myDescription = theDescription;
 		myJobLength = theJobLength;
-		String dateFormat = ""
-		long startDateMilli = ;
-	    long endDateMilli = 0;
-		myDateStart = new Date(startDateMilli);
-		myDateEnd = new Date(endDateMilli);
-		//myDate = myYear, myMonth, myDay
+		
+		//Date
+		String dateFormat = "yyyy/MM/dd";
+		SimpleDateFormat startDate = new SimpleDateFormat(dateFormat);
+		try {
+			myDateStart = startDate.parse(theDate);
+		} catch (ParseException e) {
+			//DO Nothing
+		}
+		myDateEnd = myDateStart;
+		for(int i = theJobLength; i > 0; i--) {
+			myDateEnd.setTime(myDateEnd.getTime() + ONE_DAY_IN_MILI);
+		}
+		
+				
 	}
 	
 	/*
@@ -49,16 +59,36 @@ public class Job implements Serializable {
 	 */
 	public Job() {
 		myTitle = null;
-		myDateString = "0000.00.00";
+		myDateString = "0000/00/00";
 		myRequirements = null;
 		myNoVolunteers = 0;
 		myLocation = null;
 		myDescription = null;
 		
 	}
-	public boolean checkJobStartDay() {
-		//if number of days from now until job are >= 2 return true else false
-		return false;
+	
+	public boolean validDuration() {
+		return(!((myJobLength) > MAX_DURATION));
+	}
+	
+	public boolean withinTimeFrame() {
+		Boolean valid = false;
+		Date max = new Date(System.currentTimeMillis());
+		for(int i = 0; i< MAX_DATE; i++) {
+			max.setTime(max.getTime() + ONE_DAY_IN_MILI);
+		}
+		if(!myDateEnd.after(max)){
+			valid = true;
+		}
+		return valid;
+	}
+	
+	public boolean validStartDate() {
+		Date min = new Date(System.currentTimeMillis());
+		for(int i = 0; i < MIN_DAYS_TO_JOB; i++) {
+			min = new Date(min.getTime() + ONE_DAY_IN_MILI);
+		}
+		return(!myDateStart.before(min));
 	}
 }
 
