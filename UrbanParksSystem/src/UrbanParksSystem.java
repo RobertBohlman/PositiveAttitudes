@@ -346,9 +346,17 @@ public class UrbanParksSystem {
 		
 		if (selection.charAt(0) == '1') {
 			String date = year + "/" + month + "/" + day;
-			addJob(new Job(title, date, req, numVolunteers, location, desc, lengthOfJob));
-			myStorage.setJobs(myJobMap);
-			System.out.println("Thank you for submitting a job at Urban Parks!");
+			Job jobToSubmit = new Job(title, date, req, numVolunteers, location, desc, lengthOfJob);
+			if (jobToSubmit.validDuration() && jobToSubmit.withinTimeFrame()) {
+				myStorage.setJobs(myJobMap);
+				System.out.println("Thank you for submitting a job at Urban Parks!");
+			} else {
+				if (!jobToSubmit.validDuration()) {
+					System.out.println("Can't submit this job, invalid duration.");
+				} else {
+					System.out.println("Can't submit this job, not within valid time frame.");
+				}
+			}
 			consoleState = PARK_MANAGER_MAIN_MENU;
 			
 		} else if (selection.charAt(0) == '2') {
