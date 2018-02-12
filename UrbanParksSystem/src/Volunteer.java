@@ -106,6 +106,9 @@ public class Volunteer extends AbstractUser {
 		myPhysicalLevel = thePhysicalLevel;
 	}
 	
+	
+	
+	
 	/**
 	 * Checks if the job is the minimum days after the job
 	 * @param candidateJob
