@@ -36,7 +36,8 @@ public class Job implements Serializable {
 		myLocation = theLocation;
 		myDescription = theDescription;
 		myJobLength = theJobLength;
-		long startDateMilli = 0;
+		String dateFormat = ""
+		long startDateMilli = ;
 	    long endDateMilli = 0;
 		myDateStart = new Date(startDateMilli);
 		myDateEnd = new Date(endDateMilli);
