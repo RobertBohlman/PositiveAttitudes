@@ -350,7 +350,7 @@ public class UrbanParksSystem {
 	}
 	
 	private static void displayParkManagerJobs() {
-		int i = 1;
+		int i = 1; //infinite loop?
 		System.out.println("-------------------------------------------------------------------");
 		for (Integer j: myJobMap.keySet()) {
 			System.out.println("Job #" + i + "\nTitle: " + myJobMap.get(j).myTitle + "\n" 
