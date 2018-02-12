@@ -54,8 +54,6 @@ public class Job implements Serializable {
 		for(int i = theJobLength; i > 0; i--) {
 			myDateEnd.setTime(myDateEnd.getTime() + ONE_DAY_IN_MILI);
 		}
-		
-				
 	}
 	
 	/*

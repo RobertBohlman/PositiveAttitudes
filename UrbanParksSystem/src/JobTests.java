@@ -6,7 +6,6 @@ import java.util.Date;
 import org.junit.Test;
 
 public class JobTests {
-
 	Job job1 = new Job("Test Job", "0000/00/00", null, null, null, null, 2);
 	
 	@Test
