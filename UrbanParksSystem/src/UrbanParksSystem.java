@@ -107,30 +107,45 @@ public class UrbanParksSystem {
 	
 	private static void displayUserLogIn() {
 		System.out.println("Hello! Welcome to Urban Parks.\n"
-				+ "Login with your Username: (Deveopment note: Sign in as Carol to shut down)");
+				+ "Login with your Username: (Enter 9 to shut down)");
 		String selection = scan.nextLine();
 		
-		userHash = selection.hashCode();
-		
-		
-		int selectionPermission = myUserMap.get(userHash).getPermissionLevel();
-		
-		switch (selectionPermission) {
-			case 0:
-				consoleState = END;//Not yet implemented - reserved for employees
-				break;
-				
-			case 1:
-				consoleState = PARK_MANAGER_MAIN_MENU;
-				break;
+		if (selection.charAt(0) != '9') {
+			userHash = selection.hashCode();
 			
-			case 2:
-				consoleState = VOLUNTEER_MAIN_MENU;
-				break;
+			int selectionPermission;
+			
+			try {
+				selectionPermission = myUserMap.get(userHash).getPermissionLevel();
 				
-			default:
-				consoleState = END;
-				break;
+			} catch (NullPointerException e) {
+				System.out.println("Error, no such user exists!");
+				selectionPermission = 5;
+			}
+			
+			
+			switch (selectionPermission) {
+				case 0:
+					consoleState = END;//Not yet implemented - reserved for employees
+					break;
+					
+				case 1:
+					consoleState = PARK_MANAGER_MAIN_MENU;
+					break;
+				
+				case 2:
+					consoleState = VOLUNTEER_MAIN_MENU;
+					break;
+					
+				default:
+					consoleState = USER_LOG_IN;
+					break;
+			}
+			
+		}
+		
+		if (selection.charAt(0) == '9') {
+			consoleState = END;
 		}
 		
 	}
@@ -250,10 +265,13 @@ public class UrbanParksSystem {
 				break; //Not yet implemented
 				
 			case '4':
+				break;
+			
+			case '5':
 				consoleState = USER_LOG_IN;
 				System.out.println("Goodbye!");
 				break;
-			
+				
 			default:
 				break;
 		}
