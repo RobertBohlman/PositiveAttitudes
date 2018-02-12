@@ -107,7 +107,7 @@ public class Volunteer extends AbstractUser {
 	}
 	
 	/**
-	 * Used for unitTest for 1B
+	 * Checks if the job is the minimum days after the job
 	 * @param candidateJob
 	 * @param daysAfter
 	 * @return

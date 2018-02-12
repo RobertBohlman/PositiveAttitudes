@@ -239,7 +239,11 @@ public class UrbanParksSystem {
 		
 		switch (selection.charAt(0)) {
 			case '1':
-				consoleState = PARK_MANAGER_JOB_SUBMIT;
+				if(notTooManyJobs()) {
+					consoleState = PARK_MANAGER_JOB_SUBMIT;
+				} else {
+					System.out.println("Jobs are at maximum amount at the moment. Please try again later.");
+				}
 				break;
 				
 			case '2':
@@ -285,14 +289,18 @@ public class UrbanParksSystem {
 		System.out.println("Enter job title:");
 		String title = scan.nextLine();
 		
-		System.out.println("Enter job day: ");  
-		int day = Integer.parseInt(scan.nextLine());
+		System.out.println("Enter job day (dd): ");  
+		String day = scan.nextLine();
 		
-		System.out.println("Enter job month: ");   
-		int month = Integer.parseInt(scan.nextLine());
+		System.out.println("Enter job month (mm): ");   
+		String month = scan.nextLine();
 		
-		System.out.println("Enter job year: ");   
-		int year = Integer.parseInt(scan.nextLine());
+		System.out.println("Enter job year (yyyy): ");   
+		String year = scan.nextLine();
+		
+		System.out.println("Enter job length in days: ");
+		int lengthOfJob = scan.nextInt();
+		scan.nextLine();
 		
 		System.out.println("Enter the job requirements: ");
 		String req = scan.nextLine();
@@ -318,7 +326,8 @@ public class UrbanParksSystem {
 		String selection = scan.nextLine();
 		
 		if (selection.charAt(0) == '1') {
-			addJob(new Job(title, day, month, year, req, numVolunteers, location, desc));
+			String date = year + "." + month + "." + day;
+			addJob(new Job(title, date, req, numVolunteers, location, desc, lengthOfJob));
 			myStorage.setJobs(myJobMap);
 			System.out.println("Thank you for submitting a job at Urban Parks!");
 			consoleState = PARK_MANAGER_MAIN_MENU;
