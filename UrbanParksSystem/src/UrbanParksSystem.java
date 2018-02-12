@@ -187,8 +187,7 @@ public class UrbanParksSystem {
 		System.out.println("-------------------------------------------------------------------");
 		for (Integer j: myJobMap.keySet()) {
 			System.out.println("Job #" + i + "\nTitle: " + myJobMap.get(j).myTitle + "\n" 
-								+ "Date: " + myJobMap.get(j).myMonth + "/" + myJobMap.get(j).myDay
-								+ "/" + myJobMap.get(j).myYear 
+								+ "Date: " + myJobMap.get(j).myDateString
 								+ "\n" + "Requirements: " + myJobMap.get(j).myRequirements + "\n" 
 								+ "Location: " + myJobMap.get(j).myLocation);
 			System.out.println("-------------------------------------------------------------------");
@@ -205,7 +204,7 @@ public class UrbanParksSystem {
 		System.out.println("-------------------------------------------------------------------");
 		System.out.println("Job information: ");
 		System.out.println("Title: " + j.myTitle);
-		System.out.println("Date: " + j.myMonth + "/" + j.myDay + "/" + j.myYear);
+		System.out.println("Date: " + j.myDateString);
 		System.out.println("Requirements: " + j.myRequirements + "," + j.myNoVolunteers + " volunteers");
 		System.out.println("Location: " + j.myLocation);
 		System.out.println("Description: " + j.myDescription);
@@ -287,9 +286,7 @@ public class UrbanParksSystem {
 		int i = 1;
 		for (Integer id : myUserMap.get(userHash).getJobs()) {
 				System.out.println(i + ". " + myJobMap.get(id).myTitle + "\n" 
-									+ myJobMap.get(id).myMonth + "/" 
-									+ myJobMap.get(id).myDay + "/" 
-									+ myJobMap.get(id).myYear 
+									+ myJobMap.get(id).myDateString
 									+ "\n" + myJobMap.get(id).myRequirements 
 									+ "\n" + myJobMap.get(id).myLocation
 									+ "\n\n");
@@ -381,8 +378,7 @@ public class UrbanParksSystem {
 		System.out.println("-------------------------------------------------------------------");
 		for (Integer j: myJobMap.keySet()) {
 			System.out.println("Job #" + i + "\nTitle: " + myJobMap.get(j).myTitle + "\n" 
-								+ "Date: " + myJobMap.get(j).myMonth + "/" + myJobMap.get(j).myDay
-								+ "/" + myJobMap.get(j).myYear 
+								+ "Date: " + myJobMap.get(j).myDateString
 								+ "\n" + "Requirements: " + myJobMap.get(j).myRequirements + "\n" 
 								+ "Location: " + myJobMap.get(j).myLocation);
 			System.out.println("-------------------------------------------------------------------");
@@ -399,7 +395,7 @@ public class UrbanParksSystem {
 		System.out.println("-------------------------------------------------------------------");
 		System.out.println("Job information: ");
 		System.out.println("Title: " + j.myTitle);
-		System.out.println("Date: " + j.myMonth + "/" + j.myDay + "/" + j.myYear);
+		System.out.println("Date: " + j.myDateString);
 		System.out.println("Requirements: " + j.myRequirements + "," + j.myNoVolunteers + " volunteers");
 		System.out.println("Location: " + j.myLocation);
 		System.out.println("Description: " + j.myDescription);
