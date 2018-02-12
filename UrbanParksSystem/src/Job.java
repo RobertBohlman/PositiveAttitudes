@@ -46,7 +46,11 @@ public class Job implements Serializable {
 		} catch (ParseException e) {
 			//DO Nothing
 		}
-		myDateEnd = myDateStart;
+		try {
+			myDateEnd = startDate.parse(theDate);
+		} catch (ParseException e) {
+			//Do Nothing
+		}
 		for(int i = theJobLength; i > 0; i--) {
 			myDateEnd.setTime(myDateEnd.getTime() + ONE_DAY_IN_MILI);
 		}
@@ -86,7 +90,7 @@ public class Job implements Serializable {
 	public boolean validStartDate() {
 		Date min = new Date(System.currentTimeMillis());
 		for(int i = 0; i < MIN_DAYS_TO_JOB; i++) {
-			min = new Date(min.getTime() + ONE_DAY_IN_MILI);
+			min.setTime(min.getTime() + ONE_DAY_IN_MILI);
 		}
 		return(!myDateStart.before(min));
 	}
