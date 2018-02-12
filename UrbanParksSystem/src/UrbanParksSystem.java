@@ -348,6 +348,7 @@ public class UrbanParksSystem {
 			String date = year + "/" + month + "/" + day;
 			Job jobToSubmit = new Job(title, date, req, numVolunteers, location, desc, lengthOfJob);
 			if (jobToSubmit.validDuration() && jobToSubmit.withinTimeFrame()) {
+				myJobMap.put(jobToSubmit.myTitle.hashCode(), jobToSubmit);
 				myStorage.setJobs(myJobMap);
 				System.out.println("Thank you for submitting a job at Urban Parks!");
 			} else {
