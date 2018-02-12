@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -130,11 +131,9 @@ public class DataStore implements Serializable{
 	 * @return True if empty user map, false otherwise
 	 */
 	public boolean isUserMapNull() {
-		if(myUsers == null) {
-			return true;
-		} else {
-			return false;
-		}
+		File tmpDir = new File("./users.ser");
+		boolean exists = tmpDir.exists();
+		return !exists;
 	}
 	
 	/**
@@ -143,10 +142,8 @@ public class DataStore implements Serializable{
 	 * @return True if empty job map, false otherwise
 	 */
 	public boolean isJobListNull() {
-		if(myJobs == null) {
-			return true;
-		} else {
-			return false;
-		}
+		File tmpDir = new File("./jobs.ser");
+		boolean exists = tmpDir.exists();
+		return !exists;
 	}
 }
