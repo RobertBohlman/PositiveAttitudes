@@ -24,8 +24,6 @@ public class UrbanParksSystem {
 		jobList = new HashMap<Integer, Job>();
 		scan = new Scanner(System.in);
 		
-		
-		
 		//Added this for hard-coding users until we have to implement letting 
 		//them set up accounts for themselves.
 		//0 = Employee :: 1 = ParkManager :: 2 = Volunteer
@@ -34,6 +32,11 @@ public class UrbanParksSystem {
 		myStorage.LoadJobs(jobList);
 		myStorage.LoadUsers();
 
+		/*
+		 * Checks if the serialized data is existent
+		 * if not then load defaults
+		 * if it is then load serialized.
+		 */
 		if(!myStorage.isUserMapNull()) {
 			userMap = myStorage.getUsers();
 		} else {
@@ -51,16 +54,15 @@ public class UrbanParksSystem {
 			int user3num = user3.hashCode();
 			userMap.put(user3num, new Volunteer("Billy", 2, 34, "umm@gmail.com", 3));
 			
-			
 			myStorage.setUsers(userMap);
 		}
 		
 		if(!myStorage.isJobListNull()) {
 			jobList = myStorage.getJobs();
-			
 		}
 	
-
+		
+		/* Main Console UI Loop*/
 		while (consoleState != END) {
 			
 			switch (consoleState) {
@@ -94,7 +96,6 @@ public class UrbanParksSystem {
 		}
 		System.out.println("Shutting down");
 		myStorage.Store(); //Serialize userMap and jobList
-		
 		scan.close();
 	}
 	
@@ -164,11 +165,13 @@ public class UrbanParksSystem {
 	
 	private static void displayAvailableJobs() {
 		int i = 1;
-		System.out.println("Title:\n Date:\n Requirements:\n Location:");
 		System.out.println("-------------------------------------------------------------------");
 		for (Integer j: jobList.keySet()) {
-			System.out.println(i + ". " + jobList.get(j).myTitle + "\n" + jobList.get(j).myMonth + "/" + jobList.get(j).myDay + "/" + jobList.get(j).myYear 
-					+ "\n" + jobList.get(j).myRequirements + "\n" + jobList.get(j).myLocation);
+			System.out.println("Job #" + i + "\nTitle: " + jobList.get(j).myTitle + "\n" 
+								+ "Date: " + jobList.get(j).myMonth + "/" + jobList.get(j).myDay
+								+ "/" + jobList.get(j).myYear 
+								+ "\n" + "Requirements: " + jobList.get(j).myRequirements + "\n" 
+								+ "Location: " + jobList.get(j).myLocation);
 			System.out.println("-------------------------------------------------------------------");
 			i++;
 		}
@@ -180,13 +183,14 @@ public class UrbanParksSystem {
 	}
 	
 	private static void displayJobDetails(Job j) {
+		System.out.println("-------------------------------------------------------------------");
 		System.out.println("Job information: ");
 		System.out.println("Title: " + j.myTitle);
 		System.out.println("Date: " + j.myMonth + "/" + j.myDay + "/" + j.myYear);
 		System.out.println("Requirements: " + j.myRequirements + "," + j.myNoVolunteers + " volunteers");
 		System.out.println("Location: " + j.myLocation);
-		System.out.println("-------------------------------------------------------------------");
 		System.out.println("Description: " + j.myDescription);
+		System.out.println("-------------------------------------------------------------------");
 		
 		System.out.println("\nChoose an action: \n"
 				+ "1. Sign up for this job\n"
@@ -198,6 +202,8 @@ public class UrbanParksSystem {
 		case '1':
 			AbstractUser user = userMap.get(userHash);
 			user.getJobs().add(j.myTitle.hashCode());
+			myStorage.setJobs(jobList);
+			myStorage.Store();
 			System.out.println("You have signed up"); 
 			consoleState = VOLUNTEER_MAIN_MENU;
 			break;
@@ -252,8 +258,13 @@ public class UrbanParksSystem {
 		System.out.println("-------------------------------------------------------------------");
 		int i = 1;
 		for (Integer id : userMap.get(userHash).getJobs()) {
-				System.out.println(i + ". " + jobList.get(id).myTitle + "\n" + jobList.get(id).myMonth + "/" + jobList.get(id).myDay + "/" + jobList.get(id).myYear 
-						+ "\n" + jobList.get(id).myRequirements + "\n" + jobList.get(id).myLocation);
+				System.out.println(i + ". " + jobList.get(id).myTitle + "\n" 
+									+ jobList.get(id).myMonth + "/" 
+									+ jobList.get(id).myDay + "/" 
+									+ jobList.get(id).myYear 
+									+ "\n" + jobList.get(id).myRequirements 
+									+ "\n" + jobList.get(id).myLocation
+									+ "\n\n");
 			i++;
 		}
 		System.out.println("-------------------------------------------------------------------");
@@ -280,6 +291,10 @@ public class UrbanParksSystem {
 		System.out.println("Enter the job requirements: ");
 		String req = scan.nextLine();
 		
+		System.out.println("Number of volunteers required: ");
+		int numVolunteers = scan.nextInt();
+		scan.nextLine();
+		
 		System.out.println("Enter the job location: ");
 		String location = scan.nextLine();
 		
@@ -297,7 +312,7 @@ public class UrbanParksSystem {
 		String selection = scan.nextLine();
 		
 		if (selection.charAt(0) == '1') {
-			addJob(new Job(title, day, month, year, req, 0, location, desc));
+			addJob(new Job(title, day, month, year, req, numVolunteers, location, desc));
 			myStorage.setJobs(jobList);
 			System.out.println("Thank you for submitting a job at Urban Parks!");
 			consoleState = PARK_MANAGER_MAIN_MENU;
