@@ -344,7 +344,7 @@ public class UrbanParksSystem {
 		String selection = scan.nextLine();
 		
 		if (selection.charAt(0) == '1') {
-			String date = year + "." + month + "." + day;
+			String date = year + "/" + month + "/" + day;
 			addJob(new Job(title, date, req, numVolunteers, location, desc, lengthOfJob));
 			myStorage.setJobs(myJobMap);
 			System.out.println("Thank you for submitting a job at Urban Parks!");
