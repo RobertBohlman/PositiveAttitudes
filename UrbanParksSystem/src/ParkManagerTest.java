@@ -1,5 +1,4 @@
 
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -17,14 +16,14 @@ class ParkManagerTest {
 	private List<Job> fewerThanMaxJobs;
 	private List<Job> maxJobs;
 	private Job submittableJob;
-	private ParkManager user;
+	private ParkManager managerUser;
 	
 	@Before
 	void setUp() throws Exception {
 		fewerThanMaxJobs = new ArrayList<Job>();
 		maxJobs = new ArrayList<Job>();
 		submittableJob = new Job();
-		user = new ParkManager("manager1", 1, "manager@parks.org");
+		managerUser = new ParkManager("manager1", 1, "manager@parks.org");
 		
 	}
 	
@@ -33,8 +32,8 @@ class ParkManagerTest {
 		for (int i = 0; i < 30; i++) {
 			maxJobs.add(new Job());
 		}
-		user.submitJob(submittableJob, maxJobs, MAX_NUM_JOBS);
-		assertFalse(user.getJobs().contains(submittableJob));
+		UrbanParksSystem.addJob(submittableJob);
+		assertFalse(managerUser.getJobs().contains(submittableJob));
 	}
 	
 	@Test
@@ -42,8 +41,8 @@ class ParkManagerTest {
 		for (int i = 0; i < 29; i++) {
 			maxJobs.add(new Job());
 		}
-		user.submitJob(submittableJob, maxJobs, MAX_NUM_JOBS);
-		assertTrue(user.getJobs().contains(submittableJob));
+		UrbanParksSystem.addJob(submittableJob);
+		assertTrue(managerUser.getJobs().contains(submittableJob));
 	}
 	
 	@Test
@@ -51,23 +50,8 @@ class ParkManagerTest {
 		for (int i = 0; i < 20; i++) {
 			fewerThanMaxJobs.add(new Job());
 		}
-		UrbanParksSystem.addJob(submittableJob, maxJobs, MAX_NUM_JOBS);
-		assertTrue(user.getJobs().contains(submittableJob));
-	}
-
-	@Test
-	void testParkManager() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testGetManagerEmail() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testSetManagerEmail() {
-		fail("Not yet implemented");
+		UrbanParksSystem.addJob(submittableJob);
+		assertTrue(managerUser.getJobs().contains(submittableJob));
 	}
 
 	@Test

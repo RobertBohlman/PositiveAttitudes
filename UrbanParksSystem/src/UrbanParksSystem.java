@@ -355,7 +355,7 @@ public class UrbanParksSystem {
 		}
 	}
 
-	private static void addJob(Job theJob) {
+	static void addJob(Job theJob) {
 		if (notTooManyJobs()) {
 			myJobMap.put(theJob.myTitle.hashCode(), theJob);
 			myStorage.setJobs(myJobMap);
