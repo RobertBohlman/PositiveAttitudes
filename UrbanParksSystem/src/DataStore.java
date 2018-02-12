@@ -13,71 +13,83 @@ import java.util.Map;
  * Jobs
  */
 public class DataStore implements Serializable{
-
-
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 6789836420905113195L;
 	private HashMap<Integer, AbstractUser> myUsers;
 	private HashMap<Integer, Job> myJobs;
 	
-	
+	/**
+	 * Constructor. Sets user map and jobs to null to begin with
+	 * This is used to check later if there are serialized files or not first.
+	 */
 	public DataStore() {
 		myUsers = null;
 		myJobs = null;
 	}
 	
-	
+	/**
+	 * Sets the data to be stored for users.
+	 * @param userMap HashMap<Integer, AbstractUser> User Map
+	 */
 	public void setUsers(Map<Integer, AbstractUser> userMap) {
 		myUsers = (HashMap<Integer, AbstractUser>) userMap;
 	}
 	
+	/**
+	 * Sets the data to be stored for jobs.
+	 * @param jobList HashMap<Integer, Job> Job Map
+	 */
 	public void setJobs(Map<Integer, Job> jobList) {
 		myJobs = (HashMap<Integer, Job>) jobList;
 	}
 	
 	/**
-	 * Stores DataStore object
+	 * Takes the myUsers and myJobs maps
+	 * and serializes them into two files
+	 * jobs.ser
+	 * and users.ser
 	 */
 	public void Store() {
 		try {
-			//Users
+			//User Storage
 			FileOutputStream fileOutUser = new
 					FileOutputStream("./users.ser");
 			ObjectOutputStream outUser = new ObjectOutputStream(fileOutUser);
 			outUser.writeObject(myUsers);
 			fileOutUser.close();
 			
-			//Jobs
+			//Job Storage
 			FileOutputStream fileOutJob = new
 					FileOutputStream("./jobs.ser");
 			ObjectOutputStream outJob = new ObjectOutputStream(fileOutJob);
 			outJob.writeObject(myJobs);
 			fileOutJob.close();
 		}catch (IOException i) {
-			i.printStackTrace();
+			//Do Nothing
 		}
 	}
 	
 	/**
-	 * Loads data object
-	 * @param theUsername
+	 * Loads userMap from serialized file
 	 */
 	@SuppressWarnings("unchecked")
 	public void LoadUsers() {
 		try {
-			//User
+			//User map load
 			FileInputStream fileInUser = new FileInputStream("./users.ser");
 			ObjectInputStream inUser = new ObjectInputStream(fileInUser);
 			myUsers = (HashMap<Integer, AbstractUser>) inUser.readObject();
 			inUser.close();
 			fileInUser.close();
 		} catch (Exception e) {
-			//do nothing
+			//Do Nothing
 		}
 	}
 	
+	/**
+	 * Loads job map from serialized file.
+	 * @param jobList map to put the jobs into
+	 */
 	@SuppressWarnings("unchecked")
 	public void LoadJobs(Map<Integer, Job> jobList) {
 		try {
@@ -96,14 +108,27 @@ public class DataStore implements Serializable{
 		}
 	}
 	
+	/**
+	 * Getter function to get the hashmap of jobs
+	 * @return HashMap of jobs
+	 */
 	public HashMap<Integer, Job> getJobs() {
 		return myJobs;
 	}
 	
+	/**
+	 * Getter method to get the hashmap of users
+	 * @return
+	 */
 	public HashMap<Integer, AbstractUser>  getUsers() {
 		return myUsers;
 	}
 	
+	/**
+	 * Checks if user map is null,
+	 * to be used with initial load of serialized files in system
+	 * @return True if empty user map, false otherwise
+	 */
 	public boolean isUserMapNull() {
 		if(myUsers == null) {
 			return true;
@@ -112,6 +137,11 @@ public class DataStore implements Serializable{
 		}
 	}
 	
+	/**
+	 * Checks if job map is null,
+	 * to be used with initial load of serialized files in system
+	 * @return True if empty job map, false otherwise
+	 */
 	public boolean isJobListNull() {
 		if(myJobs == null) {
 			return true;
