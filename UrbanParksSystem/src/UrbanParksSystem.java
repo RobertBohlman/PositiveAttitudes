@@ -210,6 +210,21 @@ public class UrbanParksSystem {
 		System.out.println("Description: " + j.myDescription);
 		System.out.println("-------------------------------------------------------------------");
 		
+		if (myUserMap.get(userHash).getPermissionLevel() == 2) {
+			displayVolunteerJobOptions(j);
+		} else if (myUserMap.get(userHash).getPermissionLevel() == 1) {
+			displayManagerJobOptions(j);	
+			// park manager options
+				
+		} else {
+			displayEmployeeJobOptions(j);
+		}
+				// urban parks staff options
+		
+		
+	}
+	
+	private static void displayVolunteerJobOptions(Job j) {
 		System.out.println("\nChoose an action: \n"
 				+ "1. Sign up for this job\n"
 				+ "2. Back to available jobs\n"
@@ -220,7 +235,7 @@ public class UrbanParksSystem {
 		case '1':
 			AbstractUser user = myUserMap.get(userHash);
 			if (j.validStartDate() && j.hasDateConflicts((Volunteer) myUserMap.get(userHash))) {
-				user.getJobs().add(j.myTitle.hashCode());
+				user.addJob(j.myTitle.hashCode());
 				myStorage.setJobs(myJobMap);
 				myStorage.Store();
 				System.out.println("You have signed up"); 
@@ -241,7 +256,58 @@ public class UrbanParksSystem {
 		default:
 			break;
 		}
+	}
+	
+	private static void displayManagerJobOptions(Job j) {
+		System.out.println("\nChoose an action: \n"
+				+ "1. Sign up for this job\n"
+				+ "2. Back to available jobs\n"
+				+ "3. Main menu");
+		String selection = scan.nextLine();
 		
+		switch (selection.charAt(0)) {
+		case '1':
+			
+			//consoleState = VOLUNTEER_MAIN_MENU;
+			break;
+			
+		case '2':
+			//consoleState = VOLUNTEER_JOB_SCREEN;
+			break;
+		
+		case '3':
+			//consoleState = VOLUNTEER_MAIN_MENU;
+			break;
+		
+		default:
+			break;
+		}
+	}
+	
+	private static void displayEmployeeJobOptions(Job j) {
+		System.out.println("\nChoose an action: \n"
+				+ "1. Sign up for this job\n"
+				+ "2. Back to available jobs\n"
+				+ "3. Main menu");
+		String selection = scan.nextLine();
+		
+		switch (selection.charAt(0)) {
+		case '1':
+			
+			//consoleState = VOLUNTEER_MAIN_MENU;
+			break;
+			
+		case '2':
+			//consoleState = VOLUNTEER_JOB_SCREEN;
+			break;
+		
+		case '3':
+			//consoleState = VOLUNTEER_MAIN_MENU;
+			break;
+		
+		default:
+			break;
+		}
 	}
 	
 	private static void displayParkManagerMainMenu() {
