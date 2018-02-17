@@ -11,7 +11,7 @@ public class UrbanParksSystem {
 	
 	private static int consoleState = 0;
 	
-	private static final int MAX_NUM_JOBS = 20;
+	private static final int MAX_NUM_JOBS = 10;
 	private static final int USER_LOG_IN = 0;
 	private static final int VOLUNTEER_MAIN_MENU = 1;
 	private static final int VOLUNTEER_JOB_SCREEN = 2;
