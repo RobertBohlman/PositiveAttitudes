@@ -86,6 +86,8 @@ public class Job implements Serializable {
 	}
 	
 	public boolean validStartDate() {
+		System.out.println("We're here");
+		System.out.println(myDateStart);
 		Date min = new Date(System.currentTimeMillis());
 		for(int i = 0; i < MIN_DAYS_TO_JOB; i++) {
 			min.setTime(min.getTime() + ONE_DAY_IN_MILI);

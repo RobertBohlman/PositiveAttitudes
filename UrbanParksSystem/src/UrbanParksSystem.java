@@ -14,12 +14,13 @@ public class UrbanParksSystem {
 	private static final int MAX_NUM_JOBS = 10;
 	private static final int USER_LOG_IN = 0;
 	private static final int VOLUNTEER_MAIN_MENU = 1;
-	private static final int VOLUNTEER_JOB_SCREEN = 2;
+	private static final int AVAILABLE_JOB_SCREEN = 2;
 	private static final int PARK_MANAGER_MAIN_MENU = 3;
 	private static final int PARK_MANAGER_JOB_SUBMIT = 4;
 	private static final int VOLUNTEER_SIGNED_UP_JOBS = 5;
-	private static final int END = 99;
 	private static final int PARK_MANAGER_JOB_VIEW = 6;
+	private static final int EMPLOYEE_MAIN_MENU = 7;
+	private static final int END = 99;
 	
 	public static void main(String[] args) {
 		myJobMap = new HashMap<Integer, Job>();
@@ -75,7 +76,7 @@ public class UrbanParksSystem {
 					displayVolunteerMainMenu();
 					break;
 					
-				case VOLUNTEER_JOB_SCREEN:
+				case AVAILABLE_JOB_SCREEN:
 					displayAvailableJobs();
 					break;
 					
@@ -94,6 +95,9 @@ public class UrbanParksSystem {
 				case PARK_MANAGER_JOB_VIEW:
 					displayParkManagerJobs();
 					break;
+					
+				case EMPLOYEE_MAIN_MENU:
+					displayEmployeeMainMenu();
 					
 				default:
 					break;
@@ -150,6 +154,30 @@ public class UrbanParksSystem {
 		
 	}
 	
+
+	private static void displayEmployeeMainMenu() {
+		System.out.println("Welcome to Urban Parks, Employee!\n"
+				+ "Actions: \n"
+				+ "1. See available jobs\n"
+				+ "2. Logout");
+		System.out.print("Choose an action(Enter a number): ");
+		String selection = scan.nextLine();
+		
+		switch (selection.charAt(0)) {
+			case '1':
+				consoleState = AVAILABLE_JOB_SCREEN;
+				break;
+			case '2':
+				consoleState = USER_LOG_IN;
+				System.out.println("Goodbye!");
+				break;
+			
+			default:
+				break;
+		}
+	}
+	
+	
 	private static void displayVolunteerMainMenu() {
 		System.out.println("Welcome to Urban Parks, Volunteer!\n"
 				+ "Actions: \n"
@@ -162,7 +190,7 @@ public class UrbanParksSystem {
 		
 		switch (selection.charAt(0)) {
 			case '1':
-				consoleState = VOLUNTEER_JOB_SCREEN;
+				consoleState = AVAILABLE_JOB_SCREEN;
 				break;
 				
 			case '2':
@@ -210,6 +238,21 @@ public class UrbanParksSystem {
 		System.out.println("Description: " + j.myDescription);
 		System.out.println("-------------------------------------------------------------------");
 		
+		if (myUserMap.get(userHash).getPermissionLevel() == 2) {
+			displayVolunteerJobOptions(j);
+		} else if (myUserMap.get(userHash).getPermissionLevel() == 1) {
+			displayManagerJobOptions(j);	
+			// park manager options
+				
+		} else {
+			displayEmployeeJobOptions(j);
+		}
+				// urban parks staff options
+		
+		
+	}
+	
+	private static void displayVolunteerJobOptions(Job j) {
 		System.out.println("\nChoose an action: \n"
 				+ "1. Sign up for this job\n"
 				+ "2. Back to available jobs\n"
@@ -220,7 +263,7 @@ public class UrbanParksSystem {
 		case '1':
 			AbstractUser user = myUserMap.get(userHash);
 			if (j.validStartDate() && j.hasDateConflicts((Volunteer) myUserMap.get(userHash))) {
-				user.getJobs().add(j.myTitle.hashCode());
+				user.addJob(j.myTitle.hashCode());
 				myStorage.setJobs(myJobMap);
 				myStorage.Store();
 				System.out.println("You have signed up"); 
@@ -231,7 +274,7 @@ public class UrbanParksSystem {
 			break;
 			
 		case '2':
-			consoleState = VOLUNTEER_JOB_SCREEN;
+			consoleState = AVAILABLE_JOB_SCREEN;
 			break;
 		
 		case '3':
@@ -241,7 +284,56 @@ public class UrbanParksSystem {
 		default:
 			break;
 		}
+	}
+	
+	private static void displayManagerJobOptions(Job j) {
+		System.out.println("\nChoose an action: \n"
+				+ "1. Back to available jobs\n"
+				+ "2. Main menu");
+		String selection = scan.nextLine();
 		
+		switch (selection.charAt(0)) {
+		case '1':
+			
+			consoleState = AVAILABLE_JOB_SCREEN;
+			break;
+			
+		case '2':
+			consoleState = PARK_MANAGER_MAIN_MENU;
+			break;
+		
+		default:
+			break;
+		}
+	}
+	
+	private static void displayEmployeeJobOptions(Job j) {
+		System.out.println("\nChoose an action: \n"
+				
+				/*
+				+ "1. Sign up for this job\n"
+				+ "2. Back to available jobs\n"
+				*/
+				+ "3. Main menu");
+		String selection = scan.nextLine();
+		
+		switch (selection.charAt(0)) {
+		case '1':
+			
+			//consoleState = VOLUNTEER_MAIN_MENU;
+			break;
+			
+		case '2':
+			//consoleState = VOLUNTEER_JOB_SCREEN;
+			break;
+		
+		case '3':
+			//consoleState = VOLUNTEER_MAIN_MENU;
+			break;
+		
+		default:
+			break;
+		}
 	}
 	
 	private static void displayParkManagerMainMenu() {
