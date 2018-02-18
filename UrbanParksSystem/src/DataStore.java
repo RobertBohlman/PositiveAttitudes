@@ -74,7 +74,7 @@ public class DataStore implements Serializable{
 	 * Loads userMap from serialized file
 	 */
 	@SuppressWarnings("unchecked")
-	public void LoadUsers() {
+	public void LoadUsers(Map<Integer, AbstractUser> userMap) {
 		try {
 			//User map load
 			FileInputStream fileInUser = new FileInputStream("./users.ser");
@@ -82,6 +82,9 @@ public class DataStore implements Serializable{
 			myUsers = (HashMap<Integer, AbstractUser>) inUser.readObject();
 			inUser.close();
 			fileInUser.close();
+			for (int i:myUsers.keySet()) {
+				userMap.put(myUsers.get(i).getUserName().hashCode(), myUsers.get(i));
+			}
 		} catch (Exception e) {
 			//Do Nothing
 		}

@@ -70,8 +70,8 @@ public abstract class AbstractUser implements Serializable{
 		return myJobs;
 	}
 	
-	public void addJob(Integer theJobID) {
-		myJobs.add(theJobID);
+	public void addJob(Job job) {
+		myJobs.add(job.myTitle.hashCode());
 	}
 	
 	public void removeJob(Integer theJobID) {

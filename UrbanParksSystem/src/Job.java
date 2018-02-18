@@ -97,15 +97,15 @@ public class Job implements Serializable {
 	
 	public boolean hasDateConflicts(Volunteer volun) {
 		boolean conflict = false;
-		Job j;
-		
-		for (int i : volun.myJobs) {
-			j = UrbanParksSystem.myJobMap.get(i);
-			if (j.myDateStart.compareTo(this.myDateStart) == 0) {
-				conflict = true;
-				break;
-			}
-		}
+//		Job j;
+//		
+//		for (int i : volun.myJobs) {
+//			j = UrbanParksTerminal.myJobMap.get(i);
+//			if (j.myDateStart.compareTo(this.myDateStart) == 0) {
+//				conflict = true;
+//				break;
+//			}
+//		}
 		return conflict;
 	}
 }

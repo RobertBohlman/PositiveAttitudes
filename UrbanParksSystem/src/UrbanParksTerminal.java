@@ -2,12 +2,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class UrbanParksSystem {
+public class UrbanParksTerminal {
+	private static SystemData UrbanParksSystem;
 	private static Scanner scan;
-	public static Map<Integer, Job> myJobMap;
-	private static Map<Integer, AbstractUser> myUserMap;
-	private static int userHash;
-	private static DataStore myStorage;
+	
 	
 	private static int consoleState = 0;
 	
@@ -23,44 +21,25 @@ public class UrbanParksSystem {
 	private static final int END = 99;
 	
 	public static void main(String[] args) {
-		myJobMap = new HashMap<Integer, Job>();
+		UrbanParksSystem = new SystemData();
 		scan = new Scanner(System.in);
 		
 		//Added this for hard-coding users until we have to implement letting 
 		//them set up accounts for themselves.
 		//0 = Employee :: 1 = ParkManager :: 2 = Volunteer
-		myUserMap = new HashMap<Integer, AbstractUser>();
-		myStorage = new DataStore();
-		myStorage.LoadJobs(myJobMap);
-		myStorage.LoadUsers();
 
 		/*
 		 * Checks if the serialized data is existent
 		 * if not then load defaults
 		 * if it is then load serialized.
 		 */
-		if(!myStorage.isUserMapNull()) {
-			myUserMap = myStorage.getUsers();
+		if(!UrbanParksSystem.isUserMapNull()) {
+			UrbanParksSystem.loadUsers();
 		} else {
-
-			String user1 = "Carol";
-			int user1num = user1.hashCode();
-			myUserMap.put(user1num, new Employee("Carol", 0));
-				
-			String user2 = "Frank";
-			int user2num = user2.hashCode();
-			myUserMap.put(user2num, new ParkManager("Frank", 1, "why@gmail.com"));
-				
-				
-			String user3 = "Billy";
-			int user3num = user3.hashCode();
-			myUserMap.put(user3num, new Volunteer("Billy", 2, 34, "umm@gmail.com", 3));
 			
-			myStorage.setUsers(myUserMap);
-		}
-		
-		if(!myStorage.isJobListNull()) {
-			myJobMap = myStorage.getJobs();
+			UrbanParksSystem.addUser(new Employee("Carol", 0));
+			UrbanParksSystem.addUser(new ParkManager("Frank", 1, "why@gmail.com"));
+			UrbanParksSystem.addUser(new Volunteer("Billy", 2, 34, "umm@gmail.com", 3));
 		}
 	
 		
@@ -104,7 +83,7 @@ public class UrbanParksSystem {
 			}
 		}
 		System.out.println("Shutting down");
-		myStorage.Store(); //Serialize userMap and jobList
+		UrbanParksSystem.saveData(); //Serialize userMap and jobList
 		scan.close();
 	}
 	
@@ -115,12 +94,12 @@ public class UrbanParksSystem {
 		String selection = scan.nextLine();
 		
 		if (selection.charAt(0) != '9') {
-			userHash = selection.hashCode();
+			UrbanParksSystem.setCurrentUser(selection);
 			
 			int selectionPermission;
 			
 			try {
-				selectionPermission = myUserMap.get(userHash).getPermissionLevel();
+				selectionPermission = UrbanParksSystem.getCurrentUser().getPermissionLevel();
 				
 			} catch (NullPointerException e) {
 				System.out.println("Error, no such user exists!");
@@ -211,13 +190,14 @@ public class UrbanParksSystem {
 	}
 	
 	private static void displayAvailableJobs() {
+		Map<Integer, Job> jobMap = UrbanParksSystem.getJobMap(); 
 		int i = 1;
 		System.out.println("-------------------------------------------------------------------");
-		for (Integer j: myJobMap.keySet()) {
-			System.out.println("Job #" + i + "\nTitle: " + myJobMap.get(j).myTitle + "\n" 
-								+ "Date: " + myJobMap.get(j).myDateString
-								+ "\n" + "Requirements: " + myJobMap.get(j).myRequirements + "\n" 
-								+ "Location: " + myJobMap.get(j).myLocation);
+		for (Integer j: jobMap.keySet()) {
+			System.out.println("Job #" + i + "\nTitle: " + jobMap.get(j).myTitle + "\n" 
+								+ "Date: " + jobMap.get(j).myDateString
+								+ "\n" + "Requirements: " + jobMap.get(j).myRequirements + "\n" 
+								+ "Location: " + jobMap.get(j).myLocation);
 			System.out.println("-------------------------------------------------------------------");
 			i++;
 		}
@@ -225,7 +205,7 @@ public class UrbanParksSystem {
 		System.out.println("Select a job number to view information");
 		String selection = scan.nextLine();
 		int selectNumber = Integer.parseInt(selection);
-		displayJobDetails((Job) myJobMap.values().toArray()[selectNumber - 1]);
+		displayJobDetails((Job) jobMap.values().toArray()[selectNumber - 1]);
 	}
 	
 	private static void displayJobDetails(Job j) {
@@ -238,9 +218,9 @@ public class UrbanParksSystem {
 		System.out.println("Description: " + j.myDescription);
 		System.out.println("-------------------------------------------------------------------");
 		
-		if (myUserMap.get(userHash).getPermissionLevel() == 2) {
+		if (UrbanParksSystem.getCurrentUser().getPermissionLevel() == 2) {
 			displayVolunteerJobOptions(j);
-		} else if (myUserMap.get(userHash).getPermissionLevel() == 1) {
+		} else if (UrbanParksSystem.getCurrentUser().getPermissionLevel() == 1) {
 			displayManagerJobOptions(j);	
 			// park manager options
 				
@@ -261,11 +241,10 @@ public class UrbanParksSystem {
 		
 		switch (selection.charAt(0)) {
 		case '1':
-			AbstractUser user = myUserMap.get(userHash);
-			if (j.validStartDate() && j.hasDateConflicts((Volunteer) myUserMap.get(userHash))) {
-				user.addJob(j.myTitle.hashCode());
-				myStorage.setJobs(myJobMap);
-				myStorage.Store();
+			AbstractUser user =  UrbanParksSystem.getCurrentUser();
+			if (j.validStartDate() && !j.hasDateConflicts((Volunteer) user)) {
+				user.addJob(j);
+				UrbanParksSystem.saveData();
 				System.out.println("You have signed up"); 
 			} else {
 				System.out.println("Sorry, you cannot sign up for this job");
@@ -377,14 +356,15 @@ public class UrbanParksSystem {
 	}
 	
 	public static void displayVolunteerJobs() {
+		Map<Integer, Job> jobMap = UrbanParksSystem.getJobMap();
 		System.out.println("Your Current Jobs");
 		System.out.println("-------------------------------------------------------------------");
 		int i = 1;
-		for (Integer id : myUserMap.get(userHash).getJobs()) {
-				System.out.println(i + ". " + myJobMap.get(id).myTitle + "\n" 
-									+ myJobMap.get(id).myDateString
-									+ "\n" + myJobMap.get(id).myRequirements 
-									+ "\n" + myJobMap.get(id).myLocation
+		for (Integer id : UrbanParksSystem.getCurrentUser().getJobs()) {
+				System.out.println(i + ". " + jobMap.get(id).myTitle + "\n" 
+									+ jobMap.get(id).myDateString
+									+ "\n" + jobMap.get(id).myRequirements 
+									+ "\n" + jobMap.get(id).myLocation
 									+ "\n\n");
 			i++;
 		}
@@ -392,7 +372,7 @@ public class UrbanParksSystem {
 		System.out.println("Select a job number to view information");
 		String selection = scan.nextLine();
 		int selectNumber = Integer.parseInt(selection);
-		displayJobDetails((Job) myJobMap.values().toArray()[selectNumber - 1]);
+		displayJobDetails((Job) jobMap.values().toArray()[selectNumber - 1]);
 	}
 	
 	private static void displaySubmitJobScreen() {
@@ -440,8 +420,7 @@ public class UrbanParksSystem {
 			String date = year + "/" + month + "/" + day;
 			Job jobToSubmit = new Job(title, date, req, numVolunteers, location, desc, lengthOfJob);
 			if (jobToSubmit.validDuration() && jobToSubmit.withinTimeFrame()) {
-				myJobMap.put(jobToSubmit.myTitle.hashCode(), jobToSubmit);
-				myStorage.setJobs(myJobMap);
+				UrbanParksSystem.addJob(jobToSubmit);
 				System.out.println("Thank you for submitting a job at Urban Parks!");
 			} else {
 				if (!jobToSubmit.validDuration()) {
@@ -457,35 +436,36 @@ public class UrbanParksSystem {
 		}
 	}
 
-	static void addJob(Job theJob) {
-		if (notTooManyJobs()) {
-			myJobMap.put(theJob.myTitle.hashCode(), theJob);
-			myStorage.setJobs(myJobMap);
-			myStorage.Store();
-		}
-	}
+//	static void addJob(Job theJob) {      Remove?
+//		if (notTooManyJobs()) {
+//			myJobMap.put(theJob.myTitle.hashCode(), theJob);
+//			myStorage.setJobs(myJobMap);
+//			myStorage.Store();
+//		}
+//	}
 	
 	private static boolean notTooManyJobs() {
-		return myJobMap.size() < MAX_NUM_JOBS;
+		return UrbanParksSystem.getNumberOfJobs() < MAX_NUM_JOBS;
 	}
 	
-	public Job getJob(int theID) {
-		return myJobMap.get(theID);
-		
-	}
+//	public Job getJob(int theID) {       Remove?
+//		return myJobMap.get(theID);
+//		
+//	}
 	
-	private void deleteJob() {
-		//TODO allow manager to delete jobs, and also delete from user job map
-	}
+//	private void deleteJob() {          Should be moved to SystemData
+//		//TODO allow manager to delete jobs, and also delete from user job map
+//	}
 	
 	private static void displayParkManagerJobs() {
+		Map<Integer, Job> jobMap = UrbanParksSystem.getJobMap();
 		int i = 1;
 		System.out.println("-------------------------------------------------------------------");
-		for (Integer j: myJobMap.keySet()) {
-			System.out.println("Job #" + i + "\nTitle: " + myJobMap.get(j).myTitle + "\n" 
-								+ "Date: " + myJobMap.get(j).myDateString
-								+ "\n" + "Requirements: " + myJobMap.get(j).myRequirements + "\n" 
-								+ "Location: " + myJobMap.get(j).myLocation);
+		for (Integer j: jobMap.keySet()) {
+			System.out.println("Job #" + i + "\nTitle: " + jobMap.get(j).myTitle + "\n" 
+								+ "Date: " + jobMap.get(j).myDateString
+								+ "\n" + "Requirements: " + jobMap.get(j).myRequirements + "\n" 
+								+ "Location: " + jobMap.get(j).myLocation);
 			System.out.println("-------------------------------------------------------------------");
 			i++;
 		}
@@ -493,7 +473,7 @@ public class UrbanParksSystem {
 		System.out.println("Select a job number to view information");
 		String selection = scan.nextLine();
 		int selectNumber = Integer.parseInt(selection);
-		displayParkManagerJobDetails((Job) myJobMap.values().toArray()[selectNumber - 1]);
+		displayParkManagerJobDetails((Job) jobMap.values().toArray()[selectNumber - 1]);
 	}
 	
 	private static void displayParkManagerJobDetails(Job j) {

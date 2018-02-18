@@ -31,7 +31,7 @@ public class UrbanParksSystemTests {
 		for (int i = 0; i < 30; i++) {
 			maxJobs.add(new Job());
 		}
-		UrbanParksSystem.addJob(submittableJob);
+		UrbanParksTerminal.addJob(submittableJob);
 		assertFalse(managerUser.getJobs().contains(submittableJob));
 	}
 	
@@ -40,7 +40,7 @@ public class UrbanParksSystemTests {
 		for (int i = 0; i < 29; i++) {
 			maxJobs.add(new Job());
 		}
-		UrbanParksSystem.addJob(submittableJob);
+		UrbanParksTerminal.addJob(submittableJob);
 		assertTrue(managerUser.getJobs().contains(submittableJob));
 	}
 	
@@ -49,7 +49,7 @@ public class UrbanParksSystemTests {
 		for (int i = 0; i < 20; i++) {
 			fewerThanMaxJobs.add(new Job());
 		}
-		UrbanParksSystem.addJob(submittableJob);
+		UrbanParksTerminal.addJob(submittableJob);
 		assertTrue(managerUser.getJobs().contains(submittableJob));
 	}
 
