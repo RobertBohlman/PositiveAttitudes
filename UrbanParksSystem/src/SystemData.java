@@ -35,6 +35,17 @@ public class SystemData {
 		saveData();
 	}
 	
+	public void removeVolunteerJob(Job j) {
+		if(j.isMinDaysInFuture()) {
+			//remove int from array list of volunteer
+			getCurrentUser().removeJob(j);
+			saveData();
+			System.out.println("Removed Job.\n");
+		} else {
+			System.out.println("Could not remove job!\n");
+		}
+	}
+	
 	public AbstractUser getCurrentUser() {
 		return myUserMap.get(myUserHash);
 	}

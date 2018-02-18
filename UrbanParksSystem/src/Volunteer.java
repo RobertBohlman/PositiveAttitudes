@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -41,6 +42,16 @@ public class Volunteer extends AbstractUser {
 		myJobs = new ArrayList<Integer>();
 	}
 	
+	public void removeJob(Job j) {
+		Integer jobCodeToRemove = j.myTitle.hashCode();
+		for(Integer i : myJobs) {
+			System.out.println(i);
+			if(i == jobCodeToRemove) {
+				System.out.println("Removing :" + i);
+				myJobs.remove(i);
+			}
+		}
+	}
 	
 	/**
 	 * 

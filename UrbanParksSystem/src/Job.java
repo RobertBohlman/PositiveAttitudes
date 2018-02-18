@@ -15,6 +15,7 @@ public class Job implements Serializable {
 	static int MAX_DURATION = 3;
 	static long ONE_DAY_IN_MILI = 86400000;
 	static int MIN_DAYS_TO_JOB = 2;
+	static int MIN_DAYS_TO_REMOVE = 3;
 
 	public int myID;
 	public String myTitle;
@@ -86,7 +87,6 @@ public class Job implements Serializable {
 	}
 	
 	public boolean validStartDate() {
-		System.out.println("We're here");
 		System.out.println(myDateStart);
 		Date min = new Date(System.currentTimeMillis());
 		for(int i = 0; i < MIN_DAYS_TO_JOB; i++) {
@@ -107,6 +107,21 @@ public class Job implements Serializable {
 //			}
 //		}
 		return conflict;
+	}
+	
+	public boolean isMinDaysInFuture() {
+		boolean result = false;
+		Date cur = new Date(System.currentTimeMillis());
+		Date future = new Date(System.currentTimeMillis());
+		//Incremement future date by min days to remove default: 3
+		for(int i = 0; i < MIN_DAYS_TO_REMOVE; i++) {
+			future.setTime(future.getTime() + ONE_DAY_IN_MILI);
+		}
+		//If start date of job is not before the default 3 days then bool = true
+		if(!myDateStart.before(future)) {
+			result = true;
+		}
+		return result;
 	}
 }
 

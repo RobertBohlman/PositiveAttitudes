@@ -36,7 +36,6 @@ public class UrbanParksTerminal {
 		if(!UrbanParksSystem.isUserMapNull()) {
 			UrbanParksSystem.loadUsers();
 		} else {
-			
 			UrbanParksSystem.addUser(new Employee("Carol", 0));
 			UrbanParksSystem.addUser(new ParkManager("Frank", 1, "why@gmail.com"));
 			UrbanParksSystem.addUser(new Volunteer("Billy", 2, 34, "umm@gmail.com", 3));
@@ -45,7 +44,6 @@ public class UrbanParksTerminal {
 		
 		/* Main Console UI Loop*/
 		while (consoleState != END) {
-			
 			switch (consoleState) {
 				case USER_LOG_IN:
 					displayUserLogIn();
@@ -235,8 +233,9 @@ public class UrbanParksTerminal {
 	private static void displayVolunteerJobOptions(Job j) {
 		System.out.println("\nChoose an action: \n"
 				+ "1. Sign up for this job\n"
-				+ "2. Back to available jobs\n"
-				+ "3. Main menu");
+				+ "2. Unvolunteer for this job.\n"
+				+ "3. Back to available jobs\n"
+				+ "4. Main menu");
 		String selection = scan.nextLine();
 		
 		switch (selection.charAt(0)) {
@@ -251,12 +250,14 @@ public class UrbanParksTerminal {
 			}
 			consoleState = VOLUNTEER_MAIN_MENU;
 			break;
-			
 		case '2':
+			UrbanParksSystem.removeVolunteerJob(j);
+			break;
+		case '3':
 			consoleState = AVAILABLE_JOB_SCREEN;
 			break;
 		
-		case '3':
+		case '4':
 			consoleState = VOLUNTEER_MAIN_MENU;
 			break;
 		
@@ -435,27 +436,10 @@ public class UrbanParksTerminal {
 			consoleState = PARK_MANAGER_JOB_SUBMIT;
 		}
 	}
-
-//	static void addJob(Job theJob) {      Remove?
-//		if (notTooManyJobs()) {
-//			myJobMap.put(theJob.myTitle.hashCode(), theJob);
-//			myStorage.setJobs(myJobMap);
-//			myStorage.Store();
-//		}
-//	}
 	
 	private static boolean notTooManyJobs() {
 		return UrbanParksSystem.getNumberOfJobs() < MAX_NUM_JOBS;
 	}
-	
-//	public Job getJob(int theID) {       Remove?
-//		return myJobMap.get(theID);
-//		
-//	}
-	
-//	private void deleteJob() {          Should be moved to SystemData
-//		//TODO allow manager to delete jobs, and also delete from user job map
-//	}
 	
 	private static void displayParkManagerJobs() {
 		Map<Integer, Job> jobMap = UrbanParksSystem.getJobMap();
