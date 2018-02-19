@@ -9,7 +9,6 @@ public class UrbanParksTerminal {
 	
 	private static int consoleState = 0;
 	
-	private static final int MAX_NUM_JOBS = 10;
 	private static final int USER_LOG_IN = 0;
 	private static final int VOLUNTEER_MAIN_MENU = 1;
 	private static final int AVAILABLE_JOB_SCREEN = 2;
@@ -18,6 +17,7 @@ public class UrbanParksTerminal {
 	private static final int VOLUNTEER_SIGNED_UP_JOBS = 5;
 	private static final int PARK_MANAGER_JOB_VIEW = 6;
 	private static final int EMPLOYEE_MAIN_MENU = 7;
+	private static final int MANAGER_SUBMITTED_JOBS = 8;
 	private static final int END = 99;
 	
 	public static void main(String[] args) {
@@ -68,13 +68,14 @@ public class UrbanParksTerminal {
 				case VOLUNTEER_SIGNED_UP_JOBS:
 					displayVolunteerJobs();
 					break;
-				
-				case PARK_MANAGER_JOB_VIEW:
-					displayParkManagerJobs();
-					break;
 					
 				case EMPLOYEE_MAIN_MENU:
 					displayEmployeeMainMenu();
+					break;
+					
+				case MANAGER_SUBMITTED_JOBS:
+					displaySubmittedManagerJobs();
+					break;
 					
 				default:
 					break;
@@ -131,7 +132,6 @@ public class UrbanParksTerminal {
 		
 	}
 	
-
 	private static void displayEmployeeMainMenu() {
 		System.out.println("Welcome to Urban Parks, Employee!\n"
 				+ "Actions: \n"
@@ -153,8 +153,7 @@ public class UrbanParksTerminal {
 				break;
 		}
 	}
-	
-	
+		
 	private static void displayVolunteerMainMenu() {
 		System.out.println("Welcome to Urban Parks, Volunteer!\n"
 				+ "Actions: \n"
@@ -182,6 +181,47 @@ public class UrbanParksTerminal {
 				System.out.println("Goodbye!");
 				break;
 			
+			default:
+				break;
+		}
+	}
+	
+	private static void displayParkManagerMainMenu() {
+		System.out.println("Welcome to Urban Parks, Park Manager!\n"
+				+ "Actions: \n"
+				+ "1. Submit a new job\n"
+				+ "2. View jobs\n"
+				+ "3. See your submitted jobs\n"
+				+ "4. Edit personal info\n"
+				+ "5. Logout");
+		System.out.print("Choose an action(Enter a number): ");
+		String selection = scan.nextLine();
+		
+		switch (selection.charAt(0)) {
+			case '1':
+				if(!UrbanParksSystem.atMaxJobs()) {
+					consoleState = PARK_MANAGER_JOB_SUBMIT;
+				} else {
+					System.out.println("Jobs are at maximum amount at the moment. Please try again later.");
+				}
+				break;
+				
+			case '2':
+				consoleState = AVAILABLE_JOB_SCREEN;
+				break; //Not yet implemented
+			
+			case '3':
+				consoleState = MANAGER_SUBMITTED_JOBS;
+				break; //Not yet implemented
+				
+			case '4':
+				break;
+			
+			case '5':
+				consoleState = USER_LOG_IN;
+				System.out.println("Goodbye!");
+				break;
+				
 			default:
 				break;
 		}
@@ -240,11 +280,8 @@ public class UrbanParksTerminal {
 		
 		switch (selection.charAt(0)) {
 		case '1':
-			AbstractUser user =  UrbanParksSystem.getCurrentUser();
-			if (j.validStartDate() && !j.hasDateConflicts((Volunteer) user)) {
-				user.addJob(j);
-				UrbanParksSystem.saveData();
-				System.out.println("You have signed up"); 
+			if (UrbanParksSystem.signUpForJob(j)) {
+				System.out.println("You have signed up");     
 			} else {
 				System.out.println("Sorry, you cannot sign up for this job");
 			}
@@ -268,17 +305,21 @@ public class UrbanParksTerminal {
 	
 	private static void displayManagerJobOptions(Job j) {
 		System.out.println("\nChoose an action: \n"
-				+ "1. Back to available jobs\n"
-				+ "2. Main menu");
+				+ "1. Delete this job\n"
+				+ "2. Back to available jobs\n"
+				+ "3. Main menu");
 		String selection = scan.nextLine();
 		
 		switch (selection.charAt(0)) {
 		case '1':
-			
-			consoleState = AVAILABLE_JOB_SCREEN;
+			//TODO DELETE JOB
 			break;
 			
 		case '2':
+			consoleState = PARK_MANAGER_JOB_VIEW;
+			break;
+		
+		case '3':
 			consoleState = PARK_MANAGER_MAIN_MENU;
 			break;
 		
@@ -315,50 +356,30 @@ public class UrbanParksTerminal {
 			break;
 		}
 	}
-	
-	private static void displayParkManagerMainMenu() {
-		System.out.println("Welcome to Urban Parks, Park Manager!\n"
-				+ "Actions: \n"
-				+ "1. Submit a new job\n"
-				+ "2. View jobs\n"
-				+ "3. See your calendar\n"
-				+ "4. Edit personal info\n"
-				+ "5. Logout");
-		System.out.print("Choose an action(Enter a number): ");
-		String selection = scan.nextLine();
-		
-		switch (selection.charAt(0)) {
-			case '1':
-				if(notTooManyJobs()) {
-					consoleState = PARK_MANAGER_JOB_SUBMIT;
-				} else {
-					System.out.println("Jobs are at maximum amount at the moment. Please try again later.");
-				}
-				break;
-				
-			case '2':
-				consoleState = PARK_MANAGER_JOB_VIEW;
-				break; //Not yet implemented
-			
-			case '3':
-				break; //Not yet implemented
-				
-			case '4':
-				break;
-			
-			case '5':
-				consoleState = USER_LOG_IN;
-				System.out.println("Goodbye!");
-				break;
-				
-			default:
-				break;
-		}
-	}
-	
+
 	public static void displayVolunteerJobs() {
 		Map<Integer, Job> jobMap = UrbanParksSystem.getJobMap();
 		System.out.println("Your Current Jobs");
+		System.out.println("-------------------------------------------------------------------");
+		int i = 1;
+		for (Integer id : UrbanParksSystem.getCurrentUser().getJobs()) {
+				System.out.println(i + ". " + jobMap.get(id).myTitle + "\n" 
+									+ jobMap.get(id).myDateString
+									+ "\n" + jobMap.get(id).myRequirements 
+									+ "\n" + jobMap.get(id).myLocation
+									+ "\n\n");
+			i++;
+		}
+		System.out.println("-------------------------------------------------------------------");
+		System.out.println("Select a job number to view information");
+		String selection = scan.nextLine();
+		int selectNumber = Integer.parseInt(selection);
+		displayJobDetails((Job) jobMap.values().toArray()[selectNumber - 1]);
+	}
+	
+	public static void displaySubmittedManagerJobs() {
+		Map<Integer, Job> jobMap = UrbanParksSystem.getJobMap();
+		System.out.println("Your Submitted Jobs");
 		System.out.println("-------------------------------------------------------------------");
 		int i = 1;
 		for (Integer id : UrbanParksSystem.getCurrentUser().getJobs()) {
@@ -420,14 +441,18 @@ public class UrbanParksTerminal {
 		if (selection.charAt(0) == '1') {
 			String date = year + "/" + month + "/" + day;
 			Job jobToSubmit = new Job(title, date, req, numVolunteers, location, desc, lengthOfJob);
-			if (jobToSubmit.validDuration() && jobToSubmit.withinTimeFrame()) {
-				UrbanParksSystem.addJob(jobToSubmit);
+			int userFeedback = UrbanParksSystem.submitJob(jobToSubmit);
+			
+			if (userFeedback == 0) {
 				System.out.println("Thank you for submitting a job at Urban Parks!");
+				
 			} else {
-				if (!jobToSubmit.validDuration()) {
+				if (userFeedback == 1) {
 					System.out.println("Can't submit this job, invalid duration.");
-				} else {
+				} else if (userFeedback == 2){
 					System.out.println("Can't submit this job, not within valid time frame.");
+				} else {
+					System.out.println("Can't submit this job, unknown error.");
 				}
 			}
 			consoleState = PARK_MANAGER_MAIN_MENU;
@@ -437,60 +462,37 @@ public class UrbanParksTerminal {
 		}
 	}
 	
-	private static boolean notTooManyJobs() {
-		return UrbanParksSystem.getNumberOfJobs() < MAX_NUM_JOBS;
-	}
-	
-	private static void displayParkManagerJobs() {
-		Map<Integer, Job> jobMap = UrbanParksSystem.getJobMap();
-		int i = 1;
-		System.out.println("-------------------------------------------------------------------");
-		for (Integer j: jobMap.keySet()) {
-			System.out.println("Job #" + i + "\nTitle: " + jobMap.get(j).myTitle + "\n" 
-								+ "Date: " + jobMap.get(j).myDateString
-								+ "\n" + "Requirements: " + jobMap.get(j).myRequirements + "\n" 
-								+ "Location: " + jobMap.get(j).myLocation);
-			System.out.println("-------------------------------------------------------------------");
-			i++;
-		}
-		
-		System.out.println("Select a job number to view information");
-		String selection = scan.nextLine();
-		int selectNumber = Integer.parseInt(selection);
-		displayParkManagerJobDetails((Job) jobMap.values().toArray()[selectNumber - 1]);
-	}
-	
-	private static void displayParkManagerJobDetails(Job j) {
-		System.out.println("-------------------------------------------------------------------");
-		System.out.println("Job information: ");
-		System.out.println("Title: " + j.myTitle);
-		System.out.println("Date: " + j.myDateString);
-		System.out.println("Requirements: " + j.myRequirements + "," + j.myNoVolunteers + " volunteers");
-		System.out.println("Location: " + j.myLocation);
-		System.out.println("Description: " + j.myDescription);
-		System.out.println("-------------------------------------------------------------------");
-		
-		System.out.println("\nChoose an action: \n"
-				+ "1. Delete this job\n"
-				+ "2. Back to available jobs\n"
-				+ "3. Main menu");
-		String selection = scan.nextLine();
-		
-		switch (selection.charAt(0)) {
-		case '1':
-			//TODO DELETE JOB
-			break;
-			
-		case '2':
-			consoleState = PARK_MANAGER_JOB_VIEW;
-			break;
-		
-		case '3':
-			consoleState = PARK_MANAGER_MAIN_MENU;
-			break;
-		
-		default:
-			break;
-		}
-	}
+//	private static void displayParkManagerJobDetails(Job j) {
+//		System.out.println("-------------------------------------------------------------------");
+//		System.out.println("Job information: ");
+//		System.out.println("Title: " + j.myTitle);
+//		System.out.println("Date: " + j.myDateString);
+//		System.out.println("Requirements: " + j.myRequirements + "," + j.myNoVolunteers + " volunteers");
+//		System.out.println("Location: " + j.myLocation);
+//		System.out.println("Description: " + j.myDescription);
+//		System.out.println("-------------------------------------------------------------------");
+//		
+//		System.out.println("\nChoose an action: \n"
+//				+ "1. Delete this job\n"
+//				+ "2. Back to available jobs\n"
+//				+ "3. Main menu");
+//		String selection = scan.nextLine();
+//		
+//		switch (selection.charAt(0)) {
+//		case '1':
+//			//TODO DELETE JOB
+//			break;
+//			
+//		case '2':
+//			consoleState = PARK_MANAGER_JOB_VIEW;
+//			break;
+//		
+//		case '3':
+//			consoleState = PARK_MANAGER_MAIN_MENU;
+//			break;
+//		
+//		default:
+//			break;
+//		}
+//	}
 }

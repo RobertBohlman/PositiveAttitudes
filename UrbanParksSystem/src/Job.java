@@ -77,10 +77,11 @@ public class Job implements Serializable {
 	public boolean withinTimeFrame() {
 		Boolean valid = false;
 		Date max = new Date(System.currentTimeMillis());
+		Date today = new Date(System.currentTimeMillis());
 		for(int i = 0; i< MAX_DATE; i++) {
 			max.setTime(max.getTime() + ONE_DAY_IN_MILI);
 		}
-		if(!myDateEnd.after(max)){
+		if(!myDateEnd.after(max) && !myDateStart.before(today)){
 			valid = true;
 		}
 		return valid;
