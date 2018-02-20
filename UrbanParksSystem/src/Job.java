@@ -112,14 +112,15 @@ public class Job implements Serializable {
 	
 	public boolean isMinDaysInFuture() {
 		boolean result = false;
-		Date cur = new Date(System.currentTimeMillis());
 		Date future = new Date(System.currentTimeMillis());
 		//Incremement future date by min days to remove default: 3
 		for(int i = 0; i < MIN_DAYS_TO_REMOVE; i++) {
 			future.setTime(future.getTime() + ONE_DAY_IN_MILI);
 		}
 		//If start date of job is not before the default 3 days then bool = true
-		if(!myDateStart.before(future)) {
+		if(myDateStart.after(future)) {
+			result = true;
+		} else if (myDateStart.equals(future)) {
 			result = true;
 		}
 		return result;

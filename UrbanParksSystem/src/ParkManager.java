@@ -38,6 +38,12 @@ public class ParkManager extends AbstractUser {
 	public void setManagerEmail(String theEmail) {
 		myEmail = theEmail;
 	}
+
+	@Override
+	public void removeJob(Job j) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 

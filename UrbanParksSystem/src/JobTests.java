@@ -3,10 +3,18 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class JobTests {
-	Job job1 = new Job("Test Job", "0000/00/00", null, null, null, null, 2);
+	
+	Job job1;
+
+	
+	@Before
+	public void setUp() {
+		Job job1 = new Job("Test Job", "0000/00/00", null, null, null, null, 2);
+	}
 	
 	@Test
 	public void withinTimeFrame_JobDateBeforeLimit_true() {

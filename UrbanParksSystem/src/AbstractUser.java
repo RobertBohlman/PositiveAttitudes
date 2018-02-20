@@ -1,5 +1,6 @@
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -74,6 +75,9 @@ public abstract class AbstractUser implements Serializable{
 		myJobs.add(job.myTitle.hashCode());
 	}
 	
-	public abstract void removeJob(Job j);
+	public void removeJob(Job j) {
+		Integer jobCodeToRemove = j.myTitle.hashCode();
+		myJobs.remove(jobCodeToRemove);
+	}
 	
 }

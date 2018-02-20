@@ -21,9 +21,6 @@ public class Volunteer extends AbstractUser {
 	/** */
 	private int myPhysicalLevel;
 	
-	/** */
-	Collection <Integer> myJobs;
-	
 	
 	/**
 	 * 
@@ -39,18 +36,6 @@ public class Volunteer extends AbstractUser {
 		myAge = theAge;
 		myEmail = theEmail;
 		myPhysicalLevel = thePhysicalLevel;
-		myJobs = new ArrayList<Integer>();
-	}
-	
-	public void removeJob(Job j) {
-		Integer jobCodeToRemove = j.myTitle.hashCode();
-		for(Integer i : myJobs) {
-			System.out.println(i);
-			if(i == jobCodeToRemove) {
-				System.out.println("Removing :" + i);
-				myJobs.remove(i);
-			}
-		}
 	}
 	
 	/**
