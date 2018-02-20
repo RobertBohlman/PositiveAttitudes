@@ -14,4 +14,10 @@ public class Employee extends AbstractUser {
 		super(theUserName, thePermissionLevel);
 	}
 
+	@Override
+	public void removeJob(Job j) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
