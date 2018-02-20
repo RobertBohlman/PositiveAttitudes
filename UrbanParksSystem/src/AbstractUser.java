@@ -74,6 +74,15 @@ public abstract class AbstractUser implements Serializable{
 		myJobs.add(job.myTitle.hashCode());
 	}
 	
-	public abstract void removeJob(Job j);
+	public void removeJob(Job j) {
+		Integer jobCodeToRemove = j.myTitle.hashCode();
+		for(Integer i : myJobs) {
+			System.out.println(i);
+			if(i == jobCodeToRemove) {
+				System.out.println("Removing :" + i);
+				myJobs.remove(i);
+			}
+		}
+	}
 	
 }
