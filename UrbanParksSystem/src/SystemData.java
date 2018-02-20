@@ -8,11 +8,26 @@ public class SystemData {
 	private int myUserHash;
 	private final DataStore myStorage = new DataStore();
 	
-	private static final int MAX_NUM_JOBS = 15;
+	private static int MAX_NUM_JOBS = 15;
 
 	public SystemData() {
 		myStorage.LoadJobs(myJobMap);
 
+	}
+	
+	public boolean setMaxJobs(String input) {
+		int val = MAX_NUM_JOBS;
+		try {
+			val = Integer.parseInt(input);
+		} catch(NumberFormatException e){
+			return false;
+		}
+		
+		if(val > 0){
+			MAX_NUM_JOBS = val;
+			return true;
+		}
+		return false;
 	}
 
 	public boolean atMaxJobs() {
