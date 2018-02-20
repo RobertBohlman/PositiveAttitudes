@@ -21,9 +21,6 @@ public class Volunteer extends AbstractUser {
 	/** */
 	private int myPhysicalLevel;
 	
-	/** */
-	Collection <Integer> myJobs;
-	
 	
 	/**
 	 * 
@@ -39,7 +36,6 @@ public class Volunteer extends AbstractUser {
 		myAge = theAge;
 		myEmail = theEmail;
 		myPhysicalLevel = thePhysicalLevel;
-		myJobs = new ArrayList<Integer>();
 	}
 	
 	/**

@@ -288,7 +288,7 @@ public class UrbanParksTerminal {
 			consoleState = VOLUNTEER_MAIN_MENU;
 			break;
 		case '2':
-			UrbanParksSystem.removeVolunteerJob(j);
+			UrbanParksSystem.removeJob(j);
 			break;
 		case '3':
 			consoleState = AVAILABLE_JOB_SCREEN;

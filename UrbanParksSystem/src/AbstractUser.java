@@ -1,5 +1,6 @@
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -76,13 +77,7 @@ public abstract class AbstractUser implements Serializable{
 	
 	public void removeJob(Job j) {
 		Integer jobCodeToRemove = j.myTitle.hashCode();
-		for(Integer i : myJobs) {
-			System.out.println(i);
-			if(i == jobCodeToRemove) {
-				System.out.println("Removing :" + i);
-				myJobs.remove(i);
-			}
-		}
+		myJobs.remove(jobCodeToRemove);
 	}
 	
 }

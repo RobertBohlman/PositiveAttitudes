@@ -83,7 +83,7 @@ public class SystemData {
 //		saveData();
 //	}
 
-	public void removeVolunteerJob(Job j) {
+	public void removeJob(Job j) {
 		if(j.isMinDaysInFuture()) {
 			//remove int from array list of volunteer
 			getCurrentUser().removeJob(j);
