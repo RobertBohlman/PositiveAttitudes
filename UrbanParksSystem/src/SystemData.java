@@ -83,15 +83,18 @@ public class SystemData {
 //		saveData();
 //	}
 
-	public void removeUserJob(Job j) {
+	public boolean removeUserJob(Job j) {
+		boolean result = false;
 		if(j.isMinDaysInFuture()) {
 			//remove int from array list of volunteer
 			getCurrentUser().removeJob(j);
 			saveData();
+	        result = true;
 			System.out.println("Removed Job.\n");
 		} else {
 			System.out.println("Could not remove job!\n");
 		}
+		return result;
 	}
 
 	public AbstractUser getCurrentUser() {
