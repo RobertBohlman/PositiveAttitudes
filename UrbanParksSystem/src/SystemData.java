@@ -98,15 +98,53 @@ public class SystemData {
 //		saveData();
 //	}
 
-	public void removeUserJob(Job j) {
+	public boolean removeUserJob(Job j) {
+		boolean result = false;
 		if(j.isMinDaysInFuture()) {
 			//remove int from array list of volunteer
 			getCurrentUser().removeJob(j);
 			saveData();
+	        result = true;
 			System.out.println("Removed Job.\n");
 		} else {
 			System.out.println("Could not remove job!\n");
 		}
+		return result;
+	}
+	
+	public boolean removeJob(Job j) {
+		boolean result = false;
+		
+		if(j.isMinDaysInFuture()) {
+			Integer jobToRemove = j.myTitle.hashCode();
+			myJobMap.remove(jobToRemove);
+			
+			//remove the job from each user
+			for(Integer user : myUserMap.keySet()) {
+				removeUserJobByUser(j, user);
+			}
+
+			saveData();
+			result = true;
+			System.out.println("Removed Job.\n");
+		} else {
+			System.out.println("Could not remove job!\n");
+		}
+		return result;
+	}
+	
+	// TODO I would like this method to replace the one called
+	// removeUserJob();
+	public boolean removeUserJobByUser(Job j, int user) {
+		boolean result = false;
+		if(j.isMinDaysInFuture()) {
+			LookupUser(user).removeJob(j);
+			saveData();
+	        result = true;
+		} else {
+			System.out.println("Could not remove job!\n");
+		}
+		return result;
 	}
 
 	public AbstractUser getCurrentUser() {
