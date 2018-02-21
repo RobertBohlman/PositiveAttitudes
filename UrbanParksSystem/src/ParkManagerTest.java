@@ -20,6 +20,18 @@ public class ParkManagerTest {
 	private ParkManager managerUser;
 	private SystemData UrbanParksSystem;
 	
+	ParkManager parkManagerMoreThanTwoDays = new ParkManager(null, 0, null);
+	ParkManager removeJobParkManager = new ParkManager(null, 0, null);
+	Job jobStartLate;
+	Job jobStartIn2Days;
+	Job jobStartTooEarly;
+	Job jobOnCurDay;
+	Job jobBeforeCurDay;
+	Job jobAtMinFuture;
+	Job jobMoreMinFuture;
+	
+	int currentDayDate = 21;
+	
 	@Before
 	public void setUp() throws Exception {
 		UrbanParksSystem = new SystemData();
@@ -30,6 +42,14 @@ public class ParkManagerTest {
 		managerUser = new ParkManager("manager1", 1, "manager@parks.org");
 		UrbanParksSystem.addUser(managerUser);
 		UrbanParksSystem.setCurrentUser(managerUser.getUserName());
+		
+		jobStartLate = new Job("leaves", "2018/08/02", "Req", 3, "Park 2", "Rake Leaves", 2);
+		jobStartIn2Days = new Job("leaves", "2018/07/02", "Req", 3, "Park 2", "Rake Leaves", 2);
+		jobStartTooEarly = new Job("leaves", "2018/05/02", "Req", 3, "Park 2", "Rake Leaves", 2);
+		jobOnCurDay = new Job("Title", "2018/02/" + currentDayDate, "Req", 3, "Park", "Rake Leaves", 2);
+		jobBeforeCurDay = new Job("Title", "2018/02/" + (currentDayDate - 1), "Req", 3, "Park", "Rake Leaves", 2);
+		jobMoreMinFuture = new Job("Title", "2018/02/" + (currentDayDate + 5), "Req", 3, "Park", "Rake Leaves", 2);
+		jobAtMinFuture = new Job("Title", "2018/02/" + (currentDayDate + 4), "Req", 3, "Park", "Rake Leaves", 2);
 		
 	}
 	
@@ -44,6 +64,38 @@ public class ParkManagerTest {
 		UrbanParksSystem.submitJob(submittableInvalidJob);
 		assertFalse(managerUser.getJobs().contains(submittableInvalidJob.myTitle.hashCode()));
 	}
+
+	@Test
+	public void removeJobOnCurrentDay_JobDateOnCurrentDate_false() {
+		removeJobParkManager.addJob(jobOnCurDay);
+		assertFalse(jobOnCurDay.isMinDaysInFuture());
+	}
+	
+	@Test
+	public void removeJobForMultiDayJob_JobDatePriorToCurrentDate_false() {
+		removeJobParkManager.addJob(jobBeforeCurDay);
+		assertFalse(jobBeforeCurDay.isMinDaysInFuture());
+	}
+	
+	@Test
+	public void removeJobForJob_JobDateAfterMinDaysInFuture_true() {
+		removeJobParkManager.addJob(jobMoreMinFuture);
+		assertTrue(jobMoreMinFuture.isMinDaysInFuture());
+	}
+	
+	 
+	@Test
+	public void removeJobForJob_JobDateAtExactMinInFuture_true() {
+		removeJobParkManager.addJob(jobAtMinFuture);
+		assertTrue(jobAtMinFuture.isMinDaysInFuture());
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 //	@Test
 //	void submitJob_tooManyJobs_returnFalse() { 

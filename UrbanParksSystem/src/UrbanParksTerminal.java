@@ -312,7 +312,7 @@ public class UrbanParksTerminal {
 		
 		switch (selection.charAt(0)) {
 		case '1':
-			//TODO DELETE JOB
+			UrbanParksSystem.removeJob(j);
 			break;
 			
 		case '2':
