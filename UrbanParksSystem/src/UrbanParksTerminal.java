@@ -1,8 +1,19 @@
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class UrbanParksTerminal {
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.SpringLayout;
+
+public class UrbanParksTerminal extends JFrame{
 	private static SystemData UrbanParksSystem;
 	private static Scanner scan;
 	
@@ -41,6 +52,28 @@ public class UrbanParksTerminal {
 			UrbanParksSystem.addUser(new Volunteer("Billy", 2, 34, "umm@gmail.com", 3));
 		}
 	
+		JFrame f = new JFrame();
+		JLabel usernameText = new JLabel("Username:");
+		JTextField username = new JTextField();
+		username.setPreferredSize(new Dimension(300,25));
+		JButton loginButton = new JButton("Login");
+		f.setLayout(new FlowLayout());
+		f.add(usernameText);
+		f.add(username);
+		f.add(loginButton);
+		f.setSize(500, 100);
+		f.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		f.setLocationRelativeTo(null);
+		f.setTitle("Welcome to Urban Parks!");
+		f.setVisible(true);
+		
+		loginButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String user = username.getText();
+				
+			}
+		});
+		
 		
 		/* Main Console UI Loop*/
 		while (consoleState != END) {
