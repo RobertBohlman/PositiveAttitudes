@@ -124,6 +124,8 @@ public class UrbanParksTerminal extends JFrame{
 				if(pass) {
 					UrbanParksSystem.setCurrentUser(user);
 					f.dispose();
+					//OPEN WINDOW FOR WHATEVER USER HERE BELOW
+					
 				} else {
 					JOptionPane.showMessageDialog(null, ("No user named " + user + " exists!"), "No user found",
 							JOptionPane.ERROR_MESSAGE);
