@@ -1,19 +1,16 @@
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.SpringLayout;
 
 public class UrbanParksTerminal extends JFrame{
+	private static final long serialVersionUID = -5601671266866084219L;
 	private static SystemData UrbanParksSystem;
 	private static Scanner scan;
 	
@@ -35,9 +32,6 @@ public class UrbanParksTerminal extends JFrame{
 		UrbanParksSystem = new SystemData();
 		scan = new Scanner(System.in);
 		
-		//Added this for hard-coding users until we have to implement letting 
-		//them set up accounts for themselves.
-		//0 = Employee :: 1 = ParkManager :: 2 = Volunteer
 
 		/*
 		 * Checks if the serialized data is existent
@@ -51,28 +45,10 @@ public class UrbanParksTerminal extends JFrame{
 			UrbanParksSystem.addUser(new ParkManager("Frank", 1, "why@gmail.com"));
 			UrbanParksSystem.addUser(new Volunteer("Billy", 2, 34, "umm@gmail.com", 3));
 		}
-	
-		JFrame f = new JFrame();
-		JLabel usernameText = new JLabel("Username:");
-		JTextField username = new JTextField();
-		username.setPreferredSize(new Dimension(300,25));
-		JButton loginButton = new JButton("Login");
-		f.setLayout(new FlowLayout());
-		f.add(usernameText);
-		f.add(username);
-		f.add(loginButton);
-		f.setSize(500, 100);
-		f.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		f.setLocationRelativeTo(null);
-		f.setTitle("Welcome to Urban Parks!");
-		f.setVisible(true);
 		
-		loginButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String user = username.getText();
-				
-			}
-		});
+		//GUI Calls
+		displayUserLoginGUI();
+		
 		
 		
 		/* Main Console UI Loop*/
@@ -119,6 +95,31 @@ public class UrbanParksTerminal extends JFrame{
 		scan.close();
 	}
 	
+	private static void displayUserLoginGUI() {
+		JFrame f = new JFrame();
+		JLabel usernameText = new JLabel("Username:");
+		JTextField username = new JTextField();
+		username.setPreferredSize(new Dimension(300,25));
+		JButton loginButton = new JButton("Login");
+		f.setLayout(new FlowLayout());
+		f.add(usernameText);
+		f.add(username);
+		f.add(loginButton);
+		f.setSize(500, 100);
+		f.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		f.setLocationRelativeTo(null);
+		f.setTitle("Welcome to Urban Parks!");
+		f.setVisible(true);
+		
+		loginButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String user = username.getText();
+				UrbanParksSystem.setCurrentUser(user);
+				f.dispose();
+				//Pull up UI based on user here below
+			}
+		});
+	}
 	
 	private static void displayUserLogIn() {
 		System.out.println("Hello! Welcome to Urban Parks.\n"
