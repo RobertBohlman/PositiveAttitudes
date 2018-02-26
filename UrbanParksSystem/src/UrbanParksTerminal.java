@@ -7,6 +7,7 @@ import java.util.Scanner;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class UrbanParksTerminal extends JFrame{
@@ -114,12 +115,21 @@ public class UrbanParksTerminal extends JFrame{
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String user = username.getText();
-				UrbanParksSystem.setCurrentUser(user);
-				f.dispose();
-				//Pull up UI based on user here below
-			}
-		});
-	}
+				boolean pass = false;
+				for(Integer i : UrbanParksSystem.getUserMap().keySet()) {
+					if(user.hashCode() == i) {
+						pass = true;
+					}
+				}
+				if(pass) {
+					UrbanParksSystem.setCurrentUser(user);
+					f.dispose();
+				} else {
+					JOptionPane.showMessageDialog(null, ("No user named " + user + " exists!"), "No user found",
+							JOptionPane.ERROR_MESSAGE);
+				}
+			}});
+		}
 	
 	private static void displayUserLogIn() {
 		System.out.println("Hello! Welcome to Urban Parks.\n"

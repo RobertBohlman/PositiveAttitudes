@@ -120,7 +120,7 @@ public class Job implements Serializable {
 		//If start date of job is not before the default 3 days then bool = true
 		if(myDateStart.after(future)) {
 			result = true;
-		} else if (myDateStart.equals(future)) {
+		} else if (myDateStart.getDay() == future.getDay()) {
 			result = true;
 		}
 		return result;
