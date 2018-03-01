@@ -1,0 +1,40 @@
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class UserLoginPanel extends JPanel {
+	
+	private SystemData urbanParksSystem;
+	private JLabel usernameText;
+	private JTextField username;
+	private JButton loginButton;
+
+	public UserLoginPanel(SystemData system, ActionListener listener) {
+		setLayout(new FlowLayout());
+		
+		urbanParksSystem = system;
+		usernameText = new JLabel("Username:");
+		username = new JTextField();
+		username.setPreferredSize(new Dimension(300,25));
+		loginButton = new JButton("Login");
+		
+		add(usernameText);
+		add(username);
+		add(loginButton);
+		setSize(500, 100);
+		
+		loginButton.addActionListener(listener);
+		
+	}
+
+	public String getUserName() {
+		return username.getText();
+	}
+}

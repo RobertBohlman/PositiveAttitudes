@@ -39,11 +39,11 @@ public class UrbanParksTerminal extends JFrame{
 	private JPanel currentPanel;
 	private JMenuBar currentMenu;
 	
-	private JPanel userLoginPanel = new JPanel();
+	private JPanel userLoginPanel;
 	private JPanel parkManagerJobPanel = new JPanel();
 	private JPanel parkManagerSubmitPanel = new JPanel();
 	private JPanel volunteerYourJobsPanel = new JPanel();
-	private JPanel volunteerAvailableJobsPanel = JPanel();
+	private JPanel volunteerAvailableJobsPanel = new JPanel();
 	private JPanel employeePanel = new JPanel();
 
 	private JMenuBar userLoginMenu = new JMenuBar();
@@ -144,6 +144,7 @@ public class UrbanParksTerminal extends JFrame{
 	}
 	
 	private void initializePanels() {
+		initializeUserLoginPanel();
 		initializeParkManagerJobPanel();
 		initializeParkManagerSubmitPanel();
 		initializeVolunteerYourJobsPanel();
@@ -234,19 +235,10 @@ public class UrbanParksTerminal extends JFrame{
 	}
 	
 	private void initializeUserLoginPanel() {
-		JLabel usernameText = new JLabel("Username:");
-		JTextField username = new JTextField();
-		username.setPreferredSize(new Dimension(300,25));
-		JButton loginButton = new JButton("Login");
-		userLoginPanel.setLayout(new FlowLayout());
-		userLoginPanel.add(usernameText);
-		userLoginPanel.add(username);
-		userLoginPanel.add(loginButton);
-		userLoginPanel.setSize(500, 100);
 		
-		loginButton.addActionListener(new ActionListener() {
+		userLoginPanel = new UserLoginPanel(UrbanParksSystem, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String user = username.getText();
+				String user = ((UserLoginPanel) userLoginPanel).getUserName();
 				boolean pass = false;
 				for(Integer i : UrbanParksSystem.getUserMap().keySet()) {
 					if(user.hashCode() == i) {
