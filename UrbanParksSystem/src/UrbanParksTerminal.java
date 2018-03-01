@@ -1,3 +1,4 @@
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -8,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class UrbanParksTerminal extends JFrame{
@@ -29,6 +31,58 @@ public class UrbanParksTerminal extends JFrame{
 	private static final int MANAGER_SUBMITTED_JOBS = 8;
 	private static final int END = 99;
 	
+	
+	private JPanel currentPanel;
+	private JPanel userLoginPanel = new JPanel();
+	private JPanel parkManagerPanel = new JPanel();
+	private JPanel volunteerPanel = new JPanel();
+	private JPanel employeePanel = new JPanel();
+	
+	public UrbanParksTerminal() {
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		setLocationRelativeTo(null);
+		setTitle("Welcome to Urban Parks!");
+		
+		initializeUserLoginPanel();
+		add(userLoginPanel, BorderLayout.CENTER);
+		
+		changeState(USER_LOG_IN);
+		pack();
+		setVisible(true);
+	}
+
+	private void changeState(int consoleState) {
+		switch (consoleState) {
+		case USER_LOG_IN:
+			currentPanel = userLoginPanel;
+			break;
+			
+		case VOLUNTEER_MAIN_MENU:
+			break;
+			
+		case AVAILABLE_JOB_SCREEN:
+			break;
+			
+		case PARK_MANAGER_MAIN_MENU:
+			break;
+			
+		case PARK_MANAGER_JOB_SUBMIT:
+			break;
+			
+		case VOLUNTEER_SIGNED_UP_JOBS:
+			break;
+			
+		case EMPLOYEE_MAIN_MENU:
+			break;
+			
+		case MANAGER_SUBMITTED_JOBS:
+			break;
+			
+		default:
+			break;
+	}
+	}
+	
 	public static void main(String[] args) {
 		UrbanParksSystem = new SystemData();
 		scan = new Scanner(System.in);
@@ -48,69 +102,64 @@ public class UrbanParksTerminal extends JFrame{
 		}
 		
 		//GUI Calls
-		displayUserLoginGUI();
+		UrbanParksTerminal terminal = new UrbanParksTerminal();
 		
 		
-		
-		/* Main Console UI Loop*/
-		while (consoleState != END) {
-			switch (consoleState) {
-				case USER_LOG_IN:
-					displayUserLogIn();
-					break;
-					
-				case VOLUNTEER_MAIN_MENU:
-					displayVolunteerMainMenu();
-					break;
-					
-				case AVAILABLE_JOB_SCREEN:
-					displayAvailableJobs();
-					break;
-					
-				case PARK_MANAGER_MAIN_MENU:
-					displayParkManagerMainMenu();
-					break;
-					
-				case PARK_MANAGER_JOB_SUBMIT:
-					displaySubmitJobScreen();
-					break;
-					
-				case VOLUNTEER_SIGNED_UP_JOBS:
-					displayVolunteerJobs();
-					break;
-					
-				case EMPLOYEE_MAIN_MENU:
-					displayEmployeeMainMenu();
-					break;
-					
-				case MANAGER_SUBMITTED_JOBS:
-					displaySubmittedManagerJobs();
-					break;
-					
-				default:
-					break;
-			}
-		}
-		System.out.println("Shutting down");
-		UrbanParksSystem.saveData(); //Serialize userMap and jobList
-		scan.close();
+//		
+//		/* Main Console UI Loop*/
+//		while (consoleState != END) {
+//			switch (consoleState) {
+//				case USER_LOG_IN:
+//					displayUserLogIn();
+//					break;
+//					
+//				case VOLUNTEER_MAIN_MENU:
+//					displayVolunteerMainMenu();
+//					break;
+//					
+//				case AVAILABLE_JOB_SCREEN:
+//					displayAvailableJobs();
+//					break;
+//					
+//				case PARK_MANAGER_MAIN_MENU:
+//					displayParkManagerMainMenu();
+//					break;
+//					
+//				case PARK_MANAGER_JOB_SUBMIT:
+//					displaySubmitJobScreen();
+//					break;
+//					
+//				case VOLUNTEER_SIGNED_UP_JOBS:
+//					displayVolunteerJobs();
+//					break;
+//					
+//				case EMPLOYEE_MAIN_MENU:
+//					displayEmployeeMainMenu();
+//					break;
+//					
+//				case MANAGER_SUBMITTED_JOBS:
+//					displaySubmittedManagerJobs();
+//					break;
+//					
+//				default:
+//					break;
+//			}
+//		}
+//		System.out.println("Shutting down");
+//		UrbanParksSystem.saveData(); //Serialize userMap and jobList
+//		scan.close();
 	}
 	
-	private static void displayUserLoginGUI() {
-		JFrame f = new JFrame();
+	private void initializeUserLoginPanel() {
 		JLabel usernameText = new JLabel("Username:");
 		JTextField username = new JTextField();
 		username.setPreferredSize(new Dimension(300,25));
 		JButton loginButton = new JButton("Login");
-		f.setLayout(new FlowLayout());
-		f.add(usernameText);
-		f.add(username);
-		f.add(loginButton);
-		f.setSize(500, 100);
-		f.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		f.setLocationRelativeTo(null);
-		f.setTitle("Welcome to Urban Parks!");
-		f.setVisible(true);
+		userLoginPanel.setLayout(new FlowLayout());
+		userLoginPanel.add(usernameText);
+		userLoginPanel.add(username);
+		userLoginPanel.add(loginButton);
+		userLoginPanel.setSize(500, 100);
 		
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -123,14 +172,15 @@ public class UrbanParksTerminal extends JFrame{
 				}
 				if(pass) {
 					UrbanParksSystem.setCurrentUser(user);
-					f.dispose();
-					//OPEN WINDOW FOR WHATEVER USER HERE BELOW
+					// Change state based on user type
+					//changeState();
 					
 				} else {
 					JOptionPane.showMessageDialog(null, ("No user named " + user + " exists!"), "No user found",
 							JOptionPane.ERROR_MESSAGE);
 				}
 			}});
+		
 		}
 	
 	private static void displayUserLogIn() {
