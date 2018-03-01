@@ -83,49 +83,6 @@ public class UrbanParksTerminal extends JFrame{
 		UrbanParksTerminal terminal = new UrbanParksTerminal();
 		
 		
-//		
-//		/* Main Console UI Loop*/
-//		while (consoleState != END) {
-//			switch (consoleState) {
-//				case USER_LOG_IN:
-//					displayUserLogIn();
-//					break;
-//					
-//				case VOLUNTEER_MAIN_MENU:
-//					displayVolunteerMainMenu();
-//					break;
-//					
-//				case AVAILABLE_JOB_SCREEN:
-//					displayAvailableJobs();
-//					break;
-//					
-//				case PARK_MANAGER_MAIN_MENU:
-//					displayParkManagerMainMenu();
-//					break;
-//					
-//				case PARK_MANAGER_JOB_SUBMIT:
-//					displaySubmitJobScreen();
-//					break;
-//					
-//				case VOLUNTEER_SIGNED_UP_JOBS:
-//					displayVolunteerJobs();
-//					break;
-//					
-//				case EMPLOYEE_MAIN_MENU:
-//					displayEmployeeMainMenu();
-//					break;
-//					
-//				case MANAGER_SUBMITTED_JOBS:
-//					displaySubmittedManagerJobs();
-//					break;
-//					
-//				default:
-//					break;
-//			}
-//		}
-//		System.out.println("Shutting down");
-		
-		
 		UrbanParksSystem.saveData(); //Serialize userMap and jobList
 		scan.close();
 	}
@@ -161,7 +118,7 @@ public class UrbanParksTerminal extends JFrame{
 			break;
 		}
 		
-		add(currentPanel, BorderLayout.SOUTH);
+		add(currentPanel, BorderLayout.CENTER);
 		add(currentMenu, BorderLayout.NORTH);
 		pack();
 		revalidate();
@@ -279,7 +236,13 @@ public class UrbanParksTerminal extends JFrame{
 				}
 				if(pass) {
 					UrbanParksSystem.setCurrentUser(user);
-					changeState(PARK_MANAGER);
+					if (UrbanParksSystem.getCurrentUser() instanceof Employee) {
+						changeState(EMPLOYEE);
+					} else if (UrbanParksSystem.getCurrentUser() instanceof ParkManager) {
+						changeState(PARK_MANAGER);
+					} else if (UrbanParksSystem.getCurrentUser() instanceof Volunteer) {
+						changeState(VOLUNTEER);
+					}
 					
 				} else {
 					JOptionPane.showMessageDialog(null, ("No user named " + user + " exists!"), "No user found",
