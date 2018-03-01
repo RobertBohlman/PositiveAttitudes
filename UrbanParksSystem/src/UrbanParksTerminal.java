@@ -32,6 +32,7 @@ public class UrbanParksTerminal extends JFrame{
 	private static final int PARK_MANAGER_JOB_VIEW = 6;
 	private static final int EMPLOYEE = 7;
 	private static final int MANAGER_SUBMITTED_JOBS = 8;
+	
 	private static final int END = 99;
 	
 	
@@ -39,8 +40,10 @@ public class UrbanParksTerminal extends JFrame{
 	private JMenuBar currentMenu;
 	
 	private JPanel userLoginPanel = new JPanel();
-	private JPanel parkManagerPanel = new JPanel();
-	private JPanel volunteerPanel = new JPanel();
+	private JPanel parkManagerJobPanel = new JPanel();
+	private JPanel parkManagerSubmitPanel = new JPanel();
+	private JPanel volunteerYourJobsPanel = new JPanel();
+	private JPanel volunteerAvailableJobsPanel = JPanel();
 	private JPanel employeePanel = new JPanel();
 
 	private JMenuBar userLoginMenu = new JMenuBar();
@@ -100,12 +103,12 @@ public class UrbanParksTerminal extends JFrame{
 			break;
 			
 		case VOLUNTEER:
-			currentPanel = volunteerPanel;
+			currentPanel = volunteerYourJobsPanel;
 			currentMenu = volunteerMenu;
 			break;
 			
 		case PARK_MANAGER:
-			currentPanel = parkManagerPanel;
+			currentPanel = parkManagerJobPanel;
 			currentMenu = parkManagerMenu;
 			break;
 			
@@ -141,9 +144,10 @@ public class UrbanParksTerminal extends JFrame{
 	}
 	
 	private void initializePanels() {
-		initializeUserLoginPanel();
-		initializeParkManagerPanel();
-		initializeVolunteerPanel();
+		initializeParkManagerJobPanel();
+		initializeParkManagerSubmitPanel();
+		initializeVolunteerYourJobsPanel();
+		initializeVolunteerAvailableJobsPanel();
 		initializeEmployeePanel();
 
 	}
@@ -165,13 +169,13 @@ public class UrbanParksTerminal extends JFrame{
 		JMenuItem allJobs = new JMenu("All Jobs");
 		allJobs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				changePanel(PARK_MANAGER_JOB_VIEW);
 			}});
 		
 		JMenuItem submitNewJob = new JMenu("New Job");
 		allJobs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				changePanel(PARK_MANAGER_JOB_SUBMIT);
 			}});
 		
 		viewJobs.add(allJobs);
@@ -188,13 +192,13 @@ public class UrbanParksTerminal extends JFrame{
 		JMenuItem yourJobs = new JMenu("Your Jobs");
 		yourJobs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				changePanel(VOLUNTEER_SIGNED_UP_JOBS);
 			}});
 		
 		JMenuItem availableJobs = new JMenu("Available Jobs");
 		yourJobs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				changePanel(AVAILABLE_JOB_SCREEN);
 			}});
 		
 		JMenuItem editInfo = new JMenu("Edit Information");
@@ -267,12 +271,20 @@ public class UrbanParksTerminal extends JFrame{
 		
 	}
 	
-	private void initializeParkManagerPanel() {
-		parkManagerPanel.setSize(500, 500);
+	private void initializeParkManagerJobPanel() {
+		parkManagerJobPanel.setSize(500, 500);
 	}
 	
-	private void initializeVolunteerPanel() {
-		volunteerPanel.setSize(500, 500);
+	private void initializeParkManagerSubmitPanel() {
+		parkManagerJobPanel.setSize(500, 500);
+	}
+	
+	private void initializeVolunteerYourJobsPanel() {
+		volunteerYourJobsPanel.setSize(500, 500);
+	}
+	
+	private void initializeVolunteerAvailableJobsPanel() {
+		volunteerYourJobsPanel.setSize(500, 500);
 	}
 	
 	private void initializeEmployeePanel() {
