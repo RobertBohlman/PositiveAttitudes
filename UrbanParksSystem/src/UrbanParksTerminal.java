@@ -21,13 +21,13 @@ public class UrbanParksTerminal extends JFrame{
 	private static int consoleState = 0;
 	
 	private static final int USER_LOG_IN = 0;
-	private static final int VOLUNTEER_MAIN_MENU = 1;
+	private static final int VOLUNTEER = 1;
 	private static final int AVAILABLE_JOB_SCREEN = 2;
-	private static final int PARK_MANAGER_MAIN_MENU = 3;
+	private static final int PARK_MANAGER = 3;
 	private static final int PARK_MANAGER_JOB_SUBMIT = 4;
 	private static final int VOLUNTEER_SIGNED_UP_JOBS = 5;
 	private static final int PARK_MANAGER_JOB_VIEW = 6;
-	private static final int EMPLOYEE_MAIN_MENU = 7;
+	private static final int EMPLOYEE = 7;
 	private static final int MANAGER_SUBMITTED_JOBS = 8;
 	private static final int END = 99;
 	
@@ -46,6 +46,16 @@ public class UrbanParksTerminal extends JFrame{
 		initializeUserLoginPanel();
 		add(userLoginPanel, BorderLayout.CENTER);
 		
+		initializeParkManagerPanel();
+		add(parkManagerPanel, BorderLayout.CENTER);
+		
+		initializeVolunteerPanel();
+		add(volunteerPanel, BorderLayout.CENTER);
+		
+		initializeEmployeePanel();
+		add(employeePanel, BorderLayout.CENTER);
+		
+		
 		changeState(USER_LOG_IN);
 		pack();
 		setVisible(true);
@@ -57,30 +67,66 @@ public class UrbanParksTerminal extends JFrame{
 			currentPanel = userLoginPanel;
 			break;
 			
-		case VOLUNTEER_MAIN_MENU:
+		case VOLUNTEER:
+			currentPanel = volunteerPanel;
 			break;
 			
-		case AVAILABLE_JOB_SCREEN:
+		case PARK_MANAGER:
+			currentPanel = parkManagerPanel;
 			break;
 			
-		case PARK_MANAGER_MAIN_MENU:
-			break;
-			
-		case PARK_MANAGER_JOB_SUBMIT:
-			break;
-			
-		case VOLUNTEER_SIGNED_UP_JOBS:
-			break;
-			
-		case EMPLOYEE_MAIN_MENU:
-			break;
-			
-		case MANAGER_SUBMITTED_JOBS:
+		case EMPLOYEE:
+			currentPanel = employeePanel;
 			break;
 			
 		default:
 			break;
+		}
 	}
+	
+	private void initializeUserLoginPanel() {
+		JLabel usernameText = new JLabel("Username:");
+		JTextField username = new JTextField();
+		username.setPreferredSize(new Dimension(300,25));
+		JButton loginButton = new JButton("Login");
+		userLoginPanel.setLayout(new FlowLayout());
+		userLoginPanel.add(usernameText);
+		userLoginPanel.add(username);
+		userLoginPanel.add(loginButton);
+		userLoginPanel.setSize(500, 100);
+		
+		loginButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String user = username.getText();
+				boolean pass = false;
+				for(Integer i : UrbanParksSystem.getUserMap().keySet()) {
+					if(user.hashCode() == i) {
+						pass = true;
+					}
+				}
+				if(pass) {
+					UrbanParksSystem.setCurrentUser(user);
+					// Change state based on user type
+					//changeState();
+					
+				} else {
+					JOptionPane.showMessageDialog(null, ("No user named " + user + " exists!"), "No user found",
+							JOptionPane.ERROR_MESSAGE);
+				}
+			}});
+		
+	}
+	
+	private void initializeParkManagerPanel() {
+
+	}
+	
+	private void initializeVolunteerPanel() {
+
+	}
+	
+	private void initializeEmployeePanel() {
+
 	}
 	
 	public static void main(String[] args) {
@@ -150,38 +196,7 @@ public class UrbanParksTerminal extends JFrame{
 //		scan.close();
 	}
 	
-	private void initializeUserLoginPanel() {
-		JLabel usernameText = new JLabel("Username:");
-		JTextField username = new JTextField();
-		username.setPreferredSize(new Dimension(300,25));
-		JButton loginButton = new JButton("Login");
-		userLoginPanel.setLayout(new FlowLayout());
-		userLoginPanel.add(usernameText);
-		userLoginPanel.add(username);
-		userLoginPanel.add(loginButton);
-		userLoginPanel.setSize(500, 100);
-		
-		loginButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String user = username.getText();
-				boolean pass = false;
-				for(Integer i : UrbanParksSystem.getUserMap().keySet()) {
-					if(user.hashCode() == i) {
-						pass = true;
-					}
-				}
-				if(pass) {
-					UrbanParksSystem.setCurrentUser(user);
-					// Change state based on user type
-					//changeState();
-					
-				} else {
-					JOptionPane.showMessageDialog(null, ("No user named " + user + " exists!"), "No user found",
-							JOptionPane.ERROR_MESSAGE);
-				}
-			}});
-		
-		}
+
 	
 	private static void displayUserLogIn() {
 		System.out.println("Hello! Welcome to Urban Parks.\n"
@@ -208,11 +223,11 @@ public class UrbanParksTerminal extends JFrame{
 					break;
 					
 				case 1:
-					consoleState = PARK_MANAGER_MAIN_MENU;
+					//consoleState = PARK_MANAGER_MAIN_MENU;
 					break;
 				
 				case 2:
-					consoleState = VOLUNTEER_MAIN_MENU;
+					//consoleState = VOLUNTEER_MAIN_MENU;
 					break;
 					
 				default:
@@ -381,7 +396,7 @@ public class UrbanParksTerminal extends JFrame{
 			} else {
 				System.out.println("Sorry, you cannot sign up for this job");
 			}
-			consoleState = VOLUNTEER_MAIN_MENU;
+			//consoleState = VOLUNTEER_MAIN_MENU;
 			break;
 		case '2':
 			UrbanParksSystem.removeUserJob(j);
@@ -391,7 +406,7 @@ public class UrbanParksTerminal extends JFrame{
 			break;
 		
 		case '4':
-			consoleState = VOLUNTEER_MAIN_MENU;
+			//consoleState = VOLUNTEER_MAIN_MENU;
 			break;
 		
 		default:
@@ -416,7 +431,7 @@ public class UrbanParksTerminal extends JFrame{
 			break;
 		
 		case '3':
-			consoleState = PARK_MANAGER_MAIN_MENU;
+			//consoleState = PARK_MANAGER_MAIN_MENU;
 			break;
 		
 		default:
@@ -551,7 +566,7 @@ public class UrbanParksTerminal extends JFrame{
 					System.out.println("Can't submit this job, unknown error.");
 				}
 			}
-			consoleState = PARK_MANAGER_MAIN_MENU;
+			//consoleState = PARK_MANAGER_MAIN_MENU;
 			
 		} else if (selection.charAt(0) == '2') {
 			consoleState = PARK_MANAGER_JOB_SUBMIT;
