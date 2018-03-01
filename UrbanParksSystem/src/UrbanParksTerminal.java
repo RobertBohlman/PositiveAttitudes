@@ -8,7 +8,9 @@ import java.util.Scanner;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -55,96 +57,10 @@ public class UrbanParksTerminal extends JFrame{
 		initializePanels();
 		
 		changeState(USER_LOG_IN);
-		add(currentPanel, BorderLayout.CENTER);
-		add(currentMenu, BorderLayout.NORTH);
-		pack();
 		setVisible(true);
 	}
+	
 
-	private void changeState(int consoleState) {
-		switch (consoleState) {
-		case USER_LOG_IN:
-			currentPanel = userLoginPanel;
-			currentMenu = userLoginMenu;
-			break;
-			
-		case VOLUNTEER:
-			currentPanel = volunteerPanel;
-			currentMenu = volunteerMenu;
-			break;
-			
-		case PARK_MANAGER:
-			currentPanel = parkManagerPanel;
-			currentMenu = parkManagerMenu;
-			break;
-			
-		case EMPLOYEE:
-			currentPanel = employeePanel;
-			currentMenu = employeeMenu;
-			break;
-			
-		default:
-			break;
-		}
-	}
-	
-	private void initializePanels() {
-		initializeUserLoginPanel();
-		initializeParkManagerPanel();
-		initializeVolunteerPanel();
-		initializeEmployeePanel();
-
-	}
-	
-	private void initializeMenus() {
-		
-	}
-	
-	private void initializeUserLoginPanel() {
-		JLabel usernameText = new JLabel("Username:");
-		JTextField username = new JTextField();
-		username.setPreferredSize(new Dimension(300,25));
-		JButton loginButton = new JButton("Login");
-		userLoginPanel.setLayout(new FlowLayout());
-		userLoginPanel.add(usernameText);
-		userLoginPanel.add(username);
-		userLoginPanel.add(loginButton);
-		userLoginPanel.setSize(500, 100);
-		
-		loginButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String user = username.getText();
-				boolean pass = false;
-				for(Integer i : UrbanParksSystem.getUserMap().keySet()) {
-					if(user.hashCode() == i) {
-						pass = true;
-					}
-				}
-				if(pass) {
-					UrbanParksSystem.setCurrentUser(user);
-					// Change state based on user type
-					//changeState();
-					
-				} else {
-					JOptionPane.showMessageDialog(null, ("No user named " + user + " exists!"), "No user found",
-							JOptionPane.ERROR_MESSAGE);
-				}
-			}});
-		
-	}
-	
-	private void initializeParkManagerPanel() {
-		
-	}
-	
-	private void initializeVolunteerPanel() {
-
-	}
-	
-	private void initializeEmployeePanel() {
-
-	}
-	
 	public static void main(String[] args) {
 		UrbanParksSystem = new SystemData();
 		scan = new Scanner(System.in);
@@ -208,10 +124,183 @@ public class UrbanParksTerminal extends JFrame{
 //			}
 //		}
 //		System.out.println("Shutting down");
-//		UrbanParksSystem.saveData(); //Serialize userMap and jobList
-//		scan.close();
+		
+		
+		UrbanParksSystem.saveData(); //Serialize userMap and jobList
+		scan.close();
 	}
 	
+
+	private void changeState(int consoleState) {
+		if (currentPanel != null && currentMenu != null) {
+			remove(currentPanel);
+			remove(currentMenu);
+		}
+		switch (consoleState) {
+		case USER_LOG_IN:
+			currentPanel = userLoginPanel;
+			currentMenu = userLoginMenu;
+			break;
+			
+		case VOLUNTEER:
+			currentPanel = volunteerPanel;
+			currentMenu = volunteerMenu;
+			break;
+			
+		case PARK_MANAGER:
+			currentPanel = parkManagerPanel;
+			currentMenu = parkManagerMenu;
+			break;
+			
+		case EMPLOYEE:
+			currentPanel = employeePanel;
+			currentMenu = employeeMenu;
+			break;
+			
+		default:
+			break;
+		}
+		
+		add(currentPanel, BorderLayout.SOUTH);
+		add(currentMenu, BorderLayout.NORTH);
+		pack();
+		revalidate();
+		repaint();
+	}
+	
+	private void initializePanels() {
+		initializeUserLoginPanel();
+		initializeParkManagerPanel();
+		initializeVolunteerPanel();
+		initializeEmployeePanel();
+
+	}
+	
+	private void initializeMenus() {
+		initializeParkManagerMenu();
+		initializeVolunteerMenu();
+		initializeEmployeeMenu();
+
+	}
+	
+	private void initializeParkManagerMenu() {
+		JMenu viewJobs = new JMenu("View Jobs");
+		JMenu submitJobs = new JMenu("Submit Jobs");
+		
+		parkManagerMenu.add(viewJobs);
+		parkManagerMenu.add(submitJobs);
+		
+		JMenuItem allJobs = new JMenu("All Jobs");
+		allJobs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}});
+		
+		JMenuItem submitNewJob = new JMenu("New Job");
+		allJobs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}});
+		
+		viewJobs.add(allJobs);
+		submitJobs.add(submitNewJob);
+	}
+	
+	private void initializeVolunteerMenu() {
+		JMenu viewJobs = new JMenu("View Jobs");
+		JMenu settings = new JMenu("Settings");
+		
+		volunteerMenu.add(viewJobs);
+		volunteerMenu.add(settings);
+		
+		JMenuItem yourJobs = new JMenu("Your Jobs");
+		yourJobs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}});
+		
+		JMenuItem availableJobs = new JMenu("Available Jobs");
+		yourJobs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}});
+		
+		JMenuItem editInfo = new JMenu("Edit Information");
+		editInfo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}});
+		
+		viewJobs.add(yourJobs);
+		viewJobs.add(availableJobs);
+		settings.add(editInfo);
+	}
+	
+	
+	private void initializeEmployeeMenu() {
+		JMenu jobs = new JMenu("Jobs");
+		JMenu volunteers = new JMenu("Volunteers");
+		JMenu managers = new JMenu("Park Managers");
+		JMenu settings = new JMenu("Settings");
+		
+		employeeMenu.add(jobs);
+		employeeMenu.add(volunteers);
+		employeeMenu.add(managers);
+		employeeMenu.add(settings);
+		
+		JMenuItem editSystem = new JMenu("Edit System");
+		editSystem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}});
+		
+		settings.add(editSystem);
+	}
+	
+	private void initializeUserLoginPanel() {
+		JLabel usernameText = new JLabel("Username:");
+		JTextField username = new JTextField();
+		username.setPreferredSize(new Dimension(300,25));
+		JButton loginButton = new JButton("Login");
+		userLoginPanel.setLayout(new FlowLayout());
+		userLoginPanel.add(usernameText);
+		userLoginPanel.add(username);
+		userLoginPanel.add(loginButton);
+		userLoginPanel.setSize(500, 100);
+		
+		loginButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String user = username.getText();
+				boolean pass = false;
+				for(Integer i : UrbanParksSystem.getUserMap().keySet()) {
+					if(user.hashCode() == i) {
+						pass = true;
+					}
+				}
+				if(pass) {
+					UrbanParksSystem.setCurrentUser(user);
+					changeState(PARK_MANAGER);
+					
+				} else {
+					JOptionPane.showMessageDialog(null, ("No user named " + user + " exists!"), "No user found",
+							JOptionPane.ERROR_MESSAGE);
+				}
+			}});
+		
+	}
+	
+	private void initializeParkManagerPanel() {
+		parkManagerPanel.setSize(500, 500);
+	}
+	
+	private void initializeVolunteerPanel() {
+		volunteerPanel.setSize(500, 500);
+	}
+	
+	private void initializeEmployeePanel() {
+		employeePanel.setSize(500, 500);
+	}
+
 
 	
 	private static void displayUserLogIn() {
