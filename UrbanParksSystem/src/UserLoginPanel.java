@@ -11,15 +11,13 @@ import javax.swing.JTextField;
 
 public class UserLoginPanel extends JPanel {
 	
-	private SystemData urbanParksSystem;
 	private JLabel usernameText;
 	private JTextField username;
 	private JButton loginButton;
 
-	public UserLoginPanel(SystemData system, ActionListener listener) {
+	public UserLoginPanel(ActionListener listener) {
 		setLayout(new FlowLayout());
 		
-		urbanParksSystem = system;
 		usernameText = new JLabel("Username:");
 		username = new JTextField();
 		username.setPreferredSize(new Dimension(300,25));

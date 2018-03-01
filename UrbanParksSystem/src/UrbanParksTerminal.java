@@ -236,7 +236,7 @@ public class UrbanParksTerminal extends JFrame{
 	
 	private void initializeUserLoginPanel() {
 		
-		userLoginPanel = new UserLoginPanel(UrbanParksSystem, new ActionListener() {
+		userLoginPanel = new UserLoginPanel(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String user = ((UserLoginPanel) userLoginPanel).getUserName();
 				boolean pass = false;
