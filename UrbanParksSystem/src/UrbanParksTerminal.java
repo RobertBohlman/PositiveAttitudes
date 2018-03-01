@@ -32,6 +32,7 @@ public class UrbanParksTerminal extends JFrame{
 	private static final int PARK_MANAGER_JOB_VIEW = 6;
 	private static final int EMPLOYEE = 7;
 	private static final int MANAGER_SUBMITTED_JOBS = 8;
+	private static final int VOLUNTEER_EDIT_INFO = 9;
 	
 	private static final int END = 99;
 	
@@ -168,16 +169,10 @@ public class UrbanParksTerminal extends JFrame{
 		parkManagerMenu.add(submitJobs);
 		
 		JMenuItem allJobs = new JMenu("All Jobs");
-		allJobs.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				changePanel(PARK_MANAGER_JOB_VIEW);
-			}});
+		allJobs.addActionListener(makeMenuItemListener(PARK_MANAGER_JOB_VIEW));
 		
 		JMenuItem submitNewJob = new JMenu("New Job");
-		allJobs.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				changePanel(PARK_MANAGER_JOB_SUBMIT);
-			}});
+		allJobs.addActionListener(makeMenuItemListener(PARK_MANAGER_JOB_SUBMIT));
 		
 		viewJobs.add(allJobs);
 		submitJobs.add(submitNewJob);
@@ -191,28 +186,26 @@ public class UrbanParksTerminal extends JFrame{
 		volunteerMenu.add(settings);
 		
 		JMenuItem yourJobs = new JMenu("Your Jobs");
-		yourJobs.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				changePanel(VOLUNTEER_SIGNED_UP_JOBS);
-			}});
+		yourJobs.addActionListener(makeMenuItemListener(VOLUNTEER_SIGNED_UP_JOBS));
 		
 		JMenuItem availableJobs = new JMenu("Available Jobs");
-		yourJobs.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				changePanel(AVAILABLE_JOB_SCREEN);
-			}});
-		
+		yourJobs.addActionListener(makeMenuItemListener(AVAILABLE_JOB_SCREEN));
+
 		JMenuItem editInfo = new JMenu("Edit Information");
-		editInfo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}});
+		editInfo.addActionListener(makeMenuItemListener(VOLUNTEER_EDIT_INFO));
 		
 		viewJobs.add(yourJobs);
 		viewJobs.add(availableJobs);
 		settings.add(editInfo);
 	}
 	
+	private ActionListener makeMenuItemListener(int panelState) { 
+		return new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				changePanel(panelState);
+			}};
+		
+	}
 	
 	private void initializeEmployeeMenu() {
 		JMenu jobs = new JMenu("Jobs");
@@ -225,13 +218,6 @@ public class UrbanParksTerminal extends JFrame{
 		employeeMenu.add(managers);
 		employeeMenu.add(settings);
 		
-		JMenuItem editSystem = new JMenu("Edit System");
-		editSystem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}});
-		
-		settings.add(editSystem);
 	}
 	
 	private void initializeUserLoginPanel() {
