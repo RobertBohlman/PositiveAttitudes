@@ -8,6 +8,7 @@ import java.util.Scanner;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -33,30 +34,29 @@ public class UrbanParksTerminal extends JFrame{
 	
 	
 	private JPanel currentPanel;
+	private JMenuBar currentMenu;
+	
 	private JPanel userLoginPanel = new JPanel();
 	private JPanel parkManagerPanel = new JPanel();
 	private JPanel volunteerPanel = new JPanel();
 	private JPanel employeePanel = new JPanel();
+
+	private JMenuBar userLoginMenu = new JMenuBar();
+	private JMenuBar parkManagerMenu = new JMenuBar();
+	private JMenuBar volunteerMenu = new JMenuBar();
+	private JMenuBar employeeMenu = new JMenuBar();
 	
 	public UrbanParksTerminal() {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setTitle("Welcome to Urban Parks!");
 		
-		initializeUserLoginPanel();
-		add(userLoginPanel, BorderLayout.CENTER);
-		
-		initializeParkManagerPanel();
-		add(parkManagerPanel, BorderLayout.CENTER);
-		
-		initializeVolunteerPanel();
-		add(volunteerPanel, BorderLayout.CENTER);
-		
-		initializeEmployeePanel();
-		add(employeePanel, BorderLayout.CENTER);
-		
+		initializeMenus();
+		initializePanels();
 		
 		changeState(USER_LOG_IN);
+		add(currentPanel, BorderLayout.CENTER);
+		add(currentMenu, BorderLayout.NORTH);
 		pack();
 		setVisible(true);
 	}
@@ -65,23 +65,39 @@ public class UrbanParksTerminal extends JFrame{
 		switch (consoleState) {
 		case USER_LOG_IN:
 			currentPanel = userLoginPanel;
+			currentMenu = userLoginMenu;
 			break;
 			
 		case VOLUNTEER:
 			currentPanel = volunteerPanel;
+			currentMenu = volunteerMenu;
 			break;
 			
 		case PARK_MANAGER:
 			currentPanel = parkManagerPanel;
+			currentMenu = parkManagerMenu;
 			break;
 			
 		case EMPLOYEE:
 			currentPanel = employeePanel;
+			currentMenu = employeeMenu;
 			break;
 			
 		default:
 			break;
 		}
+	}
+	
+	private void initializePanels() {
+		initializeUserLoginPanel();
+		initializeParkManagerPanel();
+		initializeVolunteerPanel();
+		initializeEmployeePanel();
+
+	}
+	
+	private void initializeMenus() {
+		
 	}
 	
 	private void initializeUserLoginPanel() {
@@ -118,7 +134,7 @@ public class UrbanParksTerminal extends JFrame{
 	}
 	
 	private void initializeParkManagerPanel() {
-
+		
 	}
 	
 	private void initializeVolunteerPanel() {
