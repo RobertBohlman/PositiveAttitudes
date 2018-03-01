@@ -125,6 +125,21 @@ public class UrbanParksTerminal extends JFrame{
 		repaint();
 	}
 	
+	private void changePanel(int panelState) {
+		if (currentPanel != null) {
+			remove(currentPanel);
+		}
+		switch (panelState) {
+		default:
+			break;
+		}
+
+		add(currentPanel, BorderLayout.CENTER);
+		pack();
+		revalidate();
+		repaint();
+	}
+	
 	private void initializePanels() {
 		initializeUserLoginPanel();
 		initializeParkManagerPanel();
