@@ -174,8 +174,16 @@ public class UrbanParksTerminal extends JFrame{
 				JobDisplayPanel JDP = new JobDisplayPanel(UrbanParksSystem);
 			}});
 		
+		//krizirk
 		JMenuItem submitNewJob = new JMenu("New Job");
-		allJobs.addActionListener(makeMenuItemListener(PARK_MANAGER_JOB_SUBMIT));
+		submitNewJob.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JobEntryPanel JEP = new JobEntryPanel(UrbanParksSystem);
+			}});
+		
+		
+//		JMenuItem submitNewJob = new JMenu("New Job");
+//		allJobs.addActionListener(makeMenuItemListener(PARK_MANAGER_JOB_SUBMIT));
 		
 		viewJobs.add(allJobs);
 		submitJobs.add(submitNewJob);
@@ -266,7 +274,7 @@ public class UrbanParksTerminal extends JFrame{
 	}
 	
 	private void initializeParkManagerSubmitPanel() {
-		parkManagerJobPanel.setSize(500, 500);
+		parkManagerSubmitPanel.setSize(500, 500);
 	}
 	
 	private void initializeVolunteerYourJobsPanel() {
