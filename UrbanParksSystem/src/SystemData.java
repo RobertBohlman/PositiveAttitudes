@@ -15,6 +15,16 @@ public class SystemData {
 
 	}
 	
+	public String[] seeJobs() {
+		String[] jobs = new String[myJobMap.size()];
+		int i = 0;
+		for (Integer j: myJobMap.keySet()) {
+			jobs[i] = i+1 + ". " + myJobMap.get(j).myTitle + " (" + myJobMap.get(j).myDateString + ")";
+			i++;
+		}
+		System.out.println(jobs);
+		return jobs;
+	}
 	public boolean setMaxJobs(String input) {
 		int val = MAX_NUM_JOBS;
 		try {

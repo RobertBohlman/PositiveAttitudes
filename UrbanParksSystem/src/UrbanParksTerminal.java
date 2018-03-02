@@ -78,9 +78,9 @@ public class UrbanParksTerminal extends JFrame{
 			UrbanParksSystem.addUser(new ParkManager("Frank", 1, "why@gmail.com"));
 			UrbanParksSystem.addUser(new Volunteer("Billy", 2, 34, "umm@gmail.com", 3));
 		}
-		
 		//GUI Calls
 		UrbanParksTerminal terminal = new UrbanParksTerminal();
+		//JobDisplayPanel JDP = new JobDisplayPanel(UrbanParksSystem); //Debug, to be deleted
 		
 		
 		UrbanParksSystem.saveData(); //Serialize userMap and jobList
@@ -162,10 +162,10 @@ public class UrbanParksTerminal extends JFrame{
 		parkManagerMenu.add(viewJobs);
 		parkManagerMenu.add(submitJobs);
 		
-		JMenuItem allJobs = new JMenu("All Jobs");
+		JMenuItem allJobs = new JMenuItem("All Jobs");
 		allJobs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				JobDisplayPanel JDP = new JobDisplayPanel(UrbanParksSystem);
 			}});
 		
 		JMenuItem submitNewJob = new JMenu("New Job");
@@ -185,19 +185,19 @@ public class UrbanParksTerminal extends JFrame{
 		volunteerMenu.add(viewJobs);
 		volunteerMenu.add(settings);
 		
-		JMenuItem yourJobs = new JMenu("Your Jobs");
+		JMenuItem yourJobs = new JMenuItem("Your Jobs");
 		yourJobs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 			}});
 		
-		JMenuItem availableJobs = new JMenu("Available Jobs");
-		yourJobs.addActionListener(new ActionListener() {
+		JMenuItem availableJobs = new JMenuItem("Available Jobs");
+		availableJobs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				JobDisplayPanel JDP = new JobDisplayPanel(UrbanParksSystem);
 			}});
 		
-		JMenuItem editInfo = new JMenu("Edit Information");
+		JMenuItem editInfo = new JMenuItem("Edit Information");
 		editInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -656,37 +656,4 @@ public class UrbanParksTerminal extends JFrame{
 		}
 	}
 	
-//	private static void displayParkManagerJobDetails(Job j) {
-//		System.out.println("-------------------------------------------------------------------");
-//		System.out.println("Job information: ");
-//		System.out.println("Title: " + j.myTitle);
-//		System.out.println("Date: " + j.myDateString);
-//		System.out.println("Requirements: " + j.myRequirements + "," + j.myNoVolunteers + " volunteers");
-//		System.out.println("Location: " + j.myLocation);
-//		System.out.println("Description: " + j.myDescription);
-//		System.out.println("-------------------------------------------------------------------");
-//		
-//		System.out.println("\nChoose an action: \n"
-//				+ "1. Delete this job\n"
-//				+ "2. Back to available jobs\n"
-//				+ "3. Main menu");
-//		String selection = scan.nextLine();
-//		
-//		switch (selection.charAt(0)) {
-//		case '1':
-//			//TODO DELETE JOB
-//			break;
-//			
-//		case '2':
-//			consoleState = PARK_MANAGER_JOB_VIEW;
-//			break;
-//		
-//		case '3':
-//			consoleState = PARK_MANAGER_MAIN_MENU;
-//			break;
-//		
-//		default:
-//			break;
-//		}
-//	}
 }
