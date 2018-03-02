@@ -4,8 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
 //import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -23,13 +25,28 @@ public class JobEntryPanel extends JFrame {
 	
 	private Job newJob;
 	
-	private JPanel jobListPanel;
-	private JPanel centerPanel;
+	private JPanel jobEntryPanel;
+	private JPanel southPanel;
 	private JPanel buttonSuitePanel;
+	private JPanel titlePanel;
+	private JPanel datePanel;
+	private JPanel lengthPanel;
+	private JPanel reqPanel;
+	private JPanel volunteerPanel;
+	private JPanel locationPanel;
+	private JPanel descriptionPanel;
 	
 	private JButton mainMenuButton;
 	private JButton submitJobButton;
 	private JButton cancelButton;
+	
+	private JLabel titleLabel;
+	private JLabel dateLabel;
+	private JLabel dayLengthLabel;
+	private JLabel reqLabel;
+	private JLabel numVolunteersLabel;
+	private JLabel locationLabel;
+	private JLabel descriptionLabel;
 	
 	private JTextField titleTextField;
 	private JSpinner dateSpinner;
@@ -39,7 +56,7 @@ public class JobEntryPanel extends JFrame {
 	private JTextField locationTextField;
 	private JTextArea descriptionTextArea;
 	
-	private JTextArea jobDetails;
+	//private JTextArea jobDetails;
 	
 	private JList<String> jobList;
 
@@ -51,9 +68,9 @@ public class JobEntryPanel extends JFrame {
 		
 		initDetailsPanel();
 		setUpButtons();
-		initListPanel();
+		initEntryPanel();
 		
-		add(centerPanel, BorderLayout.CENTER);
+		add(southPanel, BorderLayout.SOUTH);
 		
 		
 		
@@ -71,11 +88,8 @@ public class JobEntryPanel extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					try {
-						if (UrbanParksSystem.signUpForJob(newJob)) {
-							JOptionPane.showMessageDialog(null, "You have signed up");     
-						} else {
-							JOptionPane.showMessageDialog(null, "Sorry, you cannot sign up for this job."); 
-						}
+						JOptionPane.showMessageDialog(null, "You have signed up.");
+						//TODO go back to previous menu
 					} catch (NullPointerException e) {
 						
 					}
@@ -85,7 +99,8 @@ public class JobEntryPanel extends JFrame {
 			cancelButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-					//Todo
+					JOptionPane.showMessageDialog(null, "Job entry cancelled.");
+					//TODO clear entered values / go back to previous menu
 				}
 			});
 			
@@ -96,6 +111,7 @@ public class JobEntryPanel extends JFrame {
 		
 		mainMenuButton = new JButton("Main menu");
 		
+		//TODO what about clicking main menu in middle of job entry
 		mainMenuButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -106,44 +122,84 @@ public class JobEntryPanel extends JFrame {
 		
 		buttonSuitePanel.add(mainMenuButton);
 		
-		centerPanel.add(buttonSuitePanel);
+		southPanel.add(buttonSuitePanel);
 		
 	}
 
 	private void initDetailsPanel() {
-		centerPanel = new JPanel();
-		centerPanel.setPreferredSize(new Dimension(320, 450));
+		southPanel = new JPanel();
+		southPanel.setPreferredSize(new Dimension(320, 450));
 		//jobDetails = new JTextArea();
 		//jobDetails.setPreferredSize(new Dimension(300, 300));
 		//centerPanel.add(jobDetails);
 		
 	}
 
-	private void initListPanel() {
-		jobListPanel = new JPanel();
-		jobList = new JList<String>(UrbanParksSystem.seeJobs());
-		jobList.setPreferredSize(new Dimension(200, 400));
-		jobList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		jobList.addListSelectionListener(new ListSelectionListener() {
-			@Override
-			public void valueChanged(ListSelectionEvent event) {
-				Map<Integer, Job> jobMap = UrbanParksSystem.getJobMap(); 
-				int selectNumber = jobList.getSelectedIndex();
-				Job displayJob = (Job) jobMap.values().toArray()[selectNumber];
-				
-				jobDetails.setText("Job Details: " 
-				+ "\nTitle: " + displayJob.myTitle
-				+ "\nDate: " + displayJob.myDateString
-				+ "\nRequirements: " + displayJob.myRequirements + ", " + displayJob.myNoVolunteers + " volunteers"
-				+ "\nLocation: " + displayJob.myLocation
-				+ "\nDescription: " + displayJob.myDescription);
-				
-				newJob = displayJob;
-			}
-			
-		});
-		jobListPanel.add(jobList);
-		add(jobListPanel, BorderLayout.WEST);
+	private void initEntryPanel() {
+		jobEntryPanel = new JPanel();
+		
+		titlePanel = new JPanel(new BorderLayout());
+		titleLabel = new JLabel("Title: ");
+		titleTextField = new JTextField("", 15);
+		
+		datePanel = new JPanel(new BorderLayout());
+		dateLabel = new JLabel("Date: ");
+		dateSpinner = new JSpinner();
+		
+		lengthPanel = new JPanel(new BorderLayout());
+		dayLengthLabel = new JLabel("Length in Days: ");
+		dayLengthSlider = new JSlider();
+		
+		reqPanel = new JPanel(new BorderLayout());
+		reqLabel = new JLabel("Requirements: ");
+		reqTextField = new JTextField("", 15);
+		
+		volunteerPanel = new JPanel(new BorderLayout());
+		numVolunteersLabel = new JLabel("Number of Volunteers: ");
+		numVolunteersTextField = new JTextField("", 15);
+		
+		locationPanel = new JPanel(new BorderLayout());
+		locationLabel = new JLabel("Location: ");
+		locationTextField = new JTextField("", 15);
+		
+		descriptionPanel = new JPanel(new BorderLayout());
+		descriptionLabel = new JLabel("Description: ");
+		descriptionTextArea = new JTextArea();
+
+		
+		
+		jobEntryPanel.setPreferredSize(new Dimension(400, 400));
+		
+		
+		titlePanel.add(titleLabel, BorderLayout.WEST);
+		titlePanel.add(titleTextField);
+		jobEntryPanel.add(titlePanel);
+		
+		datePanel.add(dateLabel, BorderLayout.WEST);
+		datePanel.add(dateSpinner);
+		jobEntryPanel.add(datePanel);
+		
+		lengthPanel.add(dayLengthLabel, BorderLayout.WEST);
+		lengthPanel.add(dayLengthSlider);
+		jobEntryPanel.add(lengthPanel);
+		
+		reqPanel.add(reqLabel, BorderLayout.WEST);
+		reqPanel.add(reqTextField);
+		jobEntryPanel.add(reqPanel);
+		
+		volunteerPanel.add(numVolunteersLabel, BorderLayout.WEST);
+		volunteerPanel.add(numVolunteersTextField);
+		jobEntryPanel.add(volunteerPanel);
+		
+		locationPanel.add(locationLabel, BorderLayout.WEST);
+		locationPanel.add(locationTextField);
+		jobEntryPanel.add(locationPanel);
+		
+		descriptionPanel.add(descriptionLabel, BorderLayout.WEST);
+		descriptionPanel.add(descriptionTextArea);
+		jobEntryPanel.add(descriptionPanel);
+		
+		add(jobEntryPanel);
 		
 	}
 }
