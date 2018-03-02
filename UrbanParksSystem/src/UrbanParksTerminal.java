@@ -175,7 +175,7 @@ public class UrbanParksTerminal extends JFrame{
 			}});
 		
 		//krizirk
-		JMenuItem submitNewJob = new JMenu("New Job");
+		JMenuItem submitNewJob = new JMenuItem("New Job");
 		submitNewJob.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JobEntryPanel JEP = new JobEntryPanel(UrbanParksSystem);
