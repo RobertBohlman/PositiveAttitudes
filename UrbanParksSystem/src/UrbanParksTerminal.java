@@ -32,15 +32,19 @@ public class UrbanParksTerminal extends JFrame{
 	private static final int PARK_MANAGER_JOB_VIEW = 6;
 	private static final int EMPLOYEE = 7;
 	private static final int MANAGER_SUBMITTED_JOBS = 8;
+	private static final int VOLUNTEER_EDIT_INFO = 9;
+	
 	private static final int END = 99;
 	
 	
 	private JPanel currentPanel;
 	private JMenuBar currentMenu;
 	
-	private JPanel userLoginPanel = new JPanel();
-	private JPanel parkManagerPanel = new JPanel();
-	private JPanel volunteerPanel = new JPanel();
+	private JPanel userLoginPanel;
+	private JPanel parkManagerJobPanel = new JPanel();
+	private JPanel parkManagerSubmitPanel = new JPanel();
+	private JPanel volunteerYourJobsPanel = new JPanel();
+	private JPanel volunteerAvailableJobsPanel = new JPanel();
 	private JPanel employeePanel = new JPanel();
 
 	private JMenuBar userLoginMenu = new JMenuBar();
@@ -100,12 +104,12 @@ public class UrbanParksTerminal extends JFrame{
 			break;
 			
 		case VOLUNTEER:
-			currentPanel = volunteerPanel;
+			currentPanel = volunteerYourJobsPanel;
 			currentMenu = volunteerMenu;
 			break;
 			
 		case PARK_MANAGER:
-			currentPanel = parkManagerPanel;
+			currentPanel = parkManagerJobPanel;
 			currentMenu = parkManagerMenu;
 			break;
 			
@@ -142,8 +146,10 @@ public class UrbanParksTerminal extends JFrame{
 	
 	private void initializePanels() {
 		initializeUserLoginPanel();
-		initializeParkManagerPanel();
-		initializeVolunteerPanel();
+		initializeParkManagerJobPanel();
+		initializeParkManagerSubmitPanel();
+		initializeVolunteerYourJobsPanel();
+		initializeVolunteerAvailableJobsPanel();
 		initializeEmployeePanel();
 
 	}
@@ -169,10 +175,7 @@ public class UrbanParksTerminal extends JFrame{
 			}});
 		
 		JMenuItem submitNewJob = new JMenu("New Job");
-		allJobs.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}});
+		allJobs.addActionListener(makeMenuItemListener(PARK_MANAGER_JOB_SUBMIT));
 		
 		viewJobs.add(allJobs);
 		submitJobs.add(submitNewJob);
@@ -208,6 +211,13 @@ public class UrbanParksTerminal extends JFrame{
 		settings.add(editInfo);
 	}
 	
+	private ActionListener makeMenuItemListener(int panelState) { 
+		return new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				changePanel(panelState);
+			}};
+		
+	}
 	
 	private void initializeEmployeeMenu() {
 		JMenu jobs = new JMenu("Jobs");
@@ -220,29 +230,13 @@ public class UrbanParksTerminal extends JFrame{
 		employeeMenu.add(managers);
 		employeeMenu.add(settings);
 		
-		JMenuItem editSystem = new JMenu("Edit System");
-		editSystem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}});
-		
-		settings.add(editSystem);
 	}
 	
 	private void initializeUserLoginPanel() {
-		JLabel usernameText = new JLabel("Username:");
-		JTextField username = new JTextField();
-		username.setPreferredSize(new Dimension(300,25));
-		JButton loginButton = new JButton("Login");
-		userLoginPanel.setLayout(new FlowLayout());
-		userLoginPanel.add(usernameText);
-		userLoginPanel.add(username);
-		userLoginPanel.add(loginButton);
-		userLoginPanel.setSize(500, 100);
 		
-		loginButton.addActionListener(new ActionListener() {
+		userLoginPanel = new UserLoginPanel(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String user = username.getText();
+				String user = ((UserLoginPanel) userLoginPanel).getUserName();
 				boolean pass = false;
 				for(Integer i : UrbanParksSystem.getUserMap().keySet()) {
 					if(user.hashCode() == i) {
@@ -267,12 +261,20 @@ public class UrbanParksTerminal extends JFrame{
 		
 	}
 	
-	private void initializeParkManagerPanel() {
-		parkManagerPanel.setSize(500, 500);
+	private void initializeParkManagerJobPanel() {
+		parkManagerJobPanel.setSize(500, 500);
 	}
 	
-	private void initializeVolunteerPanel() {
-		volunteerPanel.setSize(500, 500);
+	private void initializeParkManagerSubmitPanel() {
+		parkManagerJobPanel.setSize(500, 500);
+	}
+	
+	private void initializeVolunteerYourJobsPanel() {
+		volunteerYourJobsPanel.setSize(500, 500);
+	}
+	
+	private void initializeVolunteerAvailableJobsPanel() {
+		volunteerYourJobsPanel.setSize(500, 500);
 	}
 	
 	private void initializeEmployeePanel() {
