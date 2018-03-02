@@ -1,15 +1,12 @@
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class UserLoginPanel extends JPanel {
+public class UserLoginPanel extends JPanel{
 	
 	private JLabel usernameText;
 	private JTextField username;
@@ -27,12 +24,13 @@ public class UserLoginPanel extends JPanel {
 		add(username);
 		add(loginButton);
 		setSize(500, 100);
-		
-		loginButton.addActionListener(listener);
-		
+		setFocusable(true);
+		//this.getRootPane().setDefaultButton(loginButton);
 	}
 
+	
 	public String getUserName() {
 		return username.getText();
 	}
+
 }

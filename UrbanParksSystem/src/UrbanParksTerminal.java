@@ -241,7 +241,6 @@ public class UrbanParksTerminal extends JFrame{
 	}
 	
 	private void initializeUserLoginPanel() {
-		
 		userLoginPanel = new UserLoginPanel(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String user = ((UserLoginPanel) userLoginPanel).getUserName();
@@ -266,7 +265,6 @@ public class UrbanParksTerminal extends JFrame{
 							JOptionPane.ERROR_MESSAGE);
 				}
 			}});
-		
 	}
 	
 	private void initializeParkManagerJobPanel() {
