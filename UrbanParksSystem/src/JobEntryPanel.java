@@ -1,5 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
@@ -49,12 +51,12 @@ public class JobEntryPanel extends JFrame {
 	private JLabel descriptionLabel;
 	
 	private JTextField titleTextField;
-	private JSpinner dateSpinner;
-	private JSlider dayLengthSlider;
+	private JTextField dateTextField;
+	private JTextField dayLengthTextField;
 	private JTextField reqTextField;
 	private JTextField numVolunteersTextField;
 	private JTextField locationTextField;
-	private JTextArea descriptionTextArea;
+	private JTextField descriptionTextField;
 	
 	//private JTextArea jobDetails;
 	
@@ -88,7 +90,9 @@ public class JobEntryPanel extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					try {
-						JOptionPane.showMessageDialog(null, "You have signed up.");
+						Job j = new Job(titleTextField.getText(), dateTextField.getText(), reqTextField.getText(), Integer.parseInt(numVolunteersTextField.getText()), locationTextField.getText(), descriptionTextField.getText(), Integer.parseInt(dayLengthTextField.getText()));
+						UrbanParksSystem.submitJob(j);
+						JOptionPane.showMessageDialog(null, "Job Submitted.");
 						//TODO go back to previous menu
 					} catch (NullPointerException e) {
 						
@@ -99,8 +103,7 @@ public class JobEntryPanel extends JFrame {
 			cancelButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-					JOptionPane.showMessageDialog(null, "Job entry cancelled.");
-					//TODO clear entered values / go back to previous menu
+					dispose();
 				}
 			});
 			
@@ -127,79 +130,92 @@ public class JobEntryPanel extends JFrame {
 	}
 
 	private void initDetailsPanel() {
-		southPanel = new JPanel();
+		southPanel = new JPanel(new GridLayout(7, 2));
 		southPanel.setPreferredSize(new Dimension(320, 450));
-		//jobDetails = new JTextArea();
-		//jobDetails.setPreferredSize(new Dimension(300, 300));
-		//centerPanel.add(jobDetails);
-		
 	}
 
 	private void initEntryPanel() {
-		jobEntryPanel = new JPanel();
+		//jobEntryPanel = new JPanel();
+		jobEntryPanel = new JPanel(new GridLayout(7, 2));
 		
-		titlePanel = new JPanel(new BorderLayout());
 		titleLabel = new JLabel("Title: ");
 		titleTextField = new JTextField("", 15);
 		
-		datePanel = new JPanel(new BorderLayout());
 		dateLabel = new JLabel("Date: ");
-		dateSpinner = new JSpinner();
+		dateTextField = new JTextField("", 5);
 		
-		lengthPanel = new JPanel(new BorderLayout());
 		dayLengthLabel = new JLabel("Length in Days: ");
-		dayLengthSlider = new JSlider();
+		dayLengthTextField = new JTextField("", 5);
 		
-		reqPanel = new JPanel(new BorderLayout());
 		reqLabel = new JLabel("Requirements: ");
 		reqTextField = new JTextField("", 15);
 		
-		volunteerPanel = new JPanel(new BorderLayout());
 		numVolunteersLabel = new JLabel("Number of Volunteers: ");
 		numVolunteersTextField = new JTextField("", 15);
 		
-		locationPanel = new JPanel(new BorderLayout());
 		locationLabel = new JLabel("Location: ");
 		locationTextField = new JTextField("", 15);
 		
-		descriptionPanel = new JPanel(new BorderLayout());
 		descriptionLabel = new JLabel("Description: ");
-		descriptionTextArea = new JTextArea();
+		descriptionTextField = new JTextField("", 15);
 
 		
 		
 		jobEntryPanel.setPreferredSize(new Dimension(400, 400));
 		
 		
-		titlePanel.add(titleLabel, BorderLayout.WEST);
-		titlePanel.add(titleTextField);
-		jobEntryPanel.add(titlePanel);
+		jobEntryPanel.add(titleLabel);
+		jobEntryPanel.add(titleTextField);
 		
-		datePanel.add(dateLabel, BorderLayout.WEST);
-		datePanel.add(dateSpinner);
-		jobEntryPanel.add(datePanel);
+		jobEntryPanel.add(dateLabel);
+		jobEntryPanel.add(dateTextField);
 		
-		lengthPanel.add(dayLengthLabel, BorderLayout.WEST);
-		lengthPanel.add(dayLengthSlider);
-		jobEntryPanel.add(lengthPanel);
+		jobEntryPanel.add(dayLengthLabel);
+		jobEntryPanel.add(dayLengthTextField);
 		
-		reqPanel.add(reqLabel, BorderLayout.WEST);
-		reqPanel.add(reqTextField);
-		jobEntryPanel.add(reqPanel);
+		jobEntryPanel.add(reqLabel);
+		jobEntryPanel.add(reqTextField);
 		
-		volunteerPanel.add(numVolunteersLabel, BorderLayout.WEST);
-		volunteerPanel.add(numVolunteersTextField);
-		jobEntryPanel.add(volunteerPanel);
+		jobEntryPanel.add(numVolunteersLabel);
+		jobEntryPanel.add(numVolunteersTextField);
 		
-		locationPanel.add(locationLabel, BorderLayout.WEST);
-		locationPanel.add(locationTextField);
-		jobEntryPanel.add(locationPanel);
+		jobEntryPanel.add(locationLabel);
+		jobEntryPanel.add(locationTextField);
 		
-		descriptionPanel.add(descriptionLabel, BorderLayout.WEST);
-		descriptionPanel.add(descriptionTextArea);
-		jobEntryPanel.add(descriptionPanel);
+		jobEntryPanel.add(descriptionLabel);
+		jobEntryPanel.add(descriptionTextField);
 		
 		add(jobEntryPanel);
 		
+	}
+	
+	
+	
+	public String getTitle() {
+		return titleTextField.getText();
+	}
+	
+	public String getDate() {
+		return dateTextField.getText();
+	}
+	
+	public String getLength() {
+		return dayLengthTextField.getText();
+	}
+	
+	public String getReq() {
+		return reqTextField.getText();
+	}
+	
+	public String getNumVol() {
+		return numVolunteersTextField.getText();
+	}
+	
+	public String getLoc() {
+		return locationTextField.getText();
+	}
+	
+	public String getDescription() {
+		return descriptionTextField.getText();
 	}
 }
