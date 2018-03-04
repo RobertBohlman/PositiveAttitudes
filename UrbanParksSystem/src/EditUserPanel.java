@@ -31,8 +31,8 @@ public class EditUserPanel extends JPanel{
 	JButton btn_save = new JButton("save");
 	JButton btn_clear = new JButton("clear");
 
-	public EditUserPanel(AbstractUser passedUser) {
-		user = passedUser;
+	public EditUserPanel(SystemData system) {
+		user = system.getCurrentUser();
 		lbl_name.setText(user.getUserName());
 		if(user instanceof Volunteer) {
 			

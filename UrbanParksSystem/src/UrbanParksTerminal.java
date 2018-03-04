@@ -223,7 +223,10 @@ public class UrbanParksTerminal extends JFrame{
 		JMenuItem editInfo = new JMenuItem("Edit Information");
 		editInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				remove(currentPanel);
+				currentPanel = new EditUserPanel(UrbanParksSystem);
+				add(currentPanel, BorderLayout.CENTER);
+				pack();
 			}});
 		
 		viewJobs.add(yourJobs);
