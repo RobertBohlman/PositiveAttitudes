@@ -5,17 +5,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.BoxLayout;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class EditUserPanel extends JPanel{
+	SystemData system;
 	AbstractUser user;
-	private static JLabel lbl_email = new JLabel();
-	private static JLabel lbl_age = new JLabel();
-	private static JLabel lbl_physicalLevel = new JLabel();
+	private static JLabel lbl_email = new JLabel("Email: ");
+	private static JLabel lbl_age = new JLabel("Age: ");
+	private static JLabel lbl_physicalLevel = new JLabel("Physical Level:");
 	private static JLabel lbl_userName = new JLabel();
 	private static JLabel lbl_userEmail = new JLabel();
 	private static JLabel lbl_userAge = new JLabel();
@@ -34,8 +35,9 @@ public class EditUserPanel extends JPanel{
 	JButton btn_clear = new JButton("clear");
 
 	public EditUserPanel(SystemData system) {
+		this.system = system;
 		user = system.getCurrentUser();
-		lbl_userName.setText(user.getUserName());
+		lbl_userName.setText("User details for:    " + user.getUserName());
 		if(user instanceof Volunteer) {
 			
 			detailLabels.add(lbl_email);
@@ -79,23 +81,36 @@ public class EditUserPanel extends JPanel{
 	}
 	
 	private void createCenter() {
-		JPanel centerPanel = new JPanel(new GridLayout(1,2));
+		JPanel centerPanel = new JPanel(new GridLayout(1,3));
 		
-		JPanel eastPanel = new JPanel();
-		eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.Y_AXIS));
+		JPanel leftPanel = new JPanel(new GridLayout(3,1));
+		for (JLabel l : detailLabels) {
+			JPanel p = new JPanel(new FlowLayout());
+			p.add(l);
+			leftPanel.add(p);
+		}
+		
+		JPanel rightPanel = new JPanel(new GridLayout(3,1));
 		for (JButton b : editButtons) {
-			eastPanel.add(b);
+			JPanel p = new JPanel(new FlowLayout());
+			p.add(b);
+			rightPanel.add(p);
 		}
 		
 		JPanel middlePanel = new JPanel();
-		middlePanel.setLayout(new BoxLayout(middlePanel, BoxLayout.Y_AXIS));
-		for (JLabel l : userInfoLabels) {	
-			middlePanel.add(l);
-			l.setAlignmentX(RIGHT_ALIGNMENT);
+		middlePanel.setLayout(new GridLayout(3,1));
+		for (JLabel l : userInfoLabels) {
+			JPanel p = new JPanel(new FlowLayout());
+			p.add(l);
+			middlePanel.add(p);
 		}
 		
+		
+		
+		
+		centerPanel.add(leftPanel);
 		centerPanel.add(middlePanel);
-		centerPanel.add(eastPanel);
+		centerPanel.add(rightPanel);
 		this.add(BorderLayout.CENTER, centerPanel);
 	}
 	
@@ -177,6 +192,7 @@ public class EditUserPanel extends JPanel{
 				} else if(user instanceof ParkManager) {
 					((ParkManager) user).setManagerEmail(lbl_userEmail.getText());
 				}
+				system.saveData();
 				btn_save.setEnabled(false);
 				btn_clear.setEnabled(false);
 			}
