@@ -105,17 +105,17 @@ public class UrbanParksTerminal extends JFrame{
 			break;
 			
 		case VOLUNTEER:
-			currentPanel = volunteerYourJobsPanel;
+			currentPanel = welcomePanel;
 			currentMenu = volunteerMenu;
 			break;
 			
 		case PARK_MANAGER:
-			currentPanel = parkManagerJobPanel;
+			currentPanel = welcomePanel;
 			currentMenu = parkManagerMenu;
 			break;
 			
 		case EMPLOYEE:
-			currentPanel = employeePanel;
+			currentPanel = welcomePanel;
 			currentMenu = employeeMenu;
 			break;
 			
