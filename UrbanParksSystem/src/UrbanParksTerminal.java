@@ -171,7 +171,7 @@ public class UrbanParksTerminal extends JFrame{
 		JMenuItem allJobs = new JMenuItem("All Jobs");
 		allJobs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JobDisplayPanel JDP = new JobDisplayPanel(UrbanParksSystem);
+				currentPanel.add(new JobDisplayPanel(UrbanParksSystem));
 			}});
 		
 		//krizirk

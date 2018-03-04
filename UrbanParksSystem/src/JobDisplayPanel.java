@@ -14,7 +14,12 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-public class JobDisplayPanel extends JFrame {
+public class JobDisplayPanel extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4544875371839943574L;
+
 	private SystemData UrbanParksSystem;
 	
 	private Job selectedJob;
@@ -35,9 +40,6 @@ public class JobDisplayPanel extends JFrame {
 
 	public JobDisplayPanel(SystemData urbanParksSystem) {
 		this.UrbanParksSystem = urbanParksSystem;
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setLocationRelativeTo(null);
-		setTitle("Job Display");
 		
 		initDetailsPanel();
 		setUpButtons();
@@ -46,8 +48,6 @@ public class JobDisplayPanel extends JFrame {
 		add(centerPanel, BorderLayout.CENTER);
 		
 		
-		
-		pack();
 		setVisible(true);
 	}
 
@@ -110,7 +110,6 @@ public class JobDisplayPanel extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				UrbanParksSystem.saveData();
-				dispose();
 			}
 		});
 		

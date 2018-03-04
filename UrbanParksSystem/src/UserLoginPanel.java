@@ -19,6 +19,7 @@ public class UserLoginPanel extends JPanel{
 		username = new JTextField();
 		username.setPreferredSize(new Dimension(300,25));
 		loginButton = new JButton("Login");
+		loginButton.addActionListener(listener);
 		
 		add(usernameText);
 		add(username);
