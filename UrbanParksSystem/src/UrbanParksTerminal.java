@@ -41,6 +41,7 @@ public class UrbanParksTerminal extends JFrame{
 	private JMenuBar currentMenu;
 	
 	private JPanel userLoginPanel;
+	private JPanel welcomePanel;
 	private JPanel parkManagerJobPanel = new JPanel();
 	private JPanel parkManagerSubmitPanel = new JPanel();
 	private JPanel volunteerYourJobsPanel = new JPanel();
@@ -123,7 +124,7 @@ public class UrbanParksTerminal extends JFrame{
 		}
 		
 		add(currentPanel, BorderLayout.CENTER);
-		add(currentMenu, BorderLayout.NORTH);
+		add(currentMenu);
 		pack();
 		revalidate();
 		repaint();
@@ -145,6 +146,7 @@ public class UrbanParksTerminal extends JFrame{
 	}
 	
 	private void initializePanels() {
+		welcomePanel = new WelcomePanel(UrbanParksSystem);
 		initializeUserLoginPanel();
 		initializeParkManagerJobPanel();
 		initializeParkManagerSubmitPanel();
