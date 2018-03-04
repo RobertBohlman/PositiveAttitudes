@@ -1,5 +1,4 @@
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -14,13 +13,16 @@ import javax.swing.JPanel;
 
 public class EditUserPanel extends JPanel{
 	AbstractUser user;
-	JLabel lbl_name = new JLabel();
-	JLabel lbl_email = new JLabel();
-	JLabel lbl_age = new JLabel();
-	JLabel lbl_physicalLevel = new JLabel();
-	JLabel lbl_saveChanges = new JLabel();
+	private static JLabel lbl_email = new JLabel();
+	private static JLabel lbl_age = new JLabel();
+	private static JLabel lbl_physicalLevel = new JLabel();
+	private static JLabel lbl_userName = new JLabel();
+	private static JLabel lbl_userEmail = new JLabel();
+	private static JLabel lbl_userAge = new JLabel();
+	private static JLabel lbl_userPhysicalLevel = new JLabel();
 	
-	ArrayList<JLabel> detailLabels = new ArrayList<JLabel>(); 
+	ArrayList<JLabel> detailLabels = new ArrayList<JLabel>();
+	ArrayList<JLabel> userInfoLabels = new ArrayList<JLabel>(); 
 	
 	JButton btn_editEmail = new JButton("Edit");
 	JButton btn_editAge = new JButton("Edit");
@@ -33,27 +35,33 @@ public class EditUserPanel extends JPanel{
 
 	public EditUserPanel(SystemData system) {
 		user = system.getCurrentUser();
-		lbl_name.setText(user.getUserName());
+		lbl_userName.setText(user.getUserName());
 		if(user instanceof Volunteer) {
 			
-			lbl_email.setText(((Volunteer) user).getVolunteerEmail());
+			detailLabels.add(lbl_email);
+			lbl_userEmail.setText(((Volunteer) user).getVolunteerEmail());
+			userInfoLabels.add(lbl_userEmail);
 			editButtons.add(btn_editEmail);
 			
-			
-			lbl_age.setText("" + ((Volunteer) user).getVolunteerAge());
+			detailLabels.add(lbl_age);
+			lbl_userAge.setText("" + ((Volunteer) user).getVolunteerAge());
+			userInfoLabels.add(lbl_userAge);
 			editButtons.add(btn_editAge);
 			
-			lbl_physicalLevel.setText("" + ((Volunteer) user).getVolunteerPhysicalLevel());
+			detailLabels.add(lbl_physicalLevel);
+			lbl_userPhysicalLevel.setText("" + ((Volunteer) user).getVolunteerPhysicalLevel());
+			userInfoLabels.add(lbl_userPhysicalLevel);
 			editButtons.add(btn_editPhysicalLevel);
 			
 		} else if(user instanceof ParkManager) {
 			
-			lbl_email.setText(((ParkManager) user).getManagerEmail());
-			lbl_email.setAlignmentX(Component.RIGHT_ALIGNMENT);
+			detailLabels.add(lbl_email);
+			lbl_userEmail.setText(((ParkManager) user).getManagerEmail());
+			userInfoLabels.add(lbl_userEmail);
 			editButtons.add(btn_editEmail);
 			
 		} else if(user instanceof Employee) {
-			lbl_name.setText(user.getUserName());
+			lbl_userName.setText(user.getUserName());
 		}
 		
 		setupButtons();
@@ -66,7 +74,7 @@ public class EditUserPanel extends JPanel{
 	
 	private void createNorth() {
 		JPanel northPanel = new JPanel(new FlowLayout());
-		northPanel.add(lbl_name);
+		northPanel.add(lbl_userName);
 		this.add(BorderLayout.NORTH, northPanel);
 	}
 	
@@ -79,14 +87,15 @@ public class EditUserPanel extends JPanel{
 			eastPanel.add(b);
 		}
 		
-		JPanel westPanel = new JPanel();
-		westPanel.setLayout(new BoxLayout(westPanel, BoxLayout.Y_AXIS));
-		for (JLabel l : detailLabels) {
-			westPanel.add(l);
+		JPanel middlePanel = new JPanel();
+		middlePanel.setLayout(new BoxLayout(middlePanel, BoxLayout.Y_AXIS));
+		for (JLabel l : userInfoLabels) {	
+			middlePanel.add(l);
+			l.setAlignmentX(RIGHT_ALIGNMENT);
 		}
-		centerPanel.add(westPanel);
-		centerPanel.add(eastPanel);
 		
+		centerPanel.add(middlePanel);
+		centerPanel.add(eastPanel);
 		this.add(BorderLayout.CENTER, centerPanel);
 	}
 	
@@ -108,7 +117,7 @@ public class EditUserPanel extends JPanel{
 				public void actionPerformed(ActionEvent arg0) {
 					String input = JOptionPane.showInputDialog(null, "Enter new Email:");
 					if(input != null) {
-						lbl_email.setText(input);
+						lbl_userEmail.setText(input);
 						btn_save.setEnabled(true);
 						btn_clear.setEnabled(true);
 					}
@@ -120,7 +129,7 @@ public class EditUserPanel extends JPanel{
 					String input = JOptionPane.showInputDialog(null, "Enter new Age:");
 					if(input != null) {
 						try {
-							lbl_age.setText("" + Integer.parseInt(input));
+							lbl_userAge.setText("" + Integer.parseInt(input));
 							btn_save.setEnabled(true);
 							btn_clear.setEnabled(true);
 						} catch (NumberFormatException e) {
@@ -135,7 +144,7 @@ public class EditUserPanel extends JPanel{
 					String input = JOptionPane.showInputDialog(null, "Enter new Age:");
 					if(input != null) {
 						try {
-							lbl_physicalLevel.setText("" + Integer.parseInt(input));
+							lbl_userPhysicalLevel.setText("" + Integer.parseInt(input));
 							btn_save.setEnabled(true);
 							btn_clear.setEnabled(true);
 						} catch (NumberFormatException e) {
@@ -150,7 +159,7 @@ public class EditUserPanel extends JPanel{
 				public void actionPerformed(ActionEvent arg0) {
 					String input = JOptionPane.showInputDialog(null, "Enter new Email:");
 					if(input != null) {
-						lbl_email.setText(input);
+						lbl_userEmail.setText(input);
 						btn_save.setEnabled(true);
 						btn_clear.setEnabled(true);
 					}
@@ -162,11 +171,11 @@ public class EditUserPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if(user instanceof Volunteer) {
-					((Volunteer) user).setVolunteerEmail(lbl_email.getText());
-					((Volunteer) user).setVolunteerAge(Integer.parseInt(lbl_age.getText()));
-					((Volunteer) user).setPermissionLevel(Integer.parseInt(lbl_physicalLevel.getText()));
+					((Volunteer) user).setVolunteerEmail(lbl_userEmail.getText());
+					((Volunteer) user).setVolunteerAge(Integer.parseInt(lbl_userAge.getText()));
+					((Volunteer) user).setPermissionLevel(Integer.parseInt(lbl_userPhysicalLevel.getText()));
 				} else if(user instanceof ParkManager) {
-					((ParkManager) user).setManagerEmail(lbl_email.getText());
+					((ParkManager) user).setManagerEmail(lbl_userEmail.getText());
 				}
 				btn_save.setEnabled(false);
 				btn_clear.setEnabled(false);
@@ -177,12 +186,12 @@ public class EditUserPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if(user instanceof Volunteer) {
-					lbl_email.setText(((Volunteer) user).getVolunteerEmail());
-					lbl_age.setText("" + ((Volunteer) user).getVolunteerAge());
-					lbl_physicalLevel.setText("" + ((Volunteer) user).getVolunteerPhysicalLevel());
+					lbl_userEmail.setText(((Volunteer) user).getVolunteerEmail());
+					lbl_userAge.setText("" + ((Volunteer) user).getVolunteerAge());
+					lbl_userPhysicalLevel.setText("" + ((Volunteer) user).getVolunteerPhysicalLevel());
 					
 				} else if(user instanceof ParkManager) {
-					lbl_email.setText(((ParkManager) user).getManagerEmail());
+					lbl_userEmail.setText(((ParkManager) user).getManagerEmail());
 					
 				}
 				btn_save.setEnabled(false);
