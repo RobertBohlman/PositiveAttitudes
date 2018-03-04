@@ -14,7 +14,14 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
+/*
+ * 
+ *Users:
+ *Billy - Volunteer 
+ *Frank - ParkManager
+ *Carol - Employee
+ *
+ */
 public class UrbanParksTerminal extends JFrame{
 	private static final long serialVersionUID = -5601671266866084219L;
 	private static SystemData UrbanParksSystem;
