@@ -185,7 +185,7 @@ public class UrbanParksTerminal extends JFrame{
 		allJobs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				remove(currentPanel);
-				currentPanel = new JobDisplayPanel(UrbanParksSystem, self);
+				currentPanel = new JobDisplayPanel(UrbanParksSystem, self, false);
 				add(currentPanel, BorderLayout.CENTER);
 				pack();
 			}});
@@ -215,14 +215,17 @@ public class UrbanParksTerminal extends JFrame{
 		JMenuItem yourJobs = new JMenuItem("Your Jobs");
 		yourJobs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				remove(currentPanel);
+				currentPanel = new JobDisplayPanel(UrbanParksSystem, self, true);
+				add(currentPanel, BorderLayout.CENTER);
+				pack();
 			}});
 		
 		JMenuItem availableJobs = new JMenuItem("Available Jobs");
 		availableJobs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				remove(currentPanel);
-				currentPanel = new JobDisplayPanel(UrbanParksSystem, self);
+				currentPanel = new JobDisplayPanel(UrbanParksSystem, self, false);
 				add(currentPanel, BorderLayout.CENTER);
 				pack();
 			}});

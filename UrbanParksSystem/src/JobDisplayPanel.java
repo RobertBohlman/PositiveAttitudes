@@ -23,6 +23,11 @@ public class JobDisplayPanel extends JPanel {
 	private SystemData UrbanParksSystem;
 	private UrbanParksTerminal myParentFrame;
 	
+	/**
+	 * Boolean flag for whether or not this panel is being used for the personal job display
+	 */
+	private boolean personal;
+	
 	private Job selectedJob;
 	
 	private JPanel jobListPanel;
@@ -39,9 +44,12 @@ public class JobDisplayPanel extends JPanel {
 	
 	private JList<String> jobList;
 
-	public JobDisplayPanel(SystemData urbanParksSystem, UrbanParksTerminal frame) {
+	public JobDisplayPanel(SystemData urbanParksSystem, UrbanParksTerminal frame, boolean isPersonal) {
 		this.UrbanParksSystem = urbanParksSystem;
 		myParentFrame = frame;
+		personal = isPersonal;
+		
+		setLayout(new BorderLayout());
 		
 		initDetailsPanel();
 		setUpButtons();
@@ -77,11 +85,28 @@ public class JobDisplayPanel extends JPanel {
 			unvolunteerButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-					UrbanParksSystem.removeUserJob(selectedJob);
+					try {
+						if (UrbanParksSystem.removeUserJob(selectedJob)) {
+							initListPanel();
+							jobDetails.setText("");
+							jobListPanel.repaint();
+							JOptionPane.showMessageDialog(null, "You have un-volunteered.");
+							
+						} else {
+							JOptionPane.showMessageDialog(null, "Could not remove you from this job!");
+						}
+						
+					} catch (NullPointerException e) {
+						
+					}
 				}
 			});
 			
-			buttonSuitePanel.add(volunteerButton);
+			//Only add the volunteer button if this is NOT the personal job list
+			//(Doesn't make sense to volunteer for jobs you're already signed up for).
+			if (!personal) {
+				buttonSuitePanel.add(volunteerButton);
+			}
 			buttonSuitePanel.add(unvolunteerButton);
 			
 		} else if (UrbanParksSystem.getCurrentUser() instanceof ParkManager) {
@@ -91,7 +116,16 @@ public class JobDisplayPanel extends JPanel {
 			deleteJobButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-					UrbanParksSystem.removeJob(selectedJob);
+					if (UrbanParksSystem.removeJob(selectedJob)) {
+						initListPanel();
+						jobDetails.setText("");
+						jobListPanel.repaint();
+						JOptionPane.showMessageDialog(null, "Job has been removed.");
+						
+					} else {
+						JOptionPane.showMessageDialog(null, "Could not remove job!");
+					}
+					
 				}
 			});
 			
@@ -137,8 +171,16 @@ public class JobDisplayPanel extends JPanel {
 	}
 
 	private void initListPanel() {
+		if (jobListPanel != null) {
+			remove(jobListPanel);
+		}
 		jobListPanel = new JPanel();
-		jobList = new JList<String>(UrbanParksSystem.seeJobs());
+		if (personal) {
+			jobList = new JList<String>(UrbanParksSystem.seeMyJobs());
+			
+		} else {
+			jobList = new JList<String>(UrbanParksSystem.seeJobs());
+		}
 		jobList.setPreferredSize(new Dimension(200, 400));
 		jobList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		jobList.addListSelectionListener(new ListSelectionListener() {

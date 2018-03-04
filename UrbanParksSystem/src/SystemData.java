@@ -15,22 +15,46 @@ public class SystemData {
 
 	}
 	
+	/**
+	 * Retrieves the personal job list for the current user
+	 * @return jobs The user's list of jobs
+	 */
+	public String[] seeMyJobs() {
+		AbstractUser user = getCurrentUser();
+		String[] jobs = new String[user.getJobs().size()];
+		int i = 0;
+		int k = 1;
+		
+		for (Integer j: myJobMap.keySet()) {
+			for (Integer id: user.getJobs()) {
+				if (id == j) {
+					jobs[i] = k + ". " + myJobMap.get(j).myTitle + " (" + myJobMap.get(j).myDateString + ")";
+					k++;
+				}
+			}
+			i++;
+		}
+		
+		return jobs;
+		
+	}
 	public String[] seeJobs() {
 		AbstractUser user = getCurrentUser();
 		String[] jobs = new String[myJobMap.size()];
 		int i = 0;
+		int k = 1;
 		for (Integer j: myJobMap.keySet()) {
 			if (user instanceof Volunteer) {
 				if (myJobMap.get(j).validStartDate() && !myJobMap.get(j).hasDateConflicts((Volunteer) user)) {
-					jobs[i] = i+1 + ". " + myJobMap.get(j).myTitle + " (" + myJobMap.get(j).myDateString + ")";
+					jobs[i] = k + ". " + myJobMap.get(j).myTitle + " (" + myJobMap.get(j).myDateString + ")";
+					k++;
 				}
 			} else {
-				jobs[i] = i+1 + ". " + myJobMap.get(j).myTitle + " (" + myJobMap.get(j).myDateString + ")";
+				jobs[i] = k + ". " + myJobMap.get(j).myTitle + " (" + myJobMap.get(j).myDateString + ")";
+				k++;
 			}
-			
 			i++;
 		}
-		System.out.println(jobs);
 		return jobs;
 	}
 	public boolean setMaxJobs(String input) {
@@ -144,10 +168,8 @@ public class SystemData {
 
 			saveData();
 			result = true;
-			System.out.println("Removed Job.\n");
-		} else {
-			System.out.println("Could not remove job!\n");
-		}
+			
+		} 
 		return result;
 	}
 	
@@ -198,6 +220,9 @@ public class SystemData {
 
 	}
 
+	/**
+	 * Saves to serializeable files.
+	 */
 	public void saveData() {
 		myStorage.setJobs(myJobMap);
 		myStorage.setUsers(myUserMap);
