@@ -62,6 +62,7 @@ public class UrbanParksTerminal extends JFrame{
 		initializePanels();
 		
 		changeState(USER_LOG_IN);
+		pack();
 		setVisible(true);
 	}
 	
@@ -173,7 +174,7 @@ public class UrbanParksTerminal extends JFrame{
 		JMenuItem allJobs = new JMenuItem("All Jobs");
 		allJobs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				currentPanel.add(new JobDisplayPanel(UrbanParksSystem));
+				currentPanel = (new JobDisplayPanel(UrbanParksSystem));
 			}});
 		
 		//krizirk

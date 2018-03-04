@@ -16,10 +16,13 @@ public class SystemData {
 	}
 	
 	public String[] seeJobs() {
+		AbstractUser user = getCurrentUser();
 		String[] jobs = new String[myJobMap.size()];
 		int i = 0;
 		for (Integer j: myJobMap.keySet()) {
-			jobs[i] = i+1 + ". " + myJobMap.get(j).myTitle + " (" + myJobMap.get(j).myDateString + ")";
+			if (myJobMap.get(j).validStartDate() && !myJobMap.get(j).hasDateConflicts((Volunteer) user)) {
+				jobs[i] = i+1 + ". " + myJobMap.get(j).myTitle + " (" + myJobMap.get(j).myDateString + ")";
+			}
 			i++;
 		}
 		System.out.println(jobs);

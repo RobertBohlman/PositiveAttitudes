@@ -75,7 +75,7 @@ public class JobDisplayPanel extends JPanel {
 			unvolunteerButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-					//Todo
+					UrbanParksSystem.removeUserJob(selectedJob);
 				}
 			});
 			
@@ -89,7 +89,7 @@ public class JobDisplayPanel extends JPanel {
 			deleteJobButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-					//Deletes the selected job
+					UrbanParksSystem.removeJob(selectedJob);
 				}
 			});
 			
