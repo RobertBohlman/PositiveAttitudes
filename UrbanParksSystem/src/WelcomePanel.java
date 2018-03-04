@@ -12,6 +12,7 @@ public class WelcomePanel extends JPanel {
 		urbanParksSystem = system;
 		setLayout(new FlowLayout());
 		welcomeMessage.setText("Welcome to Urban Parks!");
+		add(welcomeMessage);
 	}
 
 }

@@ -19,14 +19,15 @@ public class UrbanParksTerminal extends JFrame{
 	private static final long serialVersionUID = -5601671266866084219L;
 	private static SystemData UrbanParksSystem;
 	private static Scanner scan;
+	private UrbanParksTerminal self;
 	
 	
 	private static int consoleState = 0;
 	
 	private static final int USER_LOG_IN = 0;
-	private static final int VOLUNTEER = 1;
+	public static final int VOLUNTEER = 1;
 	private static final int AVAILABLE_JOB_SCREEN = 2;
-	private static final int PARK_MANAGER = 3;
+	public static final int PARK_MANAGER = 3;
 	private static final int PARK_MANAGER_JOB_SUBMIT = 4;
 	private static final int VOLUNTEER_SIGNED_UP_JOBS = 5;
 	private static final int PARK_MANAGER_JOB_VIEW = 6;
@@ -61,7 +62,10 @@ public class UrbanParksTerminal extends JFrame{
 		initializeMenus();
 		initializePanels();
 		
+		self = this;
+		
 		changeState(USER_LOG_IN);
+		pack();
 		setVisible(true);
 	}
 	
@@ -93,7 +97,7 @@ public class UrbanParksTerminal extends JFrame{
 	}
 	
 
-	private void changeState(int consoleState) {
+	void changeState(int consoleState) {
 		if (currentPanel != null && currentMenu != null) {
 			remove(currentPanel);
 			remove(currentMenu);
@@ -105,17 +109,17 @@ public class UrbanParksTerminal extends JFrame{
 			break;
 			
 		case VOLUNTEER:
-			currentPanel = volunteerYourJobsPanel;
+			currentPanel = welcomePanel;
 			currentMenu = volunteerMenu;
 			break;
 			
 		case PARK_MANAGER:
-			currentPanel = parkManagerJobPanel;
+			currentPanel = welcomePanel;
 			currentMenu = parkManagerMenu;
 			break;
 			
 		case EMPLOYEE:
-			currentPanel = employeePanel;
+			currentPanel = welcomePanel;
 			currentMenu = employeeMenu;
 			break;
 			
@@ -124,7 +128,7 @@ public class UrbanParksTerminal extends JFrame{
 		}
 		
 		add(currentPanel, BorderLayout.CENTER);
-		add(currentMenu);
+		setJMenuBar(currentMenu);
 		pack();
 		revalidate();
 		repaint();
@@ -173,7 +177,10 @@ public class UrbanParksTerminal extends JFrame{
 		JMenuItem allJobs = new JMenuItem("All Jobs");
 		allJobs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				currentPanel.add(new JobDisplayPanel(UrbanParksSystem));
+				remove(currentPanel);
+				currentPanel = new JobDisplayPanel(UrbanParksSystem, self);
+				add(currentPanel, BorderLayout.CENTER);
+				pack();
 			}});
 		
 		//krizirk
@@ -207,7 +214,10 @@ public class UrbanParksTerminal extends JFrame{
 		JMenuItem availableJobs = new JMenuItem("Available Jobs");
 		availableJobs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JobDisplayPanel JDP = new JobDisplayPanel(UrbanParksSystem);
+				remove(currentPanel);
+				currentPanel = new JobDisplayPanel(UrbanParksSystem, self);
+				add(currentPanel, BorderLayout.CENTER);
+				pack();
 			}});
 		
 		JMenuItem editInfo = new JMenuItem("Edit Information");
