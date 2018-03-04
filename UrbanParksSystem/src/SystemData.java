@@ -20,9 +20,14 @@ public class SystemData {
 		String[] jobs = new String[myJobMap.size()];
 		int i = 0;
 		for (Integer j: myJobMap.keySet()) {
-			if (myJobMap.get(j).validStartDate() && !myJobMap.get(j).hasDateConflicts((Volunteer) user)) {
+			if (user instanceof Volunteer) {
+				if (myJobMap.get(j).validStartDate() && !myJobMap.get(j).hasDateConflicts((Volunteer) user)) {
+					jobs[i] = i+1 + ". " + myJobMap.get(j).myTitle + " (" + myJobMap.get(j).myDateString + ")";
+				}
+			} else {
 				jobs[i] = i+1 + ". " + myJobMap.get(j).myTitle + " (" + myJobMap.get(j).myDateString + ")";
 			}
+			
 			i++;
 		}
 		System.out.println(jobs);

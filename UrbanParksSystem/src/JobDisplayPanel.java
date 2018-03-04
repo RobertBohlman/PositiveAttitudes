@@ -21,6 +21,7 @@ public class JobDisplayPanel extends JPanel {
 	private static final long serialVersionUID = 4544875371839943574L;
 
 	private SystemData UrbanParksSystem;
+	private UrbanParksTerminal myParentFrame;
 	
 	private Job selectedJob;
 	
@@ -38,8 +39,9 @@ public class JobDisplayPanel extends JPanel {
 	
 	private JList<String> jobList;
 
-	public JobDisplayPanel(SystemData urbanParksSystem) {
+	public JobDisplayPanel(SystemData urbanParksSystem, UrbanParksTerminal frame) {
 		this.UrbanParksSystem = urbanParksSystem;
+		myParentFrame = frame;
 		
 		initDetailsPanel();
 		setUpButtons();
@@ -109,6 +111,12 @@ public class JobDisplayPanel extends JPanel {
 		mainMenuButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				if (UrbanParksSystem.getCurrentUser() instanceof Volunteer) {
+					myParentFrame.changeState(UrbanParksTerminal.VOLUNTEER);
+					
+				} else if (UrbanParksSystem.getCurrentUser() instanceof ParkManager) {
+					myParentFrame.changeState(UrbanParksTerminal.PARK_MANAGER);
+				}
 				UrbanParksSystem.saveData();
 			}
 		});
