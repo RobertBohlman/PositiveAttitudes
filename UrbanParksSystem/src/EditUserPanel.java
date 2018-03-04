@@ -23,8 +23,8 @@ public class EditUserPanel extends JPanel{
 	ArrayList<JLabel> detailLabels = new ArrayList<JLabel>(); 
 	
 	JButton btn_editEmail = new JButton("Edit");
-	JButton btn_editAge = new JButton("edit");
-	JButton btn_editPhysicalLevel = new JButton("edit");
+	JButton btn_editAge = new JButton("Edit");
+	JButton btn_editPhysicalLevel = new JButton("Edit");
 
 	ArrayList<JButton> editButtons = new ArrayList<JButton>(); 
 	
@@ -107,31 +107,41 @@ public class EditUserPanel extends JPanel{
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					String input = JOptionPane.showInputDialog(null, "Enter new Email:");
-					lbl_email.setText(input);
-					btn_save.setEnabled(true);
-					btn_clear.setEnabled(true);
+					if(input != null) {
+						lbl_email.setText(input);
+						btn_save.setEnabled(true);
+						btn_clear.setEnabled(true);
+					}
 				}
 			});
 			btn_editAge.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					String input = JOptionPane.showInputDialog(null, "Enter new Age:");
-					lbl_age.setText("" + Integer.parseInt(input));
-					//TODO error catching
-
-					btn_save.setEnabled(true);
-					btn_clear.setEnabled(true);
+					if(input != null) {
+						try {
+							lbl_age.setText("" + Integer.parseInt(input));
+							btn_save.setEnabled(true);
+							btn_clear.setEnabled(true);
+						} catch (NumberFormatException e) {
+							JOptionPane.showMessageDialog(null, "Error: must enter number", "Input error", JOptionPane.ERROR_MESSAGE);
+						}
+					}
 				}
 			});
 			btn_editPhysicalLevel.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					String input = JOptionPane.showInputDialog(null, "Enter new Age:");
-					lbl_physicalLevel.setText("" + Integer.parseInt(input));
-					//TODO error catching
-
-					btn_save.setEnabled(true);
-					btn_clear.setEnabled(true);
+					if(input != null) {
+						try {
+							lbl_physicalLevel.setText("" + Integer.parseInt(input));
+							btn_save.setEnabled(true);
+							btn_clear.setEnabled(true);
+						} catch (NumberFormatException e) {
+							JOptionPane.showMessageDialog(null, "Error: must enter number", "Input error", JOptionPane.ERROR_MESSAGE);
+						}
+					}
 				}
 			});
 		} else if(user instanceof ParkManager) {
@@ -139,10 +149,11 @@ public class EditUserPanel extends JPanel{
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					String input = JOptionPane.showInputDialog(null, "Enter new Email:");
-					lbl_email.setText(input);
-
-					btn_save.setEnabled(true);
-					btn_clear.setEnabled(true);
+					if(input != null) {
+						lbl_email.setText(input);
+						btn_save.setEnabled(true);
+						btn_clear.setEnabled(true);
+					}
 				}
 			});
 		}
