@@ -124,7 +124,7 @@ public class UrbanParksTerminal extends JFrame{
 		}
 		
 		add(currentPanel, BorderLayout.CENTER);
-		add(currentMenu);
+		setJMenuBar(currentMenu);
 		pack();
 		revalidate();
 		repaint();
