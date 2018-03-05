@@ -254,13 +254,27 @@ public class UrbanParksTerminal extends JFrame{
 	
 	private void initializeEmployeeMenu() {
 		JMenu jobs = new JMenu("Jobs");
-		JMenu volunteers = new JMenu("Volunteers");
-		JMenu managers = new JMenu("Park Managers");
 		JMenu settings = new JMenu("Settings");
 		
+		JMenuItem viewJobs = new JMenuItem("View Jobs");
+		viewJobs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				remove(currentPanel);
+				currentPanel = new JobDisplayPanel(UrbanParksSystem, self, false);
+				add(currentPanel, BorderLayout.CENTER);
+				pack();
+			}});
+		
+		JMenuItem system = new JMenuItem("System");
+		system.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// system settings
+			}});
+		
+		jobs.add(viewJobs);
+		
+		
 		employeeMenu.add(jobs);
-		employeeMenu.add(volunteers);
-		employeeMenu.add(managers);
 		employeeMenu.add(settings);
 		
 	}
