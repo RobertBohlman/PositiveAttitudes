@@ -16,16 +16,10 @@ public class WelcomePanel extends JPanel {
 	private static final long serialVersionUID = -2567709177665924823L;
 	JLabel welcomeMessage = new JLabel();
 	
-<<<<<<< HEAD:UrbanParksSystem/src/view/WelcomePanel.java
 	/**
 	 * Constructor
-	 * @param system SystemData
 	 */
-	public WelcomePanel(SystemData system) {
-		urbanParksSystem = system;
-=======
 	public WelcomePanel() {
->>>>>>> 0b8d4c1ec4419a06c1d7dab5a34b120a4c9c0add:UrbanParksSystem/src/WelcomePanel.java
 		setLayout(new FlowLayout());
 		Border border = welcomeMessage.getBorder();
 		Border margin = new EmptyBorder(25,50,25,50);
