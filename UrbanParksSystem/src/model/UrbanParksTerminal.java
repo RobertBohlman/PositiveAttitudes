@@ -10,6 +10,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import view.EditUserPanel;
+import view.EmployeeSettingsPanel;
 import view.JobDisplayPanel;
 import view.JobEntryPanel;
 import view.UserLoginPanel;
@@ -21,11 +22,14 @@ import view.WelcomePanel;
  * @author Jenna Hand, Kristi Anna Stageberg, Robert Bohlman, Jacob Reed, Aaron Hammers
  *
  */
-public class UrbanParksTerminal extends JFrame{
+public class UrbanParksTerminal extends JFrame {
 	private static final long serialVersionUID = -5601671266866084219L;
 	private static final int USER_LOG_IN = 0;
 	public static final int VOLUNTEER = 1;
+	public static final int JOB_DISPLAY = 2;
 	public static final int PARK_MANAGER = 3;
+	public static final int EDIT_INFO = 4;
+	public static final int EDIT_SYSTEM = 5;
 	private static final int EMPLOYEE = 7;
 	private static SystemData UrbanParksSystem;
 	private static Scanner scan;
@@ -142,6 +146,14 @@ public class UrbanParksTerminal extends JFrame{
 			remove(currentPanel);
 		}
 		switch (panelState) {
+		case JOB_DISPLAY :
+			currentPanel = new JobDisplayPanel(UrbanParksSystem, self, true);
+			break;
+		case EDIT_INFO :
+			currentPanel = new EditUserPanel(UrbanParksSystem);
+			break;
+		case EDIT_SYSTEM :
+			currentPanel = new EmployeeSettingsPanel(UrbanParksSystem);
 		default:
 			break;
 		}
@@ -189,19 +201,14 @@ public class UrbanParksTerminal extends JFrame{
 		JMenuItem allJobs = new JMenuItem("All Jobs");
 		allJobs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				remove(currentPanel);
-				currentPanel = new JobDisplayPanel(UrbanParksSystem, self, false);
-				add(currentPanel, BorderLayout.CENTER);
-				pack();
+				changePanel(JOB_DISPLAY);
 			}});
 		JMenuItem submitNewJob = new JMenuItem("New Job");
 		submitNewJob.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JobEntryPanel JEP = new JobEntryPanel(UrbanParksSystem);
 			}});
-				
-//		JMenuItem submitNewJob = new JMenu("New Job");
-//		allJobs.addActionListener(makeMenuItemListener(PARK_MANAGER_JOB_SUBMIT));		
+					
 		viewJobs.add(allJobs);
 		submitJobs.add(submitNewJob);
 	}
@@ -219,28 +226,19 @@ public class UrbanParksTerminal extends JFrame{
 		JMenuItem yourJobs = new JMenuItem("Your Jobs");
 		yourJobs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				remove(currentPanel);
-				currentPanel = new JobDisplayPanel(UrbanParksSystem, self, true);
-				add(currentPanel, BorderLayout.CENTER);
-				pack();
+				changePanel(JOB_DISPLAY);
 			}});
 		
 		JMenuItem availableJobs = new JMenuItem("Available Jobs");
 		availableJobs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				remove(currentPanel);
-				currentPanel = new JobDisplayPanel(UrbanParksSystem, self, false);
-				add(currentPanel, BorderLayout.CENTER);
-				pack();
+				changePanel(JOB_DISPLAY);
 			}});
 		
 		JMenuItem editInfo = new JMenuItem("Edit Information");
 		editInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				remove(currentPanel);
-				currentPanel = new EditUserPanel(UrbanParksSystem);
-				add(currentPanel, BorderLayout.CENTER);
-				pack();
+				changePanel(EDIT_INFO);
 			}});
 		
 		viewJobs.add(yourJobs);
@@ -249,30 +247,29 @@ public class UrbanParksTerminal extends JFrame{
 	}
 	
 	/**
-	 * Makes the menu item listeners
-	 * @param panelState int
-	 * @return ActionListener
-	 */
-	private ActionListener makeMenuItemListener(int panelState) { 
-		return new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				changePanel(panelState);
-			}};
-		
-	}
-	
-	/**
 	 * Initialize employee menus
 	 */
 	private void initializeEmployeeMenu() {
 		JMenu jobs = new JMenu("Jobs");
-		JMenu volunteers = new JMenu("Volunteers");
-		JMenu managers = new JMenu("Park Managers");
 		JMenu settings = new JMenu("Settings");
 		
+		JMenuItem viewJobs = new JMenuItem("View Jobs");
+		JMenuItem editSystem = new JMenuItem("Edit System");
+		
+		viewJobs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				changePanel(JOB_DISPLAY);
+			}});
+		
+		editSystem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				changePanel(EDIT_SYSTEM);
+			}});
+		
+		jobs.add(viewJobs);
+		settings.add(editSystem);
+		
 		employeeMenu.add(jobs);
-		employeeMenu.add(volunteers);
-		employeeMenu.add(managers);
 		employeeMenu.add(settings);
 		
 	}

@@ -1,5 +1,6 @@
 
 package view;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,19 +20,25 @@ public class EmployeeSettingsPanel extends JPanel {
 	
 	JLabel parkJobs = new JLabel();
 	JTextField maxNum = new JTextField();
-	JButton enterNum = new JButton();
+	JButton enterNum = new JButton("Enter");
 	
 	
 	public EmployeeSettingsPanel(SystemData system) {
 		urbanParksSystem = system;
 		setLayout(new FlowLayout());
 		parkJobs.setText("Maximum # of park jobs:");
+		maxNum.setPreferredSize(new Dimension(200, 25));
+		maxNum.setText("Enter a number");
 		enterNum.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				urbanParksSystem.setMaxJobs(maxNum.getText());
+				if(urbanParksSystem.getMaxJobs() == Integer.parseInt(maxNum.getText())) {
+					maxNum.setText("Enter a number");
+				}
 			}});
 		add(parkJobs);
 		add(maxNum);
+		add(enterNum);
 	}
 
 }

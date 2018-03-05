@@ -1,4 +1,7 @@
 package model;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,6 +61,30 @@ public class SystemData {
 		}
 		return jobs;
 	}
+	
+	public String[] seeJobsByDate(Object startDate, Object endDate) {
+
+		
+		AbstractUser user = getCurrentUser();
+		String[] jobs = new String[myJobMap.size()];
+		int i = 0;
+		int k = 1;
+		for (Integer j: myJobMap.keySet()) {
+			if (user instanceof Employee) {
+				if (myJobMap.get(j).myDateStart.after((Date)startDate) && myJobMap.get(j).myDateEnd.before((Date)endDate)) {
+					jobs[i] = k + ". " + myJobMap.get(j).myTitle + " (" + myJobMap.get(j).myDateString + ")";
+					k++;
+				}
+			}
+			i++;
+		}
+		return jobs;
+	}
+	
+	public int getMaxJobs() {
+		return MAX_NUM_JOBS;
+	}
+	
 	public boolean setMaxJobs(String input) {
 		int val = MAX_NUM_JOBS;
 		try {

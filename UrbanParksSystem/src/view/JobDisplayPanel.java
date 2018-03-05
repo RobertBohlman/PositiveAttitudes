@@ -4,15 +4,21 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
+
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
+import javax.swing.SpinnerDateModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.text.DateFormatter;
 
+import model.Employee;
 import model.Job;
 import model.ParkManager;
 import model.SystemData;
@@ -44,6 +50,7 @@ public class JobDisplayPanel extends JPanel {
 	private JButton editJobButton;
 	private JButton volunteerButton;
 	private JButton unvolunteerButton;
+	private JButton jobByDate;
 	
 	private JTextArea jobDetails;
 	
@@ -68,6 +75,7 @@ public class JobDisplayPanel extends JPanel {
 
 	private void setUpButtons() {
 		buttonSuitePanel = new JPanel();
+		buttonSuitePanel.setPreferredSize(new Dimension(350,100));
 		if (UrbanParksSystem.getCurrentUser() instanceof Volunteer) {
 			volunteerButton = new JButton("Volunteer");
 			unvolunteerButton = new JButton("Un-Volunteer");
@@ -143,7 +151,45 @@ public class JobDisplayPanel extends JPanel {
 			
 			buttonSuitePanel.add(deleteJobButton);
 			buttonSuitePanel.add(editJobButton);
+		} else if (UrbanParksSystem.getCurrentUser() instanceof Employee) {
+			
+			JLabel from = new JLabel("From:");
+			JLabel to = new JLabel("To:");
+			
+			SpinnerDateModel model = new SpinnerDateModel();
+			JSpinner spinnerStart = new JSpinner(model);
+
+			JSpinner.DateEditor editorStart = new JSpinner.DateEditor(spinnerStart, "yyyy.MM.dd");
+			DateFormatter formatter = (DateFormatter)editorStart.getTextField().getFormatter();
+			formatter.setAllowsInvalid(false); 
+			formatter.setOverwriteMode(true);
+			
+			JSpinner spinnerEnd = new JSpinner(model);
+
+			JSpinner.DateEditor editorEnd = new JSpinner.DateEditor(spinnerEnd, "yyyy.MM.dd");
+			formatter.setAllowsInvalid(false); 
+			formatter.setOverwriteMode(true);
+
+			jobByDate = new JButton("View By Date");
+			jobByDate.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					jobListPanel = new JPanel();
+					
+					jobList = new JList<String>(UrbanParksSystem.seeJobsByDate(spinnerStart.getValue(), spinnerEnd.getValue()));
+					
+				}
+				
+			});
+			
+			buttonSuitePanel.add(from);
+			buttonSuitePanel.add(spinnerStart);
+			buttonSuitePanel.add(to);
+			buttonSuitePanel.add(spinnerEnd);
+			buttonSuitePanel.add(jobByDate);
+			
 		}
+		
 		
 		mainMenuButton = new JButton("Main menu");
 		
@@ -160,7 +206,7 @@ public class JobDisplayPanel extends JPanel {
 			}
 		});
 		
-		buttonSuitePanel.add(mainMenuButton);
+		add(mainMenuButton, BorderLayout.SOUTH);
 		
 		centerPanel.add(buttonSuitePanel);
 		
