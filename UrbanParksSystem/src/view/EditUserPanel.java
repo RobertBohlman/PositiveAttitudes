@@ -179,7 +179,7 @@ public class EditUserPanel extends JPanel{
 			btn_editPhysicalLevel.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-					String input = JOptionPane.showInputDialog(null, "Enter new Age:");
+					String input = JOptionPane.showInputDialog(null, "Enter new physical level:");
 					if(input != null) {
 						try {
 							lbl_userPhysicalLevel.setText("" + Integer.parseInt(input));
