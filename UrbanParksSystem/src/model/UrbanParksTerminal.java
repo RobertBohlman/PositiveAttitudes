@@ -37,7 +37,6 @@ public class UrbanParksTerminal extends JFrame{
 	private JPanel parkManagerJobPanel = new JPanel();
 	private JPanel parkManagerSubmitPanel = new JPanel();
 	private JPanel volunteerYourJobsPanel = new JPanel();
-	private JPanel volunteerAvailableJobsPanel = new JPanel();
 	private JPanel employeePanel = new JPanel();
 	private JMenuBar userLoginMenu = new JMenuBar();
 	private JMenuBar parkManagerMenu = new JMenuBar();
