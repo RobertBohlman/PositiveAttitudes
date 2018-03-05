@@ -1,42 +1,35 @@
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Map;
 
-import javax.swing.BoxLayout;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
+//import javax.swing.JList;
 //import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
-import javax.swing.JSpinner;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+
 
 public class JobEntryPanel extends JFrame {
 	private SystemData UrbanParksSystem;
 	
-	private Job newJob;
+	//private Job newJob;
 	
 	private JPanel jobEntryPanel;
 	private JPanel southPanel;
 	private JPanel buttonSuitePanel;
-	private JPanel titlePanel;
-	private JPanel datePanel;
-	private JPanel lengthPanel;
-	private JPanel reqPanel;
-	private JPanel volunteerPanel;
-	private JPanel locationPanel;
-	private JPanel descriptionPanel;
+//	private JPanel titlePanel;
+//	private JPanel datePanel;
+//	private JPanel lengthPanel;
+//	private JPanel reqPanel;
+//	private JPanel volunteerPanel;
+//	private JPanel locationPanel;
+//	private JPanel descriptionPanel;
 	
 	private JButton mainMenuButton;
 	private JButton submitJobButton;
@@ -60,7 +53,7 @@ public class JobEntryPanel extends JFrame {
 	
 	//private JTextArea jobDetails;
 	
-	private JList<String> jobList;
+	//private JList<String> jobList;
 
 	public JobEntryPanel(SystemData urbanParksSystem) {
 		this.UrbanParksSystem = urbanParksSystem;
@@ -92,7 +85,23 @@ public class JobEntryPanel extends JFrame {
 					try {
 						Job j = new Job(titleTextField.getText(), dateTextField.getText(), reqTextField.getText(), Integer.parseInt(numVolunteersTextField.getText()), locationTextField.getText(), descriptionTextField.getText(), Integer.parseInt(dayLengthTextField.getText()));
 						UrbanParksSystem.submitJob(j);
-						JOptionPane.showMessageDialog(null, "Job Submitted.");
+						
+						int userFeedback = UrbanParksSystem.submitJob(j);
+						
+						if (userFeedback == 0) {
+							JOptionPane.showMessageDialog(null, "Thank you for submitting a job at Urban Parks!");
+							
+						} else {
+							if (userFeedback == 1) {
+								JOptionPane.showMessageDialog(null, "Can't submit this job, invalid duration.");
+							} else if (userFeedback == 2){
+								JOptionPane.showMessageDialog(null, "Can't submit this job, not within valid time frame.");
+							} else {
+								JOptionPane.showMessageDialog(null, "Can't submit this job, unknown error.");
+							}
+						}
+						
+						
 						//TODO go back to previous menu
 					} catch (NullPointerException e) {
 						
@@ -191,31 +200,31 @@ public class JobEntryPanel extends JFrame {
 	
 	
 	
-	public String getTitle() {
-		return titleTextField.getText();
-	}
-	
-	public String getDate() {
-		return dateTextField.getText();
-	}
-	
-	public String getLength() {
-		return dayLengthTextField.getText();
-	}
-	
-	public String getReq() {
-		return reqTextField.getText();
-	}
-	
-	public String getNumVol() {
-		return numVolunteersTextField.getText();
-	}
-	
-	public String getLoc() {
-		return locationTextField.getText();
-	}
-	
-	public String getDescription() {
-		return descriptionTextField.getText();
-	}
+//	public String getTitle() {
+//		return titleTextField.getText();
+//	}
+//	
+//	public String getDate() {
+//		return dateTextField.getText();
+//	}
+//	
+//	public String getLength() {
+//		return dayLengthTextField.getText();
+//	}
+//	
+//	public String getReq() {
+//		return reqTextField.getText();
+//	}
+//	
+//	public String getNumVol() {
+//		return numVolunteersTextField.getText();
+//	}
+//	
+//	public String getLoc() {
+//		return locationTextField.getText();
+//	}
+//	
+//	public String getDescription() {
+//		return descriptionTextField.getText();
+//	}
 }
