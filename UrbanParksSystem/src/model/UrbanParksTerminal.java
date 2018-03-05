@@ -157,7 +157,7 @@ public class UrbanParksTerminal extends JFrame{
 	 * Initialize all panels
 	 */
 	private void initializePanels() {
-		welcomePanel = new WelcomePanel(UrbanParksSystem);
+		welcomePanel = new WelcomePanel();
 		initializeUserLoginPanel();
 		initializeParkManagerJobPanel();
 		initializeParkManagerSubmitPanel();
