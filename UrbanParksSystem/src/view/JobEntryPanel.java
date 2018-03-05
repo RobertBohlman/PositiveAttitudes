@@ -97,7 +97,7 @@ public class JobEntryPanel extends JFrame {
 						
 						if (userFeedback == 0) {
 							JOptionPane.showMessageDialog(null, "Thank you for submitting a job at Urban Parks!");
-							
+							dispose();
 						} else {
 							if (userFeedback == 1) {
 								JOptionPane.showMessageDialog(null, "Can't submit this job, invalid duration.");
@@ -152,7 +152,7 @@ public class JobEntryPanel extends JFrame {
 
 	private void initEntryPanel() {
 		//jobEntryPanel = new JPanel();
-		jobEntryPanel = new JPanel(new GridLayout(7, 2));
+		jobEntryPanel = new JPanel(new GridLayout(7, 2, 5, 15));
 		
 		titleLabel = new JLabel("Title: ");
 		titleTextField = new JTextField("", 15);
