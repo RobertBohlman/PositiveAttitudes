@@ -8,7 +8,7 @@ public class SystemData {
 	private int myUserHash;
 	private final DataStore myStorage = new DataStore();
 	
-	private static int MAX_NUM_JOBS = 15;
+	private int MAX_NUM_JOBS = 15;
 
 	public SystemData() {
 		myStorage.LoadJobs(myJobMap);
