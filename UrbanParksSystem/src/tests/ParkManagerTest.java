@@ -1,13 +1,18 @@
+package tests;
+
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import model.Job;
+import model.ParkManager;
+import model.SystemData;
 
 public class ParkManagerTest {
 

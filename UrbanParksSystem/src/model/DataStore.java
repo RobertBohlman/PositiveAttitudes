@@ -1,3 +1,4 @@
+package model;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -9,12 +10,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /*
- * Class for storing persistent data
- * Username with permission level
- * Jobs
+ * Class for storing persistent serialized data
+ * 
+ * @author Jenna Hand, Kristi Anna Stageberg, Robert Bohlman, Jacob Reed, Aaron Hammers
  */
 public class DataStore implements Serializable{
 	
+	/**Default Generated SUID **/
 	private static final long serialVersionUID = 6789836420905113195L;
 	private HashMap<Integer, AbstractUser> myUsers;
 	private HashMap<Integer, Job> myJobs;
@@ -71,7 +73,8 @@ public class DataStore implements Serializable{
 	}
 	
 	/**
-	 * Loads userMap from serialized file
+	 * Loads user map from serialized file
+	 * @param userMap User map to load into
 	 */
 	@SuppressWarnings("unchecked")
 	public void LoadUsers(Map<Integer, AbstractUser> userMap) {
@@ -113,7 +116,7 @@ public class DataStore implements Serializable{
 	}
 	
 	/**
-	 * Getter function to get the hashmap of jobs
+	 * Getter function to get the hash map of jobs
 	 * @return HashMap of jobs
 	 */
 	public HashMap<Integer, Job> getJobs() {
@@ -121,7 +124,7 @@ public class DataStore implements Serializable{
 	}
 	
 	/**
-	 * Getter method to get the hashmap of users
+	 * Getter method to get the hash map of users
 	 * @return
 	 */
 	public HashMap<Integer, AbstractUser>  getUsers() {

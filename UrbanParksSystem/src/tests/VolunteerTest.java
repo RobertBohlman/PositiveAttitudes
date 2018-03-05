@@ -1,10 +1,11 @@
+package tests;
+
+
 import static org.junit.Assert.*;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.junit.Before;
 import org.junit.Test;
+import model.Job;
+import model.Volunteer;
 
 public class VolunteerTest {
 	

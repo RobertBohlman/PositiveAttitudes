@@ -1,3 +1,4 @@
+package view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -14,8 +15,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import model.Job;
+import model.ParkManager;
+import model.SystemData;
+
 
 public class JobEntryPanel extends JFrame {
+	private static final long serialVersionUID = 5217049246979656460L;
+
 	private SystemData UrbanParksSystem;
 	
 	//private Job newJob;

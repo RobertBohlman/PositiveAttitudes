@@ -1,11 +1,10 @@
+package view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
-
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -13,6 +12,12 @@ import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+import model.Job;
+import model.ParkManager;
+import model.SystemData;
+import model.UrbanParksTerminal;
+import model.Volunteer;
 
 public class JobDisplayPanel extends JPanel {
 	/**

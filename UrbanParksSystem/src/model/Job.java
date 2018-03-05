@@ -1,3 +1,4 @@
+package model;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,10 +12,10 @@ import java.util.Date;
  */
 public class Job implements Serializable {
 	private static final long serialVersionUID = -2453550104876763925L;
-	static int MAX_DATE = 75;
+	public static int MAX_DATE = 75;
 	static int MAX_DURATION = 3;
 	static long ONE_DAY_IN_MILI = 86400000;
-	static int MIN_DAYS_TO_JOB = 2;
+	public static int MIN_DAYS_TO_JOB = 2;
 	static int MIN_DAYS_TO_REMOVE = 3;
 
 	public int myID;

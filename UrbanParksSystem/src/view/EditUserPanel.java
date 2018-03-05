@@ -1,17 +1,28 @@
+package view;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import model.AbstractUser;
+import model.Employee;
+import model.ParkManager;
+import model.SystemData;
+import model.Volunteer;
+
+/**
+ * Edit user panel class that allows users to edit their account info
+ * @author Jenna Hand, Kristi Anna Stageberg, Robert Bohlman, Jacob Reed, Aaron Hammers
+ *
+ */
 public class EditUserPanel extends JPanel{
+	private static final long serialVersionUID = -8262220730250909489L;
 	SystemData system;
 	AbstractUser user;
 	private static JLabel lbl_email = new JLabel("Email: ");
@@ -34,6 +45,10 @@ public class EditUserPanel extends JPanel{
 	JButton btn_save = new JButton("save");
 	JButton btn_clear = new JButton("clear");
 
+	/**
+	 * Constructor
+	 * @param system SystemData 
+	 */
 	public EditUserPanel(SystemData system) {
 		this.system = system;
 		user = system.getCurrentUser();
@@ -56,7 +71,6 @@ public class EditUserPanel extends JPanel{
 			editButtons.add(btn_editPhysicalLevel);
 			
 		} else if(user instanceof ParkManager) {
-			
 			detailLabels.add(lbl_email);
 			lbl_userEmail.setText(((ParkManager) user).getManagerEmail());
 			userInfoLabels.add(lbl_userEmail);
@@ -66,6 +80,7 @@ public class EditUserPanel extends JPanel{
 			lbl_userName.setText(user.getUserName());
 		}
 		
+		//Create GUI
 		setupButtons();
 		this.setLayout(new BorderLayout());
 		createNorth();
@@ -74,12 +89,18 @@ public class EditUserPanel extends JPanel{
 		this.setVisible(true);
 	}
 	
+	/**
+	 * North panel setup
+	 */
 	private void createNorth() {
 		JPanel northPanel = new JPanel(new FlowLayout());
 		northPanel.add(lbl_userName);
 		this.add(BorderLayout.NORTH, northPanel);
 	}
 	
+	/**
+	 * Center panel setup
+	 */
 	private void createCenter() {
 		JPanel centerPanel = new JPanel(new GridLayout(1,3));
 		
@@ -105,27 +126,29 @@ public class EditUserPanel extends JPanel{
 			middlePanel.add(p);
 		}
 		
-		
-		
-		
+		//Center panel startup
 		centerPanel.add(leftPanel);
 		centerPanel.add(middlePanel);
 		centerPanel.add(rightPanel);
 		this.add(BorderLayout.CENTER, centerPanel);
 	}
 	
+	/**
+	 * South panel setup
+	 */
 	private void createSouth() {
 		JPanel southPanel = new JPanel(new FlowLayout());
 		southPanel.add(btn_save);
 		southPanel.add(btn_clear);
 		this.add(BorderLayout.SOUTH, southPanel);
-		
 		btn_save.setEnabled(false);
 		btn_clear.setEnabled(false);
 	}
 	
+	/**
+	 * Button setup for edit info panels
+	 */
 	private void setupButtons() {
-		
 		if(user instanceof Volunteer) {
 			btn_editEmail.addActionListener(new ActionListener() {
 				@Override
